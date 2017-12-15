@@ -6,11 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.geotools.feature.FeatureCollection;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.GeodeticCalculator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 
@@ -21,12 +18,7 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
 public class WPSUtils {
-	
-	public static FeatureCollection<SimpleFeatureType, SimpleFeature> radialDrawing () {
-		
-		return null;
-	}
-	
+
 	public static List<LineString> createSegments(Geometry track, double segmentLength)
 			throws NoSuchAuthorityCodeException, FactoryException {
 
@@ -51,7 +43,6 @@ public class WPSUtils {
 			calculator.setDestinationGeographicPoint(c2.x, c2.y);
 
 			double length = calculator.getOrthodromicDistance();
-			
 
 			if (length + accumulatedLength >= segmentLength) {
 				double offsetLength = segmentLength - accumulatedLength;
@@ -61,7 +52,7 @@ public class WPSUtils {
 
 				Coordinate segmentationPoint = new Coordinate(c1.x + (dx * ratio), c1.y + (dy * ratio));
 
-				lastSegment.add(segmentationPoint); // Last point of the segment is the segmentation point
+				lastSegment.add(segmentationPoint); // segmentation point
 				segments.add(geometryFactory.createLineString(lastSegment.toArray(new Coordinate[lastSegment.size()])));
 
 				lastSegment = new ArrayList<Coordinate>(); // Resets the variable since a new segment will be built
@@ -72,9 +63,18 @@ public class WPSUtils {
 			}
 		}
 
-		lastSegment.add(coordinates.getLast()); // Because the last one is never added in the loop above
+		lastSegment.add(coordinates.getLast()); // add the last seguement
 		segments.add(geometryFactory.createLineString(lastSegment.toArray(new Coordinate[lastSegment.size()])));
 
 		return segments;
+	}
+
+	public static double toRealDistance(double length) {
+
+		return length / 110901.31089947431;
+	}
+
+	public static double kilometreToMetre(double length) {
+		return length * 1000;
 	}
 }

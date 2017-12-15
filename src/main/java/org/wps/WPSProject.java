@@ -9,6 +9,7 @@ import org.geotools.process.factory.StaticMethodsProcessFactory;
 import org.geotools.text.Text;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.wps.utils.WPSUtils;
 
 @DescribeProcess(title = "WPS project", description = "WPS for the tracking of coastlines")
 public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implements GeoServerProcess {
@@ -21,10 +22,18 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 	@DescribeResult(name = " resulFeatureCollection", description = "the result of drawing radials in reference Line")
 	public static FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadial(
 			@DescribeParameter(name = "referenceLine", description = "the input referenceLine") final FeatureCollection<SimpleFeatureType, SimpleFeature> referenceLine,
-			@DescribeParameter(name = "radialLength", description = "the length of radial") final double length,
-			@DescribeParameter(name = "radialDistance", description = "the distance of radial") final int distance,
-			@DescribeParameter(name = "radialSense", description = "the sense of radial") final int sense) {
+			@DescribeParameter(name = "radialLength", description = "the length of radial in Km") final double length,
+			@DescribeParameter(name = "radialDistance", description = "the distance between radials in Km") final int distance,
+			@DescribeParameter(name = "radialSense", description = "the sense of radial (1 to the left 2 to the right)") final int sense) {
 			
+		double lengthOfRadiale = WPSUtils.kilometreToMetre(length);
+		double distanceBetweenRadials =  WPSUtils.kilometreToMetre(distance);
+		
+		
+		
+		
+		
+		
 		return null;
 	}
 }
