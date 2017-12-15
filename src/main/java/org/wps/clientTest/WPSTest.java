@@ -25,50 +25,50 @@ import com.vividsolutions.jts.geom.PrecisionModel;
 public class WPSTest {
 
 	public WPSTest() {
-		try {
-			String path = "C:\\Users\\lecteur\\Desktop\\mydocs\\workspace\\WPSProject";
-			GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
-			Coordinate[] coords = new Coordinate[] { new Coordinate(0, 2), new Coordinate(2, 0), new Coordinate(3, 4),
-					new Coordinate(5, 6) };
-
-			LineString line = geometryFactory.createLineString(coords);
-
-			List<LineString> listeSegments = WPSUtils.createSegments(line, 100000);
-			//List<LineString> listRadiales = new ArrayList<LineString>();
-			
-			LineString segment = listeSegments.get(0);
-			Point calculatePoint = LineUtils.getInknowPoint(segment, WPSUtils.toRealDistance(10000));
-			
-			Coordinate[] radialCoordinates = new Coordinate[] {segment.getStartPoint().getCoordinate(),calculatePoint.getCoordinate()};
-			LineString radiale = geometryFactory.createLineString(radialCoordinates); 
-			Geometry[] geometries = new Geometry[2];
-			geometries[0] = segment;
-			geometries[1] = radiale;
-
-//			for (int i = 0; i < listeSegments.size(); i++) {
-//				geometries[i] = listeSegments.get(i);
-//				System.out.println(geometries[i]);
-//			}
-
-			GeometryCollection geometry = new GeometryCollection(geometries, geometryFactory);
-			GeoJsonFileUtils.geometryToGeoJsonFile(geometry, path);
-
-		} catch (FactoryRegistryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchAuthorityCodeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FactoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			String path = "C:\\Users\\lecteur\\Desktop\\mydocs\\workspace\\WPSProject";
+//			GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+//			Coordinate[] coords = new Coordinate[] { new Coordinate(0, 2), new Coordinate(2, 0), new Coordinate(3, 4),
+//					new Coordinate(5, 6) };
+//
+//			LineString line = geometryFactory.createLineString(coords);
+//
+//			List<LineString> listeSegments = WPSUtils.createSegments(line, 100000);
+//			//List<LineString> listRadiales = new ArrayList<LineString>();
+//			
+//			LineString segment = listeSegments.get(0);
+//			Point calculatePoint = LineUtils.getInknowPoint(segment, WPSUtils.toRealDistance(10000));
+//			
+//			Coordinate[] radialCoordinates = new Coordinate[] {segment.getStartPoint().getCoordinate(),calculatePoint.getCoordinate()};
+//			LineString radiale = geometryFactory.createLineString(radialCoordinates); 
+//			Geometry[] geometries = new Geometry[2];
+//			geometries[0] = segment;
+//			geometries[1] = radiale;
+//
+////			for (int i = 0; i < listeSegments.size(); i++) {
+////				geometries[i] = listeSegments.get(i);
+////				System.out.println(geometries[i]);
+////			}
+//
+//			GeometryCollection geometry = new GeometryCollection(geometries, geometryFactory);
+//			GeoJsonFileUtils.geometryToGeoJsonFile(geometry, path);
+//
+//		} catch (FactoryRegistryException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (NoSuchAuthorityCodeException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (FactoryException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 
