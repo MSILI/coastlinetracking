@@ -1,8 +1,5 @@
 package org.wps;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.LinkedList;
 
 import org.geoserver.wps.gs.GeoServerProcess;
@@ -19,7 +16,6 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.wps.utils.GeoJsonFileUtils;
 import org.wps.utils.WPSUtils;
 
 import com.vividsolutions.jts.geom.LineString;
