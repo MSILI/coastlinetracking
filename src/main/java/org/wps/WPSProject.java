@@ -84,25 +84,4 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 		return resultFeatureCollection;
 	}
 
-	public static void main(String[] args) {
-		String path = "C:\\Users\\lecteur\\Desktop\\mydocs";
-
-		try {
-			FeatureCollection<SimpleFeatureType, SimpleFeature> refLine = GeoJsonFileUtils
-					.geoJsonToFeatureCollection(new File("data_plouzane.json"));
-			if (refLine == null) {
-				System.out.println("null");
-			}
-			FeatureCollection<SimpleFeatureType, SimpleFeature> result = drawRadial(refLine, 100, 100, true);
-			GeoJsonFileUtils.featureCollectionToGeoJsonFile(result, path);
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
 }
