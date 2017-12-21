@@ -6,8 +6,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.GeodeticCalculator;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 
@@ -19,18 +23,18 @@ import com.vividsolutions.jts.geom.PrecisionModel;
 
 public class WPSUtils {
 
-	public static List<LineString> createSegments(Geometry track, double segmentLength)
+	public static LinkedList<LineString> createSegments(Geometry track, double segmentLength)
 			throws NoSuchAuthorityCodeException, FactoryException {
 
-		GeodeticCalculator calculator = new GeodeticCalculator(CRS.decode("EPSG:4326")); // KML uses WGS84
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+		GeodeticCalculator calculator = new GeodeticCalculator(CRS.decode("EPSG:4326"));
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING) , 4326);
 
 		LinkedList<Coordinate> coordinates = new LinkedList<Coordinate>();
 		Collections.addAll(coordinates, track.getCoordinates());
 
 		double accumulatedLength = 0;
 		List<Coordinate> lastSegment = new ArrayList<Coordinate>();
-		List<LineString> segments = new ArrayList<LineString>();
+		LinkedList<LineString> segments = new LinkedList<LineString>();
 		Iterator<Coordinate> itCoordinates = coordinates.iterator();
 
 		for (int i = 0; itCoordinates.hasNext() && i < coordinates.size() - 1; i++) {
@@ -69,12 +73,103 @@ public class WPSUtils {
 		return segments;
 	}
 	
-	public static double toRealDistance(double length) {
+	public static LineString getLineFromFeature(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
+		FeatureIterator<SimpleFeature> iteratorTDC = featureCollection.features();
+		try {
+			// getLineString from Feature
+			while (iteratorTDC.hasNext()) {
+				SimpleFeature feature = iteratorTDC.next();
+				return (LineString) feature.getDefaultGeometry();
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			iteratorTDC.close();
+		}
+		
+		return null;
+	}
+	
+	private static double getSlope(LineString segment) {
 
-		return length / 110901.31089947431;
+		return (segment.getEndPoint().getCoordinate().y - segment.getStartPoint().getCoordinate().y)
+				/ (segment.getEndPoint().getCoordinate().x - segment.getStartPoint().getCoordinate().x);
 	}
 
-	public static double kilometreToMetre(double length) {
-		return length * 1000;
+	private static double calculateX(LineString segment, double length, boolean sense, boolean segmentType) {
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+		double slope = 0;
+		double X = 0;
+		double resultX = 0;
+		Coordinate[] coordinates = segment.getCoordinates(); 
+		LineString newSegment = null;
+
+		if (segmentType) {
+			X = segment.getStartPoint().getX();
+		} else {
+			X = segment.getEndPoint().getX();
+		}
+		
+		if (coordinates.length == 2) {
+			slope = getSlope(segment);
+		} else {
+			newSegment = geometryFactory.createLineString(new Coordinate[] {coordinates[0],coordinates[1]});
+			slope = getSlope(newSegment);
+		}
+
+		if (sense) {
+			resultX = slope * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + X;
+		} else {
+			resultX = -1 * slope * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + X;
+		}
+
+		return resultX;
 	}
+
+	private static double calculateY(LineString segment, double length, boolean sense, boolean segmentType) {
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(0.000001) , 4326);
+		double slope = 0;
+		double Y = 0;
+		double resultY = 0;
+		Coordinate[] coordinates = segment.getCoordinates();
+		LineString newSegment = null;
+		if (segmentType) {
+			Y = segment.getStartPoint().getY();
+		} else {
+			Y = segment.getEndPoint().getY();
+		}
+		
+		if (coordinates.length == 2) {
+			slope = getSlope(segment);
+		} else {
+			newSegment = geometryFactory.createLineString(new Coordinate[] {coordinates[0],coordinates[1]});
+			slope = getSlope(newSegment);
+		}
+		
+		if (sense) {
+			resultY = -1 * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + Y;
+		} else {
+			resultY = Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + Y;
+		}
+
+		return resultY;
+	}
+
+	public static LineString createRadialSegment(LineString segment, double length, boolean sense,
+			boolean segmentType) {
+		LineString radialSegment = null;
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+		double X = calculateX(segment, length, sense, segmentType);
+		double Y = calculateY(segment, length, sense, segmentType);
+
+		if (segmentType) {
+			radialSegment = geometryFactory.createLineString(
+					new Coordinate[] { new Coordinate(X, Y), segment.getStartPoint().getCoordinate() });
+		} else {
+			radialSegment = geometryFactory
+					.createLineString(new Coordinate[] { new Coordinate(X, Y), segment.getEndPoint().getCoordinate() });
+		}
+		return radialSegment;
+	}
+	
 }

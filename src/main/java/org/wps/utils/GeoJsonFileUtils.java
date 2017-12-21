@@ -88,6 +88,7 @@ public class GeoJsonFileUtils {
 				new FileOutputStream(new File(path + File.separator + "outputFeatureCollection.json")));
 	}
 
+	@SuppressWarnings("unchecked")
 	public static FeatureCollection<SimpleFeatureType, SimpleFeature> geoJsonToFeatureCollection(
 			File featureCollectionFile) throws FileNotFoundException, IOException {
 		featureJSON = new FeatureJSON();

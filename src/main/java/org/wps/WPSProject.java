@@ -3,13 +3,11 @@ package org.wps;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import org.geoserver.wps.gs.GeoServerProcess;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.process.factory.DescribeParameter;
@@ -22,107 +20,82 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.wps.utils.GeoJsonFileUtils;
-import org.wps.utils.LineUtils;
 import org.wps.utils.WPSUtils;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.PrecisionModel;
 
 @DescribeProcess(title = "WPS project", description = "WPS for the tracking of coastlines")
 public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implements GeoServerProcess {
 
 	public WPSProject() {
-		super(Text.text("WPS for the tracking of coastlines "), "coastlinesWps", WPSProject.class);
+		super(Text.text("WPS for the tracking of coastlines "), "coa", WPSProject.class);
 	}
 
 	@DescribeProcess(title = "draw radial", description = "draw radial from reference Line")
 	@DescribeResult(name = " resulFeatureCollection", description = "the result of drawing radials in reference Line")
 	public static FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadial(
 			@DescribeParameter(name = "referenceLine", description = "the input referenceLine") final FeatureCollection<SimpleFeatureType, SimpleFeature> referenceLine,
-			@DescribeParameter(name = "radialLength", description = "the length of radial in Km") final double length,
-			@DescribeParameter(name = "radialDistance", description = "the distance between radials in Km") final int distance,
-			@DescribeParameter(name = "radialSense", description = "the sense of radial (1 to the left 2 to the right)") final int sense) {
-
-		DefaultFeatureCollection featureCollection = null;
+			@DescribeParameter(name = "radialLength", description = "the length of radial in M") final double length,
+			@DescribeParameter(name = "radialDistance", description = "the distance between radials in M") final double distance,
+			@DescribeParameter(name = "radialSense", description = "the sense of radial (true or false)") final boolean sense) {
+		DefaultFeatureCollection resultFeatureCollection = null;
+		double realLength = length * Math.pow(10, -5);
 		try {
-			LineString line = null;
-			GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
-			double lengthOfRadiale = WPSUtils.kilometreToMetre(length);
-			double distanceBetweenRadials = WPSUtils.kilometreToMetre(distance);
-			//
 			SimpleFeatureTypeBuilder tb = new SimpleFeatureTypeBuilder();
 			tb.setName("featureType");
-		    tb.add("geometry", LineString.class);
-		    tb.add("id", Integer.class);
-		    
-		    SimpleFeatureBuilder b = new SimpleFeatureBuilder(tb.buildFeatureType());
-			featureCollection = new DefaultFeatureCollection(null, b.getFeatureType());
-			FeatureIterator<SimpleFeature> iteratorTDC = referenceLine.features();
-
-			// getLineString from Feature
-			while (iteratorTDC.hasNext()) {
-				SimpleFeature feature = iteratorTDC.next();
-				line = (LineString) feature.getDefaultGeometry();
-			}
-			iteratorTDC.close();
-
-			List<LineString> listeSegments = WPSUtils.createSegments(line, distanceBetweenRadials);
-			List<LineString> listRadiales = new ArrayList<LineString>();
-			Point calculatePoint = null;
-			Coordinate[] radialCoordinates = null;
+			tb.add("geometry", LineString.class);
+			tb.add("id", Integer.class);
+			LineString refLine = WPSUtils.getLineFromFeature(referenceLine);
+			LinkedList<LineString> segements = WPSUtils.createSegments(refLine, distance);
+			LinkedList<LineString> listRadiales = new LinkedList<LineString>();
 			LineString radiale = null;
-
-			for (int i = 0; i < listeSegments.size(); i++) {
-				calculatePoint = LineUtils.getInknowPoint(listeSegments.get(i),
-						lengthOfRadiale,sense,1);
-				radialCoordinates = new Coordinate[] { listeSegments.get(i).getStartPoint().getCoordinate(),
-						calculatePoint.getCoordinate() };
-				radiale = geometryFactory.createLineString(radialCoordinates);
+			// create radials
+			for (LineString l : segements) {
+				radiale = WPSUtils.createRadialSegment(l, realLength, sense, true);
 				listRadiales.add(radiale);
 			}
 
-			// ajout de la radiale du dernier seguement.
-			calculatePoint = LineUtils.getInknowPoint(listeSegments.get(listeSegments.size() - 1),
-					lengthOfRadiale,sense,2);
-			radialCoordinates = new Coordinate[] {
-					listeSegments.get(listeSegments.size() - 1).getEndPoint().getCoordinate(),
-					calculatePoint.getCoordinate() };
-			radiale = geometryFactory.createLineString(radialCoordinates);
+			radiale = WPSUtils.createRadialSegment(segements.get(segements.size() - 1), realLength, sense, false);
 			listRadiales.add(radiale);
-			//
-			
+
+			// init DefaultFeatureCollection
+			SimpleFeatureBuilder b = new SimpleFeatureBuilder(tb.buildFeatureType());
+			resultFeatureCollection = new DefaultFeatureCollection(null, b.getFeatureType());
+
 			// add geometrie to defaultDeatures
 			for (int i = 0; i < listRadiales.size(); i++) {
 				b.add(listRadiales.get(i));
-		        b.add(i);
-		        featureCollection.add(b.buildFeature(i + ""));
+				b.add(i);
+				resultFeatureCollection.add(b.buildFeature(i + ""));
 			}
-			b.add(line);
-	        b.add(listRadiales.size()+1);
-	        featureCollection.add(b.buildFeature(listRadiales.size()+1 + ""));
-			
-			System.out.println(featureCollection.size());
+
+			b.add(refLine);
+			b.add(listRadiales.size() + 1);
+
+			resultFeatureCollection.add(b.buildFeature(listRadiales.size() + ""));
 		} catch (NoSuchAuthorityCodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FactoryException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		
-		return featureCollection;
+		}
+
+		return resultFeatureCollection;
 	}
 
 	public static void main(String[] args) {
+		String path = "C:\\Users\\lecteur\\Desktop\\mydocs";
+
 		try {
-			String path = "C:\\Users\\lecteur\\Desktop\\mydocs\\workspace\\WPSProject";
-			FeatureCollection<SimpleFeatureType, SimpleFeature> ref = GeoJsonFileUtils.geoJsonToFeatureCollection(new File("data_plouzane.json"));
-			
-			FeatureCollection<SimpleFeatureType, SimpleFeature> referenceLine =  WPSProject.drawRadial(ref, 0.1, 1, 2);
-			GeoJsonFileUtils.featureCollectionToGeoJsonFile(referenceLine, path);
+			FeatureCollection<SimpleFeatureType, SimpleFeature> refLine = GeoJsonFileUtils
+					.geoJsonToFeatureCollection(new File("data_plouzane.json"));
+			if (refLine == null) {
+				System.out.println("null");
+			}
+			FeatureCollection<SimpleFeatureType, SimpleFeature> result = drawRadial(refLine, 100, 100, true);
+			GeoJsonFileUtils.featureCollectionToGeoJsonFile(result, path);
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,5 +103,6 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 }
