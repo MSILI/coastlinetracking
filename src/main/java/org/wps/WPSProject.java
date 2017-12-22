@@ -20,13 +20,27 @@ import org.wps.utils.WPSUtils;
 
 import com.vividsolutions.jts.geom.LineString;
 
+/**
+ * @author lecteur
+ *
+ */
 @DescribeProcess(title = "WPS project", description = "WPS for the tracking of coastlines")
 public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implements GeoServerProcess {
 
+	/**
+	 * 
+	 */
 	public WPSProject() {
 		super(Text.text("WPS for the tracking of coastlines "), "coa", WPSProject.class);
 	}
 
+	/**
+	 * @param referenceLine
+	 * @param length
+	 * @param distance
+	 * @param sense
+	 * @return
+	 */
 	@DescribeProcess(title = "draw radial", description = "draw radial from reference Line")
 	@DescribeResult(name = " resulFeatureCollection", description = "the result of drawing radials in reference Line")
 	public static FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadial(
@@ -37,10 +51,10 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 		DefaultFeatureCollection resultFeatureCollection = null;
 		double realLength = length * Math.pow(10, -5);
 		try {
-			SimpleFeatureTypeBuilder tb = new SimpleFeatureTypeBuilder();
-			tb.setName("featureType");
-			tb.add("geometry", LineString.class);
-			tb.add("id", Integer.class);
+			SimpleFeatureTypeBuilder simpleFeatureTypeBuilder = new SimpleFeatureTypeBuilder();
+			simpleFeatureTypeBuilder.setName("featureType");
+			simpleFeatureTypeBuilder.add("geometry", LineString.class);
+			simpleFeatureTypeBuilder.add("id", Integer.class);
 			LineString refLine = WPSUtils.getLineFromFeature(referenceLine);
 			LinkedList<LineString> segements = WPSUtils.createSegments(refLine, distance);
 			LinkedList<LineString> listRadiales = new LinkedList<LineString>();
@@ -55,20 +69,20 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 			listRadiales.add(radiale);
 
 			// init DefaultFeatureCollection
-			SimpleFeatureBuilder b = new SimpleFeatureBuilder(tb.buildFeatureType());
-			resultFeatureCollection = new DefaultFeatureCollection(null, b.getFeatureType());
+			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(simpleFeatureTypeBuilder.buildFeatureType());
+			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 
 			// add geometrie to defaultDeatures
 			for (int i = 0; i < listRadiales.size(); i++) {
-				b.add(listRadiales.get(i));
-				b.add(i);
-				resultFeatureCollection.add(b.buildFeature(i + ""));
+				simpleFeatureBuilder.add(listRadiales.get(i));
+				simpleFeatureBuilder.add(i);
+				resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(i + ""));
 			}
 
-			b.add(refLine);
-			b.add(listRadiales.size() + 1);
+			simpleFeatureBuilder.add(refLine);
+			simpleFeatureBuilder.add(listRadiales.size() + 1);
 
-			resultFeatureCollection.add(b.buildFeature(listRadiales.size() + ""));
+			resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(listRadiales.size() + ""));
 		} catch (NoSuchAuthorityCodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

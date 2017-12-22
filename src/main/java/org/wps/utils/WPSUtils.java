@@ -21,8 +21,19 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
+/**
+ * @author lecteur
+ *
+ */
 public class WPSUtils {
 
+	/**
+	 * @param track
+	 * @param segmentLength
+	 * @return
+	 * @throws NoSuchAuthorityCodeException
+	 * @throws FactoryException
+	 */
 	public static LinkedList<LineString> createSegments(Geometry track, double segmentLength)
 			throws NoSuchAuthorityCodeException, FactoryException {
 
@@ -73,6 +84,10 @@ public class WPSUtils {
 		return segments;
 	}
 	
+	/**
+	 * @param featureCollection
+	 * @return
+	 */
 	public static LineString getLineFromFeature(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
 		FeatureIterator<SimpleFeature> iteratorTDC = featureCollection.features();
 		try {
@@ -90,12 +105,23 @@ public class WPSUtils {
 		return null;
 	}
 	
+	/**
+	 * @param segment
+	 * @return
+	 */
 	private static double getSlope(LineString segment) {
 
 		return (segment.getEndPoint().getCoordinate().y - segment.getStartPoint().getCoordinate().y)
 				/ (segment.getEndPoint().getCoordinate().x - segment.getStartPoint().getCoordinate().x);
 	}
 
+	/**
+	 * @param segment
+	 * @param length
+	 * @param sense
+	 * @param segmentType
+	 * @return
+	 */
 	private static double calculateX(LineString segment, double length, boolean sense, boolean segmentType) {
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
 		double slope = 0;
@@ -126,8 +152,15 @@ public class WPSUtils {
 		return resultX;
 	}
 
+	/**
+	 * @param segment
+	 * @param length
+	 * @param sense
+	 * @param segmentType
+	 * @return
+	 */
 	private static double calculateY(LineString segment, double length, boolean sense, boolean segmentType) {
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(0.000001) , 4326);
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING) , 4326);
 		double slope = 0;
 		double Y = 0;
 		double resultY = 0;
@@ -155,6 +188,13 @@ public class WPSUtils {
 		return resultY;
 	}
 
+	/**
+	 * @param segment
+	 * @param length
+	 * @param sense
+	 * @param segmentType
+	 * @return
+	 */
 	public static LineString createRadialSegment(LineString segment, double length, boolean sense,
 			boolean segmentType) {
 		LineString radialSegment = null;
