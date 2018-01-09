@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.geotools.referencing.CRS;
-import org.geotools.referencing.GeodeticCalculator;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
@@ -37,8 +35,7 @@ public class WPSUtils {
 	public static LinkedList<LineString> createSegments(Geometry track, double segmentLength)
 			throws NoSuchAuthorityCodeException, FactoryException {
 
-		GeodeticCalculator calculator = new GeodeticCalculator(CRS.decode("EPSG:4326"));
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING) , 4326);
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 
 		LinkedList<Coordinate> coordinates = new LinkedList<Coordinate>();
 		Collections.addAll(coordinates, track.getCoordinates());
@@ -54,10 +51,7 @@ public class WPSUtils {
 
 			lastSegment.add(c1);
 
-			calculator.setStartingGeographicPoint(c1.x, c1.y);
-			calculator.setDestinationGeographicPoint(c2.x, c2.y);
-
-			double length = calculator.getOrthodromicDistance();
+			double length = Math.sqrt(Math.pow(c2.x - c1.x, 2) + Math.pow(c2.y - c1.y, 2));
 
 			if (length + accumulatedLength >= segmentLength) {
 				double offsetLength = segmentLength - accumulatedLength;
@@ -83,7 +77,7 @@ public class WPSUtils {
 
 		return segments;
 	}
-	
+
 	/**
 	 * @param featureCollection
 	 * @return
@@ -96,15 +90,15 @@ public class WPSUtils {
 				SimpleFeature feature = iteratorTDC.next();
 				return (LineString) feature.getDefaultGeometry();
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
-		}finally {
+		} finally {
 			iteratorTDC.close();
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * @param segment
 	 * @return
@@ -123,11 +117,11 @@ public class WPSUtils {
 	 * @return
 	 */
 	private static double calculateX(LineString segment, double length, boolean sense, boolean segmentType) {
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		double slope = 0;
 		double X = 0;
 		double resultX = 0;
-		Coordinate[] coordinates = segment.getCoordinates(); 
+		Coordinate[] coordinates = segment.getCoordinates();
 		LineString newSegment = null;
 
 		if (segmentType) {
@@ -135,11 +129,11 @@ public class WPSUtils {
 		} else {
 			X = segment.getEndPoint().getX();
 		}
-		
+
 		if (coordinates.length == 2) {
 			slope = getSlope(segment);
 		} else {
-			newSegment = geometryFactory.createLineString(new Coordinate[] {coordinates[0],coordinates[1]});
+			newSegment = geometryFactory.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
 			slope = getSlope(newSegment);
 		}
 
@@ -160,7 +154,7 @@ public class WPSUtils {
 	 * @return
 	 */
 	private static double calculateY(LineString segment, double length, boolean sense, boolean segmentType) {
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING) , 4326);
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		double slope = 0;
 		double Y = 0;
 		double resultY = 0;
@@ -171,14 +165,14 @@ public class WPSUtils {
 		} else {
 			Y = segment.getEndPoint().getY();
 		}
-		
+
 		if (coordinates.length == 2) {
 			slope = getSlope(segment);
 		} else {
-			newSegment = geometryFactory.createLineString(new Coordinate[] {coordinates[0],coordinates[1]});
+			newSegment = geometryFactory.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
 			slope = getSlope(newSegment);
 		}
-		
+
 		if (sense) {
 			resultY = -1 * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + Y;
 		} else {
@@ -198,7 +192,7 @@ public class WPSUtils {
 	public static LineString createRadialSegment(LineString segment, double length, boolean sense,
 			boolean segmentType) {
 		LineString radialSegment = null;
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		double X = calculateX(segment, length, sense, segmentType);
 		double Y = calculateY(segment, length, sense, segmentType);
 
@@ -211,5 +205,5 @@ public class WPSUtils {
 		}
 		return radialSegment;
 	}
-	
+
 }

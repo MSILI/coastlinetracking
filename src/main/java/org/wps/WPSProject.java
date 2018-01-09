@@ -49,7 +49,7 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 			@DescribeParameter(name = "radialDistance", description = "the distance between radials in M") final double distance,
 			@DescribeParameter(name = "radialSense", description = "the sense of radial (true or false)") final boolean sense) {
 		DefaultFeatureCollection resultFeatureCollection = null;
-		double realLength = length * Math.pow(10, -5);
+		
 		try {
 			SimpleFeatureTypeBuilder simpleFeatureTypeBuilder = new SimpleFeatureTypeBuilder();
 			simpleFeatureTypeBuilder.setName("featureType");
@@ -61,11 +61,11 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 			LineString radiale = null;
 			// create radials
 			for (LineString l : segements) {
-				radiale = WPSUtils.createRadialSegment(l, realLength, sense, true);
+				radiale = WPSUtils.createRadialSegment(l, length, sense, true);
 				listRadiales.add(radiale);
 			}
 
-			radiale = WPSUtils.createRadialSegment(segements.get(segements.size() - 1), realLength, sense, false);
+			radiale = WPSUtils.createRadialSegment(segements.get(segements.size() - 1), length, sense, false);
 			listRadiales.add(radiale);
 
 			// init DefaultFeatureCollection
@@ -90,7 +90,7 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		return resultFeatureCollection;
 	}
 
