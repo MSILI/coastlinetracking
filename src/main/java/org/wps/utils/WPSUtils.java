@@ -194,12 +194,32 @@ public class WPSUtils {
 		LineString radialSegment = null;
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		double X = calculateX(segment, length, sense, segmentType);
+
 		double Y = calculateY(segment, length, sense, segmentType);
 
 		if (segmentType) {
+			if (sense && X < segment.getStartPoint().getX()) {
+				X = calculateX(segment, length, !sense, segmentType);
+				Y = calculateY(segment, length, !sense, segmentType);
+			}
+
+			if (!sense && X > segment.getStartPoint().getX() && Y > segment.getStartPoint().getY()) {
+				X = calculateX(segment, length, !sense, segmentType);
+				Y = calculateY(segment, length, !sense, segmentType);
+			}
+
 			radialSegment = geometryFactory.createLineString(
 					new Coordinate[] { new Coordinate(X, Y), segment.getStartPoint().getCoordinate() });
 		} else {
+			if (sense && X < segment.getEndPoint().getX()) {
+				X = calculateX(segment, length, !sense, segmentType);
+				Y = calculateY(segment, length, !sense, segmentType);
+			}
+
+			if (!sense && X > segment.getStartPoint().getX() && Y > segment.getEndPoint().getY()) {
+				X = calculateX(segment, length, !sense, segmentType);
+				Y = calculateY(segment, length, !sense, segmentType);
+			}
 			radialSegment = geometryFactory
 					.createLineString(new Coordinate[] { new Coordinate(X, Y), segment.getEndPoint().getCoordinate() });
 		}
