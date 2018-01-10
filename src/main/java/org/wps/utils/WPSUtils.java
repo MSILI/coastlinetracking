@@ -20,7 +20,9 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
 /**
- * @author lecteur
+ * Cette classe est une classe utilitaire : elle contient
+ * 
+ * @author Fatah M'SILI
  *
  */
 public class WPSUtils {
@@ -83,20 +85,47 @@ public class WPSUtils {
 	 * @return
 	 */
 	public static LineString getLineFromFeature(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
-		FeatureIterator<SimpleFeature> iteratorTDC = featureCollection.features();
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
+		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
 		try {
 			// getLineString from Feature
-			while (iteratorTDC.hasNext()) {
-				SimpleFeature feature = iteratorTDC.next();
-				return (LineString) feature.getDefaultGeometry();
+			if (iterator.hasNext()) {
+				SimpleFeature feature = iterator.next();
+				Geometry geometry = (Geometry) feature.getDefaultGeometry();
+				return geometryFactory.createLineString(geometry.getCoordinates());
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {
-			iteratorTDC.close();
+			iterator.close();
 		}
 
 		return null;
+	}
+
+	/**
+	 * @param featureCollection
+	 * @return
+	 */
+	public static List<LineString> getLineStringFromFeatureCollection(
+			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
+		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
+		List<LineString> listeOfLines = new ArrayList<LineString>();
+		try {
+			// getLineString from Feature
+			while (iterator.hasNext()) {
+				SimpleFeature feature = iterator.next();
+				Geometry geometry = (Geometry) feature.getDefaultGeometry();
+				listeOfLines.add(geometryFactory.createLineString(geometry.getCoordinates()));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			iterator.close();
+		}
+
+		return listeOfLines;
 	}
 
 	/**

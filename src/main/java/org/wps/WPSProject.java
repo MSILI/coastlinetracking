@@ -1,6 +1,7 @@
 package org.wps;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.geoserver.wps.gs.GeoServerProcess;
 import org.geotools.feature.DefaultFeatureCollection;
@@ -47,14 +48,18 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 			@DescribeParameter(name = "referenceLine", description = "the input referenceLine") final FeatureCollection<SimpleFeatureType, SimpleFeature> referenceLine,
 			@DescribeParameter(name = "radialLength", description = "the length of radial in M") final double length,
 			@DescribeParameter(name = "radialDistance", description = "the distance between radials in M") final double distance,
-			@DescribeParameter(name = "radialSense", description = "the sense of radial (true or false)") final boolean sense) {
+			@DescribeParameter(name = "radialSense", description = "the sense of radial (true or false)") final boolean sense,
+			@DescribeParameter(name = "coaslines", description = "the input Coaslines") final FeatureCollection<SimpleFeatureType, SimpleFeature> coasLines) {
 		DefaultFeatureCollection resultFeatureCollection = null;
-		
+
 		try {
 			SimpleFeatureTypeBuilder simpleFeatureTypeBuilder = new SimpleFeatureTypeBuilder();
 			simpleFeatureTypeBuilder.setName("featureType");
 			simpleFeatureTypeBuilder.add("geometry", LineString.class);
-			simpleFeatureTypeBuilder.add("id", Integer.class);
+			simpleFeatureTypeBuilder.add("type", String.class);
+
+			List<LineString> coaslineList = WPSUtils.getLineStringFromFeatureCollection(coasLines);
+
 			LineString refLine = WPSUtils.getLineFromFeature(referenceLine);
 			LinkedList<LineString> segements = WPSUtils.createSegments(refLine, distance);
 			LinkedList<LineString> listRadiales = new LinkedList<LineString>();
@@ -69,20 +74,30 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 			listRadiales.add(radiale);
 
 			// init DefaultFeatureCollection
-			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(simpleFeatureTypeBuilder.buildFeatureType());
+			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
+					simpleFeatureTypeBuilder.buildFeatureType());
 			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 
-			// add geometrie to defaultDeatures
+			// add geometrie to defaultFeatures
 			for (int i = 0; i < listRadiales.size(); i++) {
 				simpleFeatureBuilder.add(listRadiales.get(i));
-				simpleFeatureBuilder.add(i);
-				resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(i + ""));
+				simpleFeatureBuilder.add("radiale");
+				resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(i + 1 + ""));
 			}
 
+			// add coastLines to resultFeatureCollection
+			for (int i = 0; i < coaslineList.size(); i++) {
+				simpleFeatureBuilder.add(coaslineList.get(i));
+				simpleFeatureBuilder.add("coastLine");
+				resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(listRadiales.size() + i + 1 + ""));
+			}
+			
+			// add reference line to result feature
 			simpleFeatureBuilder.add(refLine);
-			simpleFeatureBuilder.add(listRadiales.size() + 1);
+			simpleFeatureBuilder.add("refLine");
+			resultFeatureCollection
+					.add(simpleFeatureBuilder.buildFeature(listRadiales.size() + coaslineList.size() + 1 + ""));
 
-			resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(listRadiales.size() + ""));
 		} catch (NoSuchAuthorityCodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,7 +105,7 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return resultFeatureCollection;
 	}
 
