@@ -2,9 +2,11 @@ package org.wps.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
@@ -17,6 +19,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
 /**
@@ -253,6 +256,63 @@ public class WPSUtils {
 					.createLineString(new Coordinate[] { new Coordinate(X, Y), segment.getEndPoint().getCoordinate() });
 		}
 		return radialSegment;
+	}
+
+	public static List<LineString> getLinesByType(FeatureCollection<SimpleFeatureType, SimpleFeature> input, int type) {
+		List<LineString> linesBytType = new ArrayList<LineString>();
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
+		FeatureIterator<SimpleFeature> iterator = input.features();
+		try {
+			while (iterator.hasNext()) {
+				SimpleFeature feature = iterator.next();
+				Geometry geometry = (Geometry) feature.getDefaultGeometry();
+				// 1 pour radials
+				if (type == 1) {
+					if (feature.getProperty("type").getValue().toString().equals("radiale")) {
+						LineString radiale = geometryFactory.createLineString(geometry.getCoordinates());
+						linesBytType.add(radiale);
+					}
+				}
+				// 2 pour coastLines
+				if (type == 2) {
+					if (feature.getProperty("type").getValue().toString().equals("coastLine")) {
+						LineString coastline = geometryFactory.createLineString(geometry.getCoordinates());
+						linesBytType.add(coastline);
+					}
+				}
+				// 3 pour refLine
+				if (type == 3) {
+					if (feature.getProperty("type").getValue().toString().equals("refLine")) {
+						LineString refLine = geometryFactory.createLineString(geometry.getCoordinates());
+						linesBytType.add(refLine);
+					}
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			iterator.close();
+		}
+
+		return linesBytType;
+	}
+
+	public static Map<Integer, List<Point>> getIntersectedPoints(List<LineString> radials, List<LineString> coastLines) {
+
+		Map<Integer, List<Point>> intersectedPoints = new HashMap<Integer, List<Point>>();
+
+		for (int i = 0; i < radials.size(); i++) {
+			List<Point> intersectedPoint = new ArrayList<Point>();
+			for (LineString coastLine : coastLines) {
+				if (radials.get(i).intersection(coastLine) instanceof Point) {
+					intersectedPoint.add((Point) radials.get(i).intersection(coastLine));
+				}
+			}
+			intersectedPoints.put(i + 1, intersectedPoint);
+		}
+
+		return intersectedPoints;
 	}
 
 }
