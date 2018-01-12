@@ -1,5 +1,6 @@
 package org.wps;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -124,10 +125,14 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 			@DescribeParameter(name = "resultFeatureCollection", description = "the result featureCollection from draw radials process") final FeatureCollection<SimpleFeatureType, SimpleFeature> raidalResultFeatureCollection) {
 
 		DefaultFeatureCollection resultFeatureCollection = null;
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
+
 		SimpleFeatureTypeBuilder simpleFeatureTypeBuilder = new SimpleFeatureTypeBuilder();
 		simpleFeatureTypeBuilder.setName("featureType");
 		simpleFeatureTypeBuilder.add("geometry", LineString.class);
 		simpleFeatureTypeBuilder.add("idRadiale", Integer.class);
+		simpleFeatureTypeBuilder.add("fromCoastLineId", Integer.class);
+		simpleFeatureTypeBuilder.add("toCoastLineId", Integer.class);
 		simpleFeatureTypeBuilder.add("distance", Double.class);
 
 		SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
@@ -135,30 +140,44 @@ public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implemen
 
 		resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		List<LineString> radials = WPSUtils.getLinesByType(raidalResultFeatureCollection, 1);
 		List<LineString> coastLines = WPSUtils.getLinesByType(raidalResultFeatureCollection, 2);
 		Map<Integer, List<Point>> intersectedPoints = WPSUtils.getIntersectedPoints(radials, coastLines);
-		Map<Integer, LineString> intersectedPointSegments = new HashMap<Integer, LineString>();
+
+		Map<Integer, List<LineString>> intersectedPointSegments = new HashMap<Integer, List<LineString>>();
+		List<int[]> fromTo = new ArrayList<int[]>();
 
 		for (Map.Entry<Integer, List<Point>> index : intersectedPoints.entrySet()) {
 			List<Point> points = index.getValue();
 			if (points.size() > 1) {
 				Coordinate[] coordinates = new Coordinate[2];
-				for (int i = 0; i < points.size(); i++) {
-					coordinates[i] = points.get(i).getCoordinate();
+				int[] formtoCoastLines = new int[2];
+				List<LineString> lines = new ArrayList<LineString>();
+				for (int i = 0; i < points.size() - 1; i++) {
+					coordinates[0] = points.get(i).getCoordinate();
+					coordinates[1] = points.get(i + 1).getCoordinate();
+					formtoCoastLines[0] = intersectedPoints.size() + i + 1;
+					formtoCoastLines[1] = intersectedPoints.size() + i + 2;
+					fromTo.add(formtoCoastLines);
+					lines.add(geometryFactory.createLineString(coordinates));
 				}
 
-				intersectedPointSegments.put(index.getKey(), geometryFactory.createLineString(coordinates));
+				intersectedPointSegments.put(index.getKey(), lines);
 			}
 
 		}
 
-		for (Map.Entry<Integer, LineString> index : intersectedPointSegments.entrySet()) {
-			simpleFeatureBuilder.add(index.getValue());
-			simpleFeatureBuilder.add(index.getKey());
-			simpleFeatureBuilder.add(index.getValue().getLength());
-			resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(index.getKey() + ""));
+		int id = 0;
+		for (Map.Entry<Integer, List<LineString>> index : intersectedPointSegments.entrySet()) {
+			for (int i = 0; i < index.getValue().size(); i++) {
+				id++;
+				simpleFeatureBuilder.add(index.getValue().get(i));
+				simpleFeatureBuilder.add(index.getKey());
+				simpleFeatureBuilder.add(fromTo.get(id - 1)[0]);
+				simpleFeatureBuilder.add(fromTo.get(id - 1)[1]);
+				simpleFeatureBuilder.add(index.getValue().get(i).getLength());
+				resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(id + ""));
+			}
 		}
 
 		return resultFeatureCollection;
