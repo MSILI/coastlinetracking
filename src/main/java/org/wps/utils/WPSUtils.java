@@ -87,7 +87,8 @@ public class WPSUtils {
 	 * @param featureCollection
 	 * @return
 	 */
-	public static LineString getLineFromFeature(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
+	public static LineString getReferenceLineFromFeature(
+			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
 		try {
@@ -104,31 +105,6 @@ public class WPSUtils {
 		}
 
 		return null;
-	}
-
-	/**
-	 * @param featureCollection
-	 * @return
-	 */
-	public static List<LineString> getLineStringFromFeatureCollection(
-			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
-		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
-		List<LineString> listeOfLines = new ArrayList<LineString>();
-		try {
-			// getLineString from Feature
-			while (iterator.hasNext()) {
-				SimpleFeature feature = iterator.next();
-				Geometry geometry = (Geometry) feature.getDefaultGeometry();
-				listeOfLines.add(geometryFactory.createLineString(geometry.getCoordinates()));
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			iterator.close();
-		}
-
-		return listeOfLines;
 	}
 
 	/**
@@ -258,8 +234,9 @@ public class WPSUtils {
 		return radialSegment;
 	}
 
-	public static List<LineString> getLinesByType(FeatureCollection<SimpleFeatureType, SimpleFeature> input, int type) {
-		List<LineString> linesBytType = new ArrayList<LineString>();
+	public static Map<String, LineString> getLinesByType(FeatureCollection<SimpleFeatureType, SimpleFeature> input,
+			int type) {
+		Map<String, LineString> linesBytType = new HashMap<String, LineString>();
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		FeatureIterator<SimpleFeature> iterator = input.features();
 		try {
@@ -268,28 +245,21 @@ public class WPSUtils {
 				Geometry geometry = (Geometry) feature.getDefaultGeometry();
 				// 1 pour radials
 				if (type == 1) {
-					if (feature.getProperty("type").getValue().toString().equals("radiale")) {
-						LineString radiale = geometryFactory.createLineString(geometry.getCoordinates());
-						linesBytType.add(radiale);
-					}
-				}
-				// 2 pour coastLines
-				if (type == 2) {
-					if (feature.getProperty("type").getValue().toString().equals("coastLine")) {
-						LineString coastline = geometryFactory.createLineString(geometry.getCoordinates());
-						linesBytType.add(coastline);
-					}
-				}
-				// 3 pour refLine
-				if (type == 3) {
-					if (feature.getProperty("type").getValue().toString().equals("refLine")) {
-						LineString refLine = geometryFactory.createLineString(geometry.getCoordinates());
-						linesBytType.add(refLine);
-					}
+
+					LineString radiale = geometryFactory.createLineString(geometry.getCoordinates());
+					linesBytType.put(feature.getProperty("name").getValue().toString(), radiale);
 				}
 
+				// 2 pour coastLines
+				if (type == 2) {
+					LineString coastline = geometryFactory.createLineString(geometry.getCoordinates());
+					linesBytType.put(feature.getProperty("dte").getValue().toString(), coastline);
+				}
 			}
-		} catch (Exception e) {
+
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		} finally {
 			iterator.close();
@@ -298,21 +268,57 @@ public class WPSUtils {
 		return linesBytType;
 	}
 
-	public static Map<Integer, List<Point>> getIntersectedPoints(List<LineString> radials, List<LineString> coastLines) {
-
-		Map<Integer, List<Point>> intersectedPoints = new HashMap<Integer, List<Point>>();
-
-		for (int i = 0; i < radials.size(); i++) {
-			List<Point> intersectedPoint = new ArrayList<Point>();
-			for (LineString coastLine : coastLines) {
-				if (radials.get(i).intersection(coastLine) instanceof Point) {
-					intersectedPoint.add((Point) radials.get(i).intersection(coastLine));
+	public static Map<String, Map<String, Point>> getIntersectedPoints(Map<String, LineString> radialsMap,
+			Map<String, LineString> coastLinesMap) {
+		Map<String, Map<String, Point>> intersectedPoints = new HashMap<String, Map<String, Point>>();
+		for (Map.Entry<String, LineString> radial : radialsMap.entrySet()) {
+			Map<String, Point> intersectPoints = new HashMap<String, Point>();
+			for (Map.Entry<String, LineString> coastLine : coastLinesMap.entrySet()) {
+				if (radial.getValue().intersects(coastLine.getValue())) {
+					intersectPoints.put(coastLine.getKey(),
+							(Point) radial.getValue().intersection(coastLine.getValue()));
 				}
 			}
-			intersectedPoints.put(i + 1, intersectedPoint);
+
+			intersectedPoints.put(radial.getKey(), intersectPoints);
 		}
 
 		return intersectedPoints;
+	}
+
+	public static Map<String, Map<String[], LineString>> getComposedSegment(
+			Map<String, Map<String, Point>> intersectedPoints) {
+
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
+		Map<String, Map<String[], LineString>> composedSegments = new HashMap<String, Map<String[], LineString>>();
+
+		for (Map.Entry<String, Map<String, Point>> radial : intersectedPoints.entrySet()) {
+
+			if (radial.getValue().size() > 1) {
+				Map<String[], LineString> lines = new HashMap<String[], LineString>();
+
+				List<String> keyList = new ArrayList<String>(radial.getValue().keySet());
+
+				for (int i = 0; i < keyList.size() - 1; i++) {
+					Coordinate[] coordinates = new Coordinate[2];
+					String[] formToCoastLinesDate = new String[2];
+					String firstPointKey = keyList.get(i);
+					String secondPointKey = keyList.get(i + 1);
+
+					coordinates[0] = radial.getValue().get(firstPointKey).getCoordinate();
+					coordinates[1] = radial.getValue().get(secondPointKey).getCoordinate();
+
+					formToCoastLinesDate[0] = firstPointKey;
+					formToCoastLinesDate[1] = secondPointKey;
+
+					lines.put(formToCoastLinesDate, geometryFactory.createLineString(coordinates));
+				}
+
+				composedSegments.put(radial.getKey(), lines);
+			}
+
+		}
+		return composedSegments;
 	}
 
 }
