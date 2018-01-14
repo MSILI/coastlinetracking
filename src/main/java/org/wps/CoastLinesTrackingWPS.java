@@ -27,13 +27,13 @@ import com.vividsolutions.jts.geom.Point;
  *
  */
 @DescribeProcess(title = "Coastlines tracking project", description = "WPS for the tracking of coastlines")
-public class WPSProject extends StaticMethodsProcessFactory<WPSProject> implements GeoServerProcess {
+public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLinesTrackingWPS> implements GeoServerProcess {
 
 	/**
 	 * 
 	 */
-	public WPSProject() {
-		super(Text.text("WPS for the tracking of coastlines "), "coa", WPSProject.class);
+	public CoastLinesTrackingWPS() {
+		super(Text.text("WPS for the tracking of coastlines "), "coa", CoastLinesTrackingWPS.class);
 	}
 
 	/**
