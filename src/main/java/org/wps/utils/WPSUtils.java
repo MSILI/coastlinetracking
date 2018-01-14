@@ -302,6 +302,7 @@ public class WPSUtils {
 				for (int i = 0; i < keyList.size() - 1; i++) {
 					Coordinate[] coordinates = new Coordinate[2];
 					String[] formToCoastLinesDate = new String[2];
+					
 					String firstPointKey = keyList.get(i);
 					String secondPointKey = keyList.get(i + 1);
 
