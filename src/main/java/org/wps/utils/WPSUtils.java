@@ -88,7 +88,7 @@ public class WPSUtils {
 	 * @return
 	 */
 	public static LineString getReferenceLineFromFeature(
-			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
+			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) throws Exception{
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
 		try {
@@ -96,10 +96,13 @@ public class WPSUtils {
 			if (iterator.hasNext()) {
 				SimpleFeature feature = iterator.next();
 				Geometry geometry = (Geometry) feature.getDefaultGeometry();
-				return geometryFactory.createLineString(geometry.getCoordinates());
+				if (geometry instanceof LineString)
+					return geometryFactory.createLineString(geometry.getCoordinates());
+				else
+					throw new Exception("la geometrie n'est pas une LineString !");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} finally {
 			iterator.close();
 		}
@@ -235,7 +238,7 @@ public class WPSUtils {
 	}
 
 	public static Map<String, LineString> getLinesByType(FeatureCollection<SimpleFeatureType, SimpleFeature> input,
-			int type) {
+			int type) throws Exception{
 		Map<String, LineString> linesBytType = new HashMap<String, LineString>();
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		FeatureIterator<SimpleFeature> iterator = input.features();
@@ -243,18 +246,24 @@ public class WPSUtils {
 			while (iterator.hasNext()) {
 				SimpleFeature feature = iterator.next();
 				Geometry geometry = (Geometry) feature.getDefaultGeometry();
-				// 1 pour radials
-				if (type == 1) {
+				if(geometry instanceof LineString)
+				{
+					// 1 pour radials
+					if (type == 1) {
 
-					LineString radiale = geometryFactory.createLineString(geometry.getCoordinates());
-					linesBytType.put(feature.getProperty("name").getValue().toString(), radiale);
-				}
+						LineString radiale = geometryFactory.createLineString(geometry.getCoordinates());
+						linesBytType.put(feature.getProperty("name").getValue().toString(), radiale);
+					}
 
-				// 2 pour coastLines
-				if (type == 2) {
-					LineString coastline = geometryFactory.createLineString(geometry.getCoordinates());
-					linesBytType.put(feature.getProperty("dte").getValue().toString(), coastline);
+					// 2 pour coastLines
+					if (type == 2) {
+						LineString coastline = geometryFactory.createLineString(geometry.getCoordinates());
+						linesBytType.put(feature.getProperty("dte").getValue().toString(), coastline);
+					}
+				}else {
+					throw new Exception("Les geometries sont pas des LineString !");
 				}
+				
 			}
 
 		} catch (
@@ -302,7 +311,7 @@ public class WPSUtils {
 				for (int i = 0; i < keyList.size() - 1; i++) {
 					Coordinate[] coordinates = new Coordinate[2];
 					String[] formToCoastLinesDate = new String[2];
-					
+
 					String firstPointKey = keyList.get(i);
 					String secondPointKey = keyList.get(i + 1);
 

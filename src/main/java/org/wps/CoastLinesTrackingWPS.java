@@ -27,7 +27,8 @@ import com.vividsolutions.jts.geom.Point;
  *
  */
 @DescribeProcess(title = "Coastlines tracking project", description = "WPS for the tracking of coastlines")
-public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLinesTrackingWPS> implements GeoServerProcess {
+public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLinesTrackingWPS>
+		implements GeoServerProcess {
 
 	/**
 	 * 
@@ -92,6 +93,9 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 		} catch (FactoryException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		return resultFeatureCollection;
@@ -108,37 +112,40 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			@DescribeParameter(name = "coaslines", description = "the input Coaslines") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
 
 		DefaultFeatureCollection resultFeatureCollection = null;
-		SimpleFeatureTypeBuilder simpleFeatureTypeBuilder = new SimpleFeatureTypeBuilder();
-		simpleFeatureTypeBuilder.setName("featureType");
-		simpleFeatureTypeBuilder.add("geometry", LineString.class);
-		simpleFeatureTypeBuilder.add("radiale", String.class);
-		simpleFeatureTypeBuilder.add("fromDate", String.class);
-		simpleFeatureTypeBuilder.add("toDate", String.class);
-		simpleFeatureTypeBuilder.add("distance", Double.class);
+		try {
+			SimpleFeatureTypeBuilder simpleFeatureTypeBuilder = new SimpleFeatureTypeBuilder();
+			simpleFeatureTypeBuilder.setName("featureType");
+			simpleFeatureTypeBuilder.add("geometry", LineString.class);
+			simpleFeatureTypeBuilder.add("radiale", String.class);
+			simpleFeatureTypeBuilder.add("fromDate", String.class);
+			simpleFeatureTypeBuilder.add("toDate", String.class);
+			simpleFeatureTypeBuilder.add("distance", Double.class);
 
-		SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
-				simpleFeatureTypeBuilder.buildFeatureType());
+			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
+					simpleFeatureTypeBuilder.buildFeatureType());
 
-		resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
+			Map<String, LineString> radialsMap = WPSUtils.getLinesByType(radials, 1);
+			Map<String, LineString> coastLinesMap = WPSUtils.getLinesByType(coastLines, 2);
 
-		Map<String, LineString> radialsMap = WPSUtils.getLinesByType(radials, 1);
-		Map<String, LineString> coastLinesMap = WPSUtils.getLinesByType(coastLines, 2);
+			Map<String, Map<String, Point>> intersectedPoints = WPSUtils.getIntersectedPoints(radialsMap,
+					coastLinesMap);
+			Map<String, Map<String[], LineString>> composedSegments = WPSUtils.getComposedSegment(intersectedPoints);
+			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
+			int id = 0;
+			for (Map.Entry<String, Map<String[], LineString>> radial : composedSegments.entrySet()) {
 
-		Map<String, Map<String, Point>> intersectedPoints = WPSUtils.getIntersectedPoints(radialsMap, coastLinesMap);
-		Map<String, Map<String[], LineString>> composedSegments = WPSUtils.getComposedSegment(intersectedPoints);
-
-		int id = 0;
-		for (Map.Entry<String, Map<String[], LineString>> radial : composedSegments.entrySet()) {
-
-			for (Map.Entry<String[], LineString> line : radial.getValue().entrySet()) {
-				id++;
-				simpleFeatureBuilder.add(line.getValue());
-				simpleFeatureBuilder.add(radial.getKey());
-				simpleFeatureBuilder.add(line.getKey()[0]);
-				simpleFeatureBuilder.add(line.getKey()[1]);
-				simpleFeatureBuilder.add(line.getValue().getLength());
-				resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(id + ""));
+				for (Map.Entry<String[], LineString> line : radial.getValue().entrySet()) {
+					id++;
+					simpleFeatureBuilder.add(line.getValue());
+					simpleFeatureBuilder.add(radial.getKey());
+					simpleFeatureBuilder.add(line.getKey()[0]);
+					simpleFeatureBuilder.add(line.getKey()[1]);
+					simpleFeatureBuilder.add(line.getValue().getLength());
+					resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(id + ""));
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return resultFeatureCollection;
