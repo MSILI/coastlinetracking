@@ -45,7 +45,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 	 * @return
 	 */
 	@DescribeProcess(title = "Draw radial", description = "draw radial from reference Line")
-	@DescribeResult(name = " resulFeatureCollection", description = "the result of drawing radials in reference Line")
+	@DescribeResult(name = "resulFeatureCollection", description = "the result of drawing radials in reference Line")
 	public static FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadial(
 			@DescribeParameter(name = "referenceLine", description = "the input referenceLine") final FeatureCollection<SimpleFeatureType, SimpleFeature> referenceLine,
 			@DescribeParameter(name = "radialLength", description = "the length of radial in M") final double length,
@@ -135,12 +135,23 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			for (Map.Entry<String, Map<String[], LineString>> radial : composedSegments.entrySet()) {
 
 				for (Map.Entry<String[], LineString> line : radial.getValue().entrySet()) {
+
+					LineString ln = line.getValue();
+					double distance = 0;
 					id++;
+
+					if ((ln.getStartPoint().getX() < ln.getEndPoint().getX())
+							&& (ln.getStartPoint().getY() > ln.getEndPoint().getY())) {
+						distance = line.getValue().getLength();
+					} else {
+						distance = -line.getValue().getLength();
+					}
+
 					simpleFeatureBuilder.add(line.getValue());
 					simpleFeatureBuilder.add(radial.getKey());
 					simpleFeatureBuilder.add(line.getKey()[0]);
 					simpleFeatureBuilder.add(line.getKey()[1]);
-					simpleFeatureBuilder.add(line.getValue().getLength());
+					simpleFeatureBuilder.add(distance);
 					resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(id + ""));
 				}
 			}
