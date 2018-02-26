@@ -1,12 +1,17 @@
 package org.wps.utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
@@ -37,6 +42,9 @@ public class WPSUtils {
 	 * @throws NoSuchAuthorityCodeException
 	 * @throws FactoryException
 	 */
+
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 	public static LinkedList<LineString> createSegments(Geometry track, double segmentLength)
 			throws NoSuchAuthorityCodeException, FactoryException {
 
@@ -88,7 +96,7 @@ public class WPSUtils {
 	 * @return
 	 */
 	public static LineString getReferenceLineFromFeature(
-			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) throws Exception{
+			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) throws Exception {
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
 		try {
@@ -100,7 +108,8 @@ public class WPSUtils {
 					return geometryFactory.createLineString(geometry.getCoordinates());
 				else
 					throw new Exception("la geometrie n'est pas une LineString !");
-			}
+			} else
+				throw new Exception("aucune LineString dans les données.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -238,7 +247,7 @@ public class WPSUtils {
 	}
 
 	public static Map<String, LineString> getLinesByType(FeatureCollection<SimpleFeatureType, SimpleFeature> input,
-			int type) throws Exception{
+			int type) throws Exception {
 		Map<String, LineString> linesBytType = new HashMap<String, LineString>();
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		FeatureIterator<SimpleFeature> iterator = input.features();
@@ -246,8 +255,7 @@ public class WPSUtils {
 			while (iterator.hasNext()) {
 				SimpleFeature feature = iterator.next();
 				Geometry geometry = (Geometry) feature.getDefaultGeometry();
-				if(geometry instanceof LineString)
-				{
+				if (geometry instanceof LineString) {
 					// 1 pour radials
 					if (type == 1) {
 
@@ -257,18 +265,19 @@ public class WPSUtils {
 
 					// 2 pour coastLines
 					if (type == 2) {
+
 						LineString coastline = geometryFactory.createLineString(geometry.getCoordinates());
-						linesBytType.put(feature.getProperty("dte").getValue().toString(), coastline);
+						String date = feature.getProperty("dte").getValue().toString();
+						date = date.substring(0, date.length() - 1);
+						linesBytType.put(date, coastline);
 					}
-				}else {
+				} else {
 					throw new Exception("Les geometries sont pas des LineString !");
 				}
-				
+
 			}
 
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			iterator.close();
@@ -277,43 +286,64 @@ public class WPSUtils {
 		return linesBytType;
 	}
 
-	public static Map<String, Map<String, Point>> getIntersectedPoints(Map<String, LineString> radialsMap,
-			Map<String, LineString> coastLinesMap) {
-		Map<String, Map<String, Point>> intersectedPoints = new HashMap<String, Map<String, Point>>();
+	public static Map<Date, LineString> sortBydate(Map<String, LineString> map) {
+
+		try {
+			if (!map.isEmpty()) {
+				Map<Date, LineString> dataToSort = new HashMap<Date, LineString>();
+				for (Map.Entry<String, LineString> entry : map.entrySet()) {
+
+					dataToSort.put(dateFormat.parse(entry.getKey()), entry.getValue());
+				}
+
+				return new TreeMap<Date, LineString>(dataToSort);
+			}
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	// ordonner selon les dates
+	public static Map<String, Map<Date, Point>> getIntersectedPoints(Map<String, LineString> radialsMap,
+			Map<Date, LineString> coastLinesMap) {
+		Map<String, Map<Date, Point>> intersectedPoints = new HashMap<String, Map<Date, Point>>();
 		for (Map.Entry<String, LineString> radial : radialsMap.entrySet()) {
-			Map<String, Point> intersectPoints = new HashMap<String, Point>();
-			for (Map.Entry<String, LineString> coastLine : coastLinesMap.entrySet()) {
+			Map<Date, Point> intersectPoints = new HashMap<Date, Point>();
+			for (Map.Entry<Date, LineString> coastLine : coastLinesMap.entrySet()) {
 				if (radial.getValue().intersects(coastLine.getValue())) {
+
 					intersectPoints.put(coastLine.getKey(),
 							(Point) radial.getValue().intersection(coastLine.getValue()));
 				}
 			}
-
-			intersectedPoints.put(radial.getKey(), intersectPoints);
+			intersectedPoints.put(radial.getKey(), new TreeMap<Date, Point>(intersectPoints));
 		}
 
 		return intersectedPoints;
 	}
 
-	public static Map<String, Map<String[], LineString>> getComposedSegment(
-			Map<String, Map<String, Point>> intersectedPoints) {
+	public static Map<String, Map<Date[], LineString>> getComposedSegment(
+			Map<String, Map<Date, Point>> intersectedPoints) {
 
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
-		Map<String, Map<String[], LineString>> composedSegments = new HashMap<String, Map<String[], LineString>>();
+		Map<String, Map<Date[], LineString>> composedSegments = new HashMap<String, Map<Date[], LineString>>();
 
-		for (Map.Entry<String, Map<String, Point>> radial : intersectedPoints.entrySet()) {
+		for (Map.Entry<String, Map<Date, Point>> radial : intersectedPoints.entrySet()) {
 
 			if (radial.getValue().size() > 1) {
-				Map<String[], LineString> lines = new HashMap<String[], LineString>();
+				Map<Date[], LineString> lines = new HashMap<Date[], LineString>();
 
-				List<String> keyList = new ArrayList<String>(radial.getValue().keySet());
+				List<Date> keyList = new ArrayList<Date>(radial.getValue().keySet());
 
 				for (int i = 0; i < keyList.size() - 1; i++) {
 					Coordinate[] coordinates = new Coordinate[2];
-					String[] formToCoastLinesDate = new String[2];
+					Date[] formToCoastLinesDate = new Date[2];
 
-					String firstPointKey = keyList.get(i);
-					String secondPointKey = keyList.get(i + 1);
+					Date firstPointKey = keyList.get(i);
+					Date secondPointKey = keyList.get(i + 1);
 
 					coordinates[0] = radial.getValue().get(firstPointKey).getCoordinate();
 					coordinates[1] = radial.getValue().get(secondPointKey).getCoordinate();

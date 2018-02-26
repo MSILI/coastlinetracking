@@ -1,5 +1,11 @@
 package org.wps;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -33,6 +39,9 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 	/**
 	 * 
 	 */
+
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 	public CoastLinesTrackingWPS() {
 		super(Text.text("WPS for the tracking of coastlines "), "coa", CoastLinesTrackingWPS.class);
 	}
@@ -119,22 +128,21 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			simpleFeatureTypeBuilder.add("radiale", String.class);
 			simpleFeatureTypeBuilder.add("fromDate", String.class);
 			simpleFeatureTypeBuilder.add("toDate", String.class);
-			simpleFeatureTypeBuilder.add("distance", Double.class);
+			simpleFeatureTypeBuilder.add("separate_dist", Double.class);
 
 			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
 					simpleFeatureTypeBuilder.buildFeatureType());
 
 			Map<String, LineString> radialsMap = WPSUtils.getLinesByType(radials, 1);
-			Map<String, LineString> coastLinesMap = WPSUtils.getLinesByType(coastLines, 2);
+			Map<Date, LineString> coastLinesMap = WPSUtils.sortBydate(WPSUtils.getLinesByType(coastLines, 2));
 
-			Map<String, Map<String, Point>> intersectedPoints = WPSUtils.getIntersectedPoints(radialsMap,
-					coastLinesMap);
-			Map<String, Map<String[], LineString>> composedSegments = WPSUtils.getComposedSegment(intersectedPoints);
+			Map<String, Map<Date, Point>> intersectedPoints = WPSUtils.getIntersectedPoints(radialsMap, coastLinesMap);
+			Map<String, Map<Date[], LineString>> composedSegments = WPSUtils.getComposedSegment(intersectedPoints);
 			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 			int id = 0;
-			for (Map.Entry<String, Map<String[], LineString>> radial : composedSegments.entrySet()) {
+			for (Map.Entry<String, Map<Date[], LineString>> radial : composedSegments.entrySet()) {
 
-				for (Map.Entry<String[], LineString> line : radial.getValue().entrySet()) {
+				for (Map.Entry<Date[], LineString> line : radial.getValue().entrySet()) {
 
 					LineString ln = line.getValue();
 					double distance = 0;
@@ -142,15 +150,15 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 
 					if ((ln.getStartPoint().getX() < ln.getEndPoint().getX())
 							&& (ln.getStartPoint().getY() > ln.getEndPoint().getY())) {
-						distance = line.getValue().getLength();
-					} else {
 						distance = -line.getValue().getLength();
+					} else {
+						distance = line.getValue().getLength();
 					}
 
 					simpleFeatureBuilder.add(line.getValue());
 					simpleFeatureBuilder.add(radial.getKey());
-					simpleFeatureBuilder.add(line.getKey()[0]);
-					simpleFeatureBuilder.add(line.getKey()[1]);
+					simpleFeatureBuilder.add(dateFormat.format(line.getKey()[0]));
+					simpleFeatureBuilder.add(dateFormat.format(line.getKey()[1]));
 					simpleFeatureBuilder.add(distance);
 					resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(id + ""));
 				}
@@ -160,6 +168,12 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 		}
 
 		return resultFeatureCollection;
+	}
+
+	public static String getDistancesToCSV(
+			@DescribeParameter(name = "coaslines", description = "") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
+
+		return null;
 	}
 
 }
