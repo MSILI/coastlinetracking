@@ -38,10 +38,6 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 	 * 
 	 */
 
-	/**
-	 * 
-	 */
-
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	public CoastLinesTrackingWPS() {
@@ -132,6 +128,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			simpleFeatureTypeBuilder.add("toDate", String.class);
 			simpleFeatureTypeBuilder.add("separate_dist", Double.class);
 			simpleFeatureTypeBuilder.add("cumulate_dist", Double.class);
+			simpleFeatureTypeBuilder.add("taux_recul", Double.class);
 
 			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
 					simpleFeatureTypeBuilder.buildFeatureType());
@@ -168,12 +165,16 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 						accumulateDistance = separateDistance;
 					}
 
+					int nbrJours = WPSUtils.getNbrDaysBetweenTwoDate(line.getKey()[0], line.getKey()[1]);
+					double taux = separateDistance / nbrJours;
+
 					simpleFeatureBuilder.add(line.getValue());
 					simpleFeatureBuilder.add(radial.getKey());
 					simpleFeatureBuilder.add(dateFormat.format(line.getKey()[0]));
 					simpleFeatureBuilder.add(dateFormat.format(line.getKey()[1]));
 					simpleFeatureBuilder.add(separateDistance);
 					simpleFeatureBuilder.add(accumulateDistance);
+					simpleFeatureBuilder.add(taux);
 					resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(id + ""));
 				}
 			}

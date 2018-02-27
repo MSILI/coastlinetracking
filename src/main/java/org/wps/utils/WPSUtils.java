@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
@@ -109,7 +110,7 @@ public class WPSUtils {
 				else
 					throw new Exception("la geometrie n'est pas une LineString !");
 			} else
-				throw new Exception("aucune LineString dans les données.");
+				throw new Exception("aucune LineString dans les donnï¿½es.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -390,7 +391,7 @@ public class WPSUtils {
 	public static double getCumulatedDistance(Map<String, Map<Date[], LineString>> distanceSeguments,
 			List<Date> datesBefor, String radialeName) {
 		double cumulDist = 0;
-		
+
 		for (Map.Entry<String, Map<Date[], LineString>> radial : distanceSeguments.entrySet()) {
 			for (Map.Entry<Date[], LineString> line : radial.getValue().entrySet()) {
 
@@ -399,7 +400,7 @@ public class WPSUtils {
 					if (line.getKey()[0].compareTo(d) == 0 && radial.getKey().equals(radialeName))
 						if ((line.getValue().getStartPoint().getX() < line.getValue().getEndPoint().getX())
 								&& (line.getValue().getStartPoint().getY() > line.getValue().getEndPoint().getY())) {
-							
+
 							separateDistance = -line.getValue().getLength();
 						} else {
 							separateDistance = line.getValue().getLength();
@@ -411,4 +412,11 @@ public class WPSUtils {
 		return cumulDist;
 	}
 
+	public static int getNbrDaysBetweenTwoDate(Date date1, Date date2) {
+
+		long diff = date2.getTime() - date1.getTime();
+
+		return (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+
+	}
 }
