@@ -1,8 +1,5 @@
 package org.wps;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -141,7 +138,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 			int id = 0;
 			for (Map.Entry<String, Map<Date[], LineString>> radial : composedSegments.entrySet()) {
-
+				
 				for (Map.Entry<Date[], LineString> line : radial.getValue().entrySet()) {
 
 					LineString ln = line.getValue();
