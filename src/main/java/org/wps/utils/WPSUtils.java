@@ -306,6 +306,31 @@ public class WPSUtils {
 		return null;
 	}
 
+	public static List<Date> getDatesFromCoastLinesMap(Map<Date, LineString> coastLineMap) {
+
+		List<Date> dates = null;
+		if (!coastLineMap.isEmpty()) {
+			dates = new LinkedList<Date>();
+			for (Map.Entry<Date, LineString> entry : coastLineMap.entrySet()) {
+
+				dates.add(entry.getKey());
+			}
+		}
+
+		return dates;
+	}
+
+	public static List<Date> getBeforDates(List<Date> dates, Date date) {
+
+		List<Date> datesBefor = new ArrayList<Date>();
+		for (Date d : dates) {
+			if (date.compareTo(d) > 0)
+				datesBefor.add(d);
+		}
+
+		return datesBefor;
+	}
+
 	// ordonner selon les dates
 	public static Map<String, Map<Date, Point>> getIntersectedPoints(Map<String, LineString> radialsMap,
 			Map<Date, LineString> coastLinesMap) {
@@ -319,6 +344,7 @@ public class WPSUtils {
 							(Point) radial.getValue().intersection(coastLine.getValue()));
 				}
 			}
+
 			intersectedPoints.put(radial.getKey(), new TreeMap<Date, Point>(intersectPoints));
 		}
 
@@ -359,6 +385,30 @@ public class WPSUtils {
 
 		}
 		return composedSegments;
+	}
+
+	public static double getCumulatedDistance(Map<String, Map<Date[], LineString>> distanceSeguments,
+			List<Date> datesBefor, String radialeName) {
+		double cumulDist = 0;
+		
+		for (Map.Entry<String, Map<Date[], LineString>> radial : distanceSeguments.entrySet()) {
+			for (Map.Entry<Date[], LineString> line : radial.getValue().entrySet()) {
+
+				for (Date d : datesBefor) {
+					double separateDistance = 0;
+					if (line.getKey()[0].compareTo(d) == 0 && radial.getKey().equals(radialeName))
+						if ((line.getValue().getStartPoint().getX() < line.getValue().getEndPoint().getX())
+								&& (line.getValue().getStartPoint().getY() > line.getValue().getEndPoint().getY())) {
+							
+							separateDistance = -line.getValue().getLength();
+						} else {
+							separateDistance = line.getValue().getLength();
+						}
+					cumulDist = cumulDist + separateDistance;
+				}
+			}
+		}
+		return cumulDist;
 	}
 
 }

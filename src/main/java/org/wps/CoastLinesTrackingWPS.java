@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.geoserver.wps.gs.GeoServerProcess;
@@ -32,6 +33,10 @@ import com.vividsolutions.jts.geom.Point;
 @DescribeProcess(title = "Coastlines tracking project", description = "WPS for the tracking of coastlines")
 public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLinesTrackingWPS>
 		implements GeoServerProcess {
+
+	/**
+	 * 
+	 */
 
 	/**
 	 * 
@@ -126,37 +131,49 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			simpleFeatureTypeBuilder.add("fromDate", String.class);
 			simpleFeatureTypeBuilder.add("toDate", String.class);
 			simpleFeatureTypeBuilder.add("separate_dist", Double.class);
+			simpleFeatureTypeBuilder.add("cumulate_dist", Double.class);
 
 			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
 					simpleFeatureTypeBuilder.buildFeatureType());
 
 			Map<String, LineString> radialsMap = WPSUtils.getLinesByType(radials, 1);
 			Map<Date, LineString> coastLinesMap = WPSUtils.sortBydate(WPSUtils.getLinesByType(coastLines, 2));
+			List<Date> dates = WPSUtils.getDatesFromCoastLinesMap(coastLinesMap);
 
 			Map<String, Map<Date, Point>> intersectedPoints = WPSUtils.getIntersectedPoints(radialsMap, coastLinesMap);
 			Map<String, Map<Date[], LineString>> composedSegments = WPSUtils.getComposedSegment(intersectedPoints);
 			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 			int id = 0;
 			for (Map.Entry<String, Map<Date[], LineString>> radial : composedSegments.entrySet()) {
-				
+
 				for (Map.Entry<Date[], LineString> line : radial.getValue().entrySet()) {
 
 					LineString ln = line.getValue();
-					double distance = 0;
+					double separateDistance = 0;
+					double accumulateDistance = 0;
 					id++;
 
 					if ((ln.getStartPoint().getX() < ln.getEndPoint().getX())
 							&& (ln.getStartPoint().getY() > ln.getEndPoint().getY())) {
-						distance = -line.getValue().getLength();
+						separateDistance = -line.getValue().getLength();
 					} else {
-						distance = line.getValue().getLength();
+						separateDistance = line.getValue().getLength();
+					}
+
+					List<Date> datesBefor = WPSUtils.getBeforDates(dates, line.getKey()[1]);
+					if (!datesBefor.isEmpty()) {
+						accumulateDistance = WPSUtils.getCumulatedDistance(composedSegments, datesBefor,
+								radial.getKey());
+					} else {
+						accumulateDistance = separateDistance;
 					}
 
 					simpleFeatureBuilder.add(line.getValue());
 					simpleFeatureBuilder.add(radial.getKey());
 					simpleFeatureBuilder.add(dateFormat.format(line.getKey()[0]));
 					simpleFeatureBuilder.add(dateFormat.format(line.getKey()[1]));
-					simpleFeatureBuilder.add(distance);
+					simpleFeatureBuilder.add(separateDistance);
+					simpleFeatureBuilder.add(accumulateDistance);
 					resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(id + ""));
 				}
 			}
