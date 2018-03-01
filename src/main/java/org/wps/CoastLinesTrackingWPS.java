@@ -2,6 +2,7 @@ package org.wps;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 	 * @return
 	 */
 	@DescribeProcess(title = "Calculate distances between coastlines", description = "calculate distances between coastlines using radials intersection.")
-	@DescribeResult(name = " resultFeatureCollection", description = "the result of distance calculting.")
+	@DescribeResult(name = "resultFeatureCollection", description = "the result of distance calculting.")
 	public static FeatureCollection<SimpleFeatureType, SimpleFeature> getDistances(
 			@DescribeParameter(name = "radials", description = "the result featureCollection from draw radials process") final FeatureCollection<SimpleFeatureType, SimpleFeature> radials,
 			@DescribeParameter(name = "coaslines", description = "the input Coaslines") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
@@ -185,10 +186,69 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 		return resultFeatureCollection;
 	}
 
+	@DescribeProcess(title = "distancesToCSV", description = "parse a feautureCollection of distances to csv String.")
+	@DescribeResult(name = "csvString", description = "the result of parsing distances.")
 	public static String getDistancesToCSV(
-			@DescribeParameter(name = "coaslines", description = "") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
+			@DescribeParameter(name = "distancesFeatureCollection", description = "the result distance feature collection") final FeatureCollection<SimpleFeatureType, SimpleFeature> distances) {
 
-		return null;
+		List<Date> dates = WPSUtils.getDatesFromFeatures(distances);
+
+		String sep = "|";
+		String eol = "\n";
+		String headers = "";
+		String subHeaders = "";
+		String rad = "rad";
+		String csv = "";
+
+		List<String> dataList = new ArrayList<String>();
+
+		for (Date d : dates)
+			headers = headers + dateFormat.format(d) + "|";
+
+		headers = headers.substring(0, headers.length() - 1) + eol;
+
+		for (int i = 1; i < dates.size(); i++)
+			subHeaders = subHeaders + "separe;cumule;taux" + sep;
+
+		subHeaders = rad + sep + subHeaders.substring(0, subHeaders.length() - 1) + eol;
+		dataList.add(headers);
+		dataList.add(subHeaders);
+
+		for (String radiale : WPSUtils.getRadialsNameFromFeatures(distances)) {
+			String data = radiale + sep;
+			for (int i = 1; i < dates.size(); i++) {
+
+				double cumulateDist = WPSUtils.getDistanceByType(distances, 1, dates.get(i), radiale);
+				double separateDist = WPSUtils.getDistanceByType(distances, 2, dates.get(i), radiale);
+				double taux = WPSUtils.getDistanceByType(distances, 3, dates.get(i), radiale);
+
+				if (cumulateDist != -1)
+					data = data + cumulateDist + ";";
+				else
+					data = data + "none" + ";";
+
+				if (separateDist != -1)
+					data = data + separateDist + ";";
+				else
+					data = data + "none" + ";";
+
+				if (taux != -1)
+					data = data + taux;
+				else
+					data = data + "none";
+
+				data = data + sep;
+			}
+
+			data = data.substring(0, data.length() - 1) + eol;
+			dataList.add(data);
+
+		}
+
+		for (String line : dataList)
+			csv = csv + line;
+
+		return csv;
 	}
 
 }

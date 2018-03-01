@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -110,7 +111,7 @@ public class WPSUtils {
 				else
 					throw new Exception("la geometrie n'est pas une LineString !");
 			} else
-				throw new Exception("aucune LineString dans les donnï¿½es.");
+				throw new Exception("aucune LineString dans les données.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -419,4 +420,113 @@ public class WPSUtils {
 		return (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 
 	}
+
+	public static List<Date> getDatesFromFeatures(
+			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
+		List<Date> listOfDate = new ArrayList<Date>();
+		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
+		try {
+			while (iterator.hasNext()) {
+				SimpleFeature feature = iterator.next();
+				Date fromDate = dateFormat.parse(feature.getProperty("fromDate").getValue().toString());
+				Date toDate = dateFormat.parse(feature.getProperty("toDate").getValue().toString());
+
+				if (!listOfDate.contains(fromDate))
+					listOfDate.add(fromDate);
+				if (!listOfDate.contains(toDate))
+					listOfDate.add(toDate);
+
+			}
+
+			Collections.sort(listOfDate);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			iterator.close();
+		}
+
+		return listOfDate;
+	}
+
+	public static List<String> getRadialsNameFromFeatures(
+			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
+		List<String> listOfRadialsName = new ArrayList<String>();
+		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
+		try {
+			while (iterator.hasNext()) {
+				SimpleFeature feature = iterator.next();
+				String radiale = feature.getProperty("radiale").getValue().toString();
+
+				if (!listOfRadialsName.contains(radiale))
+					listOfRadialsName.add(radiale);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			iterator.close();
+		}
+
+		return sortRadialsByName(listOfRadialsName);
+	}
+
+	public static double getDistanceByType(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection,
+			int type, Date date, String radialeName) {
+
+		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
+		try {
+			while (iterator.hasNext()) {
+				SimpleFeature feature = iterator.next();
+				String radiale = feature.getProperty("radiale").getValue().toString();
+				Date toDate = dateFormat.parse(feature.getProperty("toDate").getValue().toString());
+				if (radialeName.equals(radiale) && date.equals(toDate)) {
+					// separate_dist
+					if (type == 1)
+						return (Double) feature.getProperty("separate_dist").getValue();
+					// cumulate_dist
+					if (type == 2)
+						return (Double) feature.getProperty("cumulate_dist").getValue();
+					// taux_recul
+					if (type == 3)
+						return (Double) feature.getProperty("taux_recul").getValue();
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			iterator.close();
+		}
+
+		return -1;
+	}
+
+	private static List<String> sortRadialsByName(List<String> radialsNames) {
+		Collections.sort(radialsNames, new Comparator<String>() {
+			public int compare(String s1, String s2) {
+				return extractInt(s1) - extractInt(s2);
+			}
+
+			int extractInt(String s) {
+				String num = s.replaceAll("\\D", "");
+				// return 0 if no digits found
+				return num.isEmpty() ? 0 : Integer.parseInt(num);
+			}
+		});
+
+		return radialsNames;
+	}
+
+	/*
+	 * private static double round(double value, int places) { if (places < 0) throw
+	 * new IllegalArgumentException();
+	 * 
+	 * long factor = (long) Math.pow(10, places); value = value * factor; long tmp =
+	 * Math.round(value); return (double) tmp / factor; }
+	 */
+
 }
