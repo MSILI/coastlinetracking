@@ -251,4 +251,23 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 		return csv;
 	}
 
+	@DescribeProcess(title = "coastLinesTracking", description = "coastLinesTracking WPS")
+	@DescribeResult(name = "csvString", description = "the result of coastLinesTracking WPS")
+	public static String coastLinesTracking(
+			@DescribeParameter(name = "referenceLine", description = "the input referenceLine") final FeatureCollection<SimpleFeatureType, SimpleFeature> referenceLine,
+			@DescribeParameter(name = "radialLength", description = "the length of radial in M") final double length,
+			@DescribeParameter(name = "radialDistance", description = "the distance between radials in M") final double distance,
+			@DescribeParameter(name = "radialDirection", description = "the direction of radial (true or false)") final boolean direction,
+			@DescribeParameter(name = "coaslines", description = "the input Coaslines") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
+
+		FeatureCollection<SimpleFeatureType, SimpleFeature> fc1 = drawRadial(referenceLine, length, distance,
+				direction);
+		FeatureCollection<SimpleFeatureType, SimpleFeature> fc2 = fc1;
+		FeatureCollection<SimpleFeatureType, SimpleFeature> fc3 = getDistances(fc2, coastLines);
+		FeatureCollection<SimpleFeatureType, SimpleFeature> fc4 = fc3;
+		String csv = getDistancesToCSV(fc4);
+
+		return csv;
+	}
+
 }
