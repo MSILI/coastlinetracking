@@ -1,0 +1,4755 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151287.446,
+						6862656.487
+					],
+					[
+						151288.7099,
+						6862655.4033
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R61",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.6649216886517562,
+				"cumulate_dist": -4.00374986408494,
+				"taux_recul": -0.001237859991562644
+			},
+			"id": "1"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151792.8668,
+						6863234.0127
+					],
+					[
+						151793.6981,
+						6863232.2535
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R21",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.9457856871073251,
+				"cumulate_dist": 2.922579692500992,
+				"taux_recul": -0.0014466808082582343
+			},
+			"id": "10"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151559.2437,
+						6863035.1995
+					],
+					[
+						151566.4621,
+						6863030.4637
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R38",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -8.633287557902417,
+				"cumulate_dist": -8.633287557902417,
+				"taux_recul": -9.031580246785664E-4
+			},
+			"id": "100"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151570.4337,
+						6863051.7782
+					],
+					[
+						151575.0125,
+						6863048.7742
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R37",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -5.476203816882507,
+				"cumulate_dist": -5.476203816882507,
+				"taux_recul": -5.728845922044677E-4
+			},
+			"id": "101"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151575.0125,
+						6863048.7742
+					],
+					[
+						151574.6567,
+						6863049.0076
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R37",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.42546528909759146,
+				"cumulate_dist": -5.050738527784916,
+				"taux_recul": 3.1633106996103457E-4
+			},
+			"id": "102"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151550.3582,
+						6863017.1089
+					],
+					[
+						151550.7728,
+						6863016.8369
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R39",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.49588795383576506,
+				"cumulate_dist": -6.541880862971212,
+				"taux_recul": -3.6868992850242757E-4
+			},
+			"id": "103"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151545.303,
+						6863020.4255
+					],
+					[
+						151550.3582,
+						6863017.1089
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R39",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -6.045992909135447,
+				"cumulate_dist": -6.045992909135447,
+				"taux_recul": -6.324921967920752E-4
+			},
+			"id": "104"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150964.6827,
+						6862396.2414
+					],
+					[
+						150966.4148,
+						6862393.3152
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R81",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.400422320029997,
+				"cumulate_dist": -3.400422320029997,
+				"taux_recul": -3.5572992154304814E-4
+			},
+			"id": "105"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150966.4148,
+						6862393.3152
+					],
+					[
+						150968.7702,
+						6862389.3359
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R81",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -4.624185246603039,
+				"cumulate_dist": -8.024607566633037,
+				"taux_recul": -0.003438055945429769
+			},
+			"id": "106"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150984.953,
+						6862401.2603
+					],
+					[
+						150985.9498,
+						6862399.5763
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R80",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.956919337501515,
+				"cumulate_dist": -7.264897573582643,
+				"taux_recul": -0.001454958615242762
+			},
+			"id": "107"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150982.2492,
+						6862405.8281
+					],
+					[
+						150984.953,
+						6862401.2603
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R80",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -5.307978236081128,
+				"cumulate_dist": -5.307978236081128,
+				"taux_recul": -5.55285933265104E-4
+			},
+			"id": "108"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150929.1394,
+						6862377.7611
+					],
+					[
+						150932.9053,
+						6862371.399
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R83",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -7.393073213932192,
+				"cumulate_dist": -7.393073213932192,
+				"taux_recul": -7.734149193359339E-4
+			},
+			"id": "109"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151231.0617,
+						6862592.6713
+					],
+					[
+						151231.7428,
+						6862591.9606
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R65",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -0.9843474708266918,
+				"cumulate_dist": -0.9843474708266918,
+				"taux_recul": -1.0297598816054941E-4
+			},
+			"id": "11"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150932.9053,
+						6862371.399
+					],
+					[
+						150934.1861,
+						6862369.2352
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R83",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.514497793230835,
+				"cumulate_dist": -9.907571007163028,
+				"taux_recul": -0.0018695150879039666
+			},
+			"id": "110"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150947.6215,
+						6862385.8011
+					],
+					[
+						150950.1687,
+						6862381.4977
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R82",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -5.000749147639643,
+				"cumulate_dist": -5.000749147639643,
+				"taux_recul": -5.231456373720727E-4
+			},
+			"id": "111"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150950.1687,
+						6862381.4977
+					],
+					[
+						150953.0579,
+						6862376.6167
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R82",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -5.671945291413753,
+				"cumulate_dist": -10.672694439053394,
+				"taux_recul": -0.004217059696218404
+			},
+			"id": "112"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151521.4061,
+						6862987.6484
+					],
+					[
+						151527.2914,
+						6862983.6927
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R41",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -7.091135289966279,
+				"cumulate_dist": -7.091135289966279,
+				"taux_recul": -7.418281504306182E-4
+			},
+			"id": "113"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151527.2914,
+						6862983.6927
+					],
+					[
+						151526.8752,
+						6862983.9725
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R41",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.5015002043955111,
+				"cumulate_dist": -6.589635085570768,
+				"taux_recul": 3.728626054985213E-4
+			},
+			"id": "114"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150903.524,
+						6862359.7038
+					],
+					[
+						150908.3879,
+						6862353.9996
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R85",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -7.496376451139726,
+				"cumulate_dist": -7.496376451139726,
+				"taux_recul": -7.842218277162597E-4
+			},
+			"id": "115"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150908.3879,
+						6862353.9996
+					],
+					[
+						150910.8414,
+						6862351.1221
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R85",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -3.781494396642835,
+				"cumulate_dist": -11.27787084778256,
+				"taux_recul": -0.0028115199975039663
+			},
+			"id": "116"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151537.5496,
+						6863000.8957
+					],
+					[
+						151537.8655,
+						6863000.6833
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R40",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.3807230429739044,
+				"cumulate_dist": -6.201562640169765,
+				"taux_recul": -2.83065459460152E-4
+			},
+			"id": "117"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151532.7185,
+						6863004.1427
+					],
+					[
+						151537.5496,
+						6863000.8957
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R40",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -5.820839597195861,
+				"cumulate_dist": -5.820839597195861,
+				"taux_recul": -6.089381313103735E-4
+			},
+			"id": "118"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150912.603,
+						6862366.434
+					],
+					[
+						150916.9232,
+						6862359.1356
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R84",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -8.481231691973097,
+				"cumulate_dist": -8.481231691973097,
+				"taux_recul": -8.872509354506849E-4
+			},
+			"id": "119"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151231.7428,
+						6862591.9606
+					],
+					[
+						151232.8813,
+						6862590.7724
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R65",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.6456478187627908,
+				"cumulate_dist": -2.6299952895894827,
+				"taux_recul": -0.0012235299767753092
+			},
+			"id": "12"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150916.9232,
+						6862359.1356
+					],
+					[
+						150918.1966,
+						6862356.9841
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R84",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.5000674422617566,
+				"cumulate_dist": -10.981299134234852,
+				"taux_recul": -0.0018587862024250978
+			},
+			"id": "120"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151498.9739,
+						6862954.5301
+					],
+					[
+						151504.7715,
+						6862950.6335
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R43",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -6.985377305383341,
+				"cumulate_dist": -6.985377305383341,
+				"taux_recul": -7.307644424503966E-4
+			},
+			"id": "121"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151504.7715,
+						6862950.6335
+					],
+					[
+						151503.2205,
+						6862951.6759
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R43",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 1.8687071174266148,
+				"cumulate_dist": -5.116670187956726,
+				"taux_recul": 0.0013893733215067769
+			},
+			"id": "122"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150875.4509,
+						6862330.9779
+					],
+					[
+						150878.3028,
+						6862327.6332
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R87",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -4.395474389316831,
+				"cumulate_dist": -9.818102851933604,
+				"taux_recul": -0.0032680106983768264
+			},
+			"id": "123"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150871.9325,
+						6862335.1041
+					],
+					[
+						150875.4509,
+						6862330.9779
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R87",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -5.422628462616773,
+				"cumulate_dist": -5.422628462616773,
+				"taux_recul": -5.672798893834891E-4
+			},
+			"id": "124"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151514.3765,
+						6862968.2754
+					],
+					[
+						151514.0019,
+						6862968.5271
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R42",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.4512901247674763,
+				"cumulate_dist": -3.880038584084314,
+				"taux_recul": 3.3553169127693405E-4
+			},
+			"id": "125"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151510.7817,
+						6862970.6915
+					],
+					[
+						151514.3765,
+						6862968.2754
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R42",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -4.331328708851791,
+				"cumulate_dist": -4.331328708851791,
+				"taux_recul": -4.531152535675061E-4
+			},
+			"id": "126"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150891.7976,
+						6862342.6315
+					],
+					[
+						150894.8244,
+						6862339.0818
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R86",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -4.665008401020194,
+				"cumulate_dist": -12.886933589128738,
+				"taux_recul": -0.0034684077331005162
+			},
+			"id": "127"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150886.463,
+						6862348.8879
+					],
+					[
+						150891.7976,
+						6862342.6315
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R86",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -8.221925188108544,
+				"cumulate_dist": -8.221925188108544,
+				"taux_recul": -8.601239866208332E-4
+			},
+			"id": "128"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151477.7324,
+						6862920.6116
+					],
+					[
+						151480.9503,
+						6862918.4488
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R45",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.877302614503319,
+				"cumulate_dist": -3.877302614503319,
+				"taux_recul": -4.0561801595389885E-4
+			},
+			"id": "129"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151811.6905,
+						6863236.6639
+					],
+					[
+						151809.7692,
+						6863241.2235
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R20",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 4.947832015816971,
+				"cumulate_dist": 4.947832015816971,
+				"taux_recul": 5.176097934738959E-4
+			},
+			"id": "13"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151480.9503,
+						6862918.4488
+					],
+					[
+						151481.2989,
+						6862918.2145
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R45",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.4199596901316476,
+				"cumulate_dist": -4.297262304634967,
+				"taux_recul": -3.1223768783022126E-4
+			},
+			"id": "130"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150839.9469,
+						6862313.5772
+					],
+					[
+						150842.3634,
+						6862310.7432
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R89",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.724370530009808,
+				"cumulate_dist": -3.724370530009808,
+				"taux_recul": -3.8961926247618034E-4
+			},
+			"id": "131"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150842.3634,
+						6862310.7432
+					],
+					[
+						150844.626,
+						6862308.0896
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R89",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -3.4872941302913354,
+				"cumulate_dist": -7.211664660301143,
+				"taux_recul": -0.0025927837399935577
+			},
+			"id": "132"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151488.6509,
+						6862937.3707
+					],
+					[
+						151492.2403,
+						6862934.9582
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R44",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -4.324806327929369,
+				"cumulate_dist": -4.324806327929369,
+				"taux_recul": -4.524329247755381E-4
+			},
+			"id": "133"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151492.2403,
+						6862934.9582
+					],
+					[
+						151492.2604,
+						6862934.9447
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R44",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.024233815669010624,
+				"cumulate_dist": -4.349040143598379,
+				"taux_recul": -1.801770681710827E-5
+			},
+			"id": "134"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150857.692,
+						6862320.9804
+					],
+					[
+						150860.5951,
+						6862317.5757
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R88",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -4.474428317493636,
+				"cumulate_dist": -7.477982392681907,
+				"taux_recul": -0.0033267125037127407
+			},
+			"id": "135"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150855.7432,
+						6862323.2659
+					],
+					[
+						150857.692,
+						6862320.9804
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R88",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.0035540751882706,
+				"cumulate_dist": -3.0035540751882706,
+				"taux_recul": -3.142121639489769E-4
+			},
+			"id": "136"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151459.0533,
+						6862884.9709
+					],
+					[
+						151459.4781,
+						6862884.6853
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R47",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.5119048607393103,
+				"cumulate_dist": -3.793365487369873,
+				"taux_recul": -3.8059840947160615E-4
+			},
+			"id": "137"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151456.3298,
+						6862886.8014
+					],
+					[
+						151459.0533,
+						6862884.9709
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R47",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.2814606266305626,
+				"cumulate_dist": -3.2814606266305626,
+				"taux_recul": -3.43284927987296E-4
+			},
+			"id": "138"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151471.3107,
+						6862900.83
+					],
+					[
+						151470.7159,
+						6862901.2298
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R46",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.7167127555062929,
+				"cumulate_dist": -4.163755246513967,
+				"taux_recul": 5.328719371793999E-4
+			},
+			"id": "139"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151809.7692,
+						6863241.2235
+					],
+					[
+						151810.3413,
+						6863239.8659
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R20",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.4731839330752143,
+				"cumulate_dist": 3.4746480827417567,
+				"taux_recul": -0.0010953040394611258
+			},
+			"id": "14"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151467.2602,
+						6862903.5525
+					],
+					[
+						151471.3107,
+						6862900.83
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R46",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -4.88046800202026,
+				"cumulate_dist": -4.88046800202026,
+				"taux_recul": -5.105626113631404E-4
+			},
+			"id": "140"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151437.0977,
+						6862851.5323
+					],
+					[
+						151437.6759,
+						6862851.1437
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R49",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.6966868027650944,
+				"cumulate_dist": -5.536556450062656,
+				"taux_recul": -5.179827529852003E-4
+			},
+			"id": "141"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151433.0808,
+						6862854.2321
+					],
+					[
+						151437.0977,
+						6862851.5323
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R49",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -4.8398696472975615,
+				"cumulate_dist": -4.8398696472975615,
+				"taux_recul": -5.063154772777028E-4
+			},
+			"id": "142"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151448.3947,
+						6862868.037
+					],
+					[
+						151448.3337,
+						6862868.078
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R48",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.07352279678478531,
+				"cumulate_dist": -5.594592452141578,
+				"taux_recul": 5.466378943106714E-5
+			},
+			"id": "143"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151443.6904,
+						6862871.1988
+					],
+					[
+						151448.3947,
+						6862868.037
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R48",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -5.668115248926363,
+				"cumulate_dist": -5.668115248926363,
+				"taux_recul": -5.929611098364225E-4
+			},
+			"id": "144"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151421.3844,
+						6862836.3932
+					],
+					[
+						151424.0819,
+						6862834.4694
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R50",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.3132780336376144,
+				"cumulate_dist": -3.3132780336376144,
+				"taux_recul": -3.466134568090401E-4
+			},
+			"id": "145"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151424.0819,
+						6862834.4694
+					],
+					[
+						151424.7844,
+						6862833.9684
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R50",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.8628491527250638,
+				"cumulate_dist": -4.176127186362678,
+				"taux_recul": -6.415235336245827E-4
+			},
+			"id": "146"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151398.0199,
+						6862803.9258
+					],
+					[
+						151400.8029,
+						6862801.941
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R52",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.418238302355833,
+				"cumulate_dist": -3.418238302355833,
+				"taux_recul": -3.575937129779091E-4
+			},
+			"id": "147"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151400.8029,
+						6862801.941
+					],
+					[
+						151401.7976,
+						6862801.2317
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R52",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.2217188205144383,
+				"cumulate_dist": -4.639957122870271,
+				"taux_recul": -9.083411304940061E-4
+			},
+			"id": "148"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151410.0909,
+						6862819.8823
+					],
+					[
+						151413.8693,
+						6862817.1876
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R51",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -4.64084814932806,
+				"cumulate_dist": -4.64084814932806,
+				"taux_recul": -4.854951510961461E-4
+			},
+			"id": "149"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151243.9849,
+						6862608.0922
+					],
+					[
+						151245.2887,
+						6862606.7315
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R64",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -1.884591730468476,
+				"cumulate_dist": -1.884591730468476,
+				"taux_recul": -1.9715364896625965E-4
+			},
+			"id": "15"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151413.8693,
+						6862817.1876
+					],
+					[
+						151414.1535,
+						6862816.9849
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R51",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.3491450191092132,
+				"cumulate_dist": -4.989993168437273,
+				"taux_recul": -2.59587374802389E-4
+			},
+			"id": "150"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151997.2031,
+						6863336.6456
+					],
+					[
+						151997.8923,
+						6863335.8052
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R10",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.0868627925600727,
+				"cumulate_dist": 5.944680362434786,
+				"taux_recul": -8.080764256952213E-4
+			},
+			"id": "151"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152001.6618,
+						6863331.2084
+					],
+					[
+						151997.2031,
+						6863336.6456
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R10",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 7.031543154994859,
+				"cumulate_dist": 7.031543154994859,
+				"taux_recul": 7.355940114023285E-4
+			},
+			"id": "152"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151997.8923,
+						6863335.8052
+					],
+					[
+						152008.7209,
+						6863322.6003
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R10",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -17.077170163467883,
+				"cumulate_dist": -11.132489801033097,
+				"taux_recul": -0.0021080323618649405
+			},
+			"id": "153"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151375.0071,
+						6862771.2076
+					],
+					[
+						151376.747,
+						6862769.9668
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R54",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -2.1370927245145586,
+				"cumulate_dist": -2.1370927245145586,
+				"taux_recul": -2.235686499126016E-4
+			},
+			"id": "154"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151376.747,
+						6862769.9668
+					],
+					[
+						151378.5314,
+						6862768.6942
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R54",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.191628765740388,
+				"cumulate_dist": -4.328721490254947,
+				"taux_recul": -0.001629463766349731
+			},
+			"id": "155"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151386.8104,
+						6862787.355
+					],
+					[
+						151389.7295,
+						6862785.2731
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R53",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.585468190080876,
+				"cumulate_dist": -3.585468190080876,
+				"taux_recul": -3.750882090261404E-4
+			},
+			"id": "156"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151389.7295,
+						6862785.2731
+					],
+					[
+						151390.0598,
+						6862785.0376
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R53",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.4056719434509416,
+				"cumulate_dist": -3.9911401335318177,
+				"taux_recul": -3.0161482784456624E-4
+			},
+			"id": "157"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151958.0212,
+						6863310.6777
+					],
+					[
+						151966.0917,
+						6863295.9274
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R12",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -16.81384757932214,
+				"cumulate_dist": -9.471777088491939,
+				"taux_recul": -0.0020755274138158425
+			},
+			"id": "158"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151957.4877,
+						6863311.6528
+					],
+					[
+						151958.0212,
+						6863310.6777
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R12",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.1115346766077625,
+				"cumulate_dist": 7.342070490830203,
+				"taux_recul": -8.264198339091171E-4
+			},
+			"id": "159"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151245.2887,
+						6862606.7315
+					],
+					[
+						151246.5387,
+						6862605.427
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R64",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.8067189941424007,
+				"cumulate_dist": -3.6913107246108767,
+				"taux_recul": -0.0013432854975036436
+			},
+			"id": "16"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151961.5453,
+						6863304.2367
+					],
+					[
+						151957.4877,
+						6863311.6528
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R12",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 8.453605167437965,
+				"cumulate_dist": 8.453605167437965,
+				"taux_recul": 8.843608293166613E-4
+			},
+			"id": "160"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151353.4544,
+						6862737.4482
+					],
+					[
+						151354.0033,
+						6862737.0567
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R56",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.6742610743212648,
+				"cumulate_dist": -4.4819617751289895,
+				"taux_recul": -5.013093489377433E-4
+			},
+			"id": "161"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151350.3543,
+						6862739.6591
+					],
+					[
+						151353.4544,
+						6862737.4482
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R56",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.807700700807725,
+				"cumulate_dist": -3.807700700807725,
+				"taux_recul": -3.983367194066037E-4
+			},
+			"id": "162"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151975.0416,
+						6863321.2372
+					],
+					[
+						151975.2833,
+						6863320.7955
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R11",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.5034978215632611,
+				"cumulate_dist": 6.168320928434903,
+				"taux_recul": -3.743478227236142E-4
+			},
+			"id": "163"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151975.2833,
+						6863320.7955
+					],
+					[
+						151983.7706,
+						6863305.2833
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R11",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -17.682308128271107,
+				"cumulate_dist": -11.513987199836205,
+				"taux_recul": -0.002182731530461808
+			},
+			"id": "164"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151978.244,
+						6863315.3842
+					],
+					[
+						151975.0416,
+						6863321.2372
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R11",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 6.671818749998164,
+				"cumulate_dist": 6.671818749998164,
+				"taux_recul": 6.979619991629003E-4
+			},
+			"id": "165"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151365.3885,
+						6862753.5022
+					],
+					[
+						151366.4802,
+						6862752.7236
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R55",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.3409273757615523,
+				"cumulate_dist": -5.225305292737997,
+				"taux_recul": -9.969720265885146E-4
+			},
+			"id": "166"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151362.226,
+						6862755.7576
+					],
+					[
+						151365.3885,
+						6862753.5022
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R55",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.8843779169764447,
+				"cumulate_dist": -3.8843779169764447,
+				"taux_recul": -4.063581877786845E-4
+			},
+			"id": "167"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151925.6761,
+						6863286.4596
+					],
+					[
+						151922.2937,
+						6863292.6415
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R14",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 7.046741992956505,
+				"cumulate_dist": 7.046741992956505,
+				"taux_recul": 7.37184014327493E-4
+			},
+			"id": "168"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151922.8102,
+						6863291.6975
+					],
+					[
+						151931.1642,
+						6863276.4289
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R14",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -17.404569788894108,
+				"cumulate_dist": -11.433884216886009,
+				"taux_recul": -0.002148447079236404
+			},
+			"id": "169"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151759.7096,
+						6863210.5567
+					],
+					[
+						151758.2752,
+						6863213.5923
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R23",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 3.357375521174706,
+				"cumulate_dist": 3.357375521174706,
+				"taux_recul": 3.512266472617121E-4
+			},
+			"id": "17"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151922.2937,
+						6863292.6415
+					],
+					[
+						151922.8102,
+						6863291.6975
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R14",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.0760564209484058,
+				"cumulate_dist": 5.970685572008099,
+				"taux_recul": -8.000419486605247E-4
+			},
+			"id": "170"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151325.5208,
+						6862702.8764
+					],
+					[
+						151326.6443,
+						6862701.9131
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R58",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.4799577785298295,
+				"cumulate_dist": -3.509287118661649,
+				"taux_recul": -0.00110034035578426
+			},
+			"id": "171"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151323.9802,
+						6862704.1973
+					],
+					[
+						151325.5208,
+						6862702.8764
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R58",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -2.0293293401318198,
+				"cumulate_dist": -2.0293293401318198,
+				"taux_recul": -2.122951501340956E-4
+			},
+			"id": "172"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151940.0077,
+						6863301.9332
+					],
+					[
+						151940.436,
+						6863301.1505
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R13",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.8922208272168726,
+				"cumulate_dist": 7.3740900769633395,
+				"taux_recul": -6.63361209826671E-4
+			},
+			"id": "173"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151943.9755,
+						6863294.6814
+					],
+					[
+						151940.0077,
+						6863301.9332
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R13",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 8.266310904180212,
+				"cumulate_dist": 8.266310904180212,
+				"taux_recul": 8.64767329655844E-4
+			},
+			"id": "174"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151940.436,
+						6863301.1505
+					],
+					[
+						151949.0484,
+						6863285.4096
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R13",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -17.942934251095362,
+				"cumulate_dist": -10.568844174132023,
+				"taux_recul": -0.0022149036231447184
+			},
+			"id": "175"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151338.835,
+						6862717.8057
+					],
+					[
+						151338.6996,
+						6862717.9218
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R57",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.17830717329245066,
+				"cumulate_dist": -2.9611094616493006,
+				"taux_recul": 1.3257038906501907E-4
+			},
+			"id": "176"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151336.4517,
+						6862719.8492
+					],
+					[
+						151338.835,
+						6862717.8057
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R57",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.1394166349417514,
+				"cumulate_dist": -3.1394166349417514,
+				"taux_recul": -3.284252154976202E-4
+			},
+			"id": "177"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151886.1578,
+						6863265.9607
+					],
+					[
+						151883.2655,
+						6863272.8247
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R16",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 7.44845520830186,
+				"cumulate_dist": 7.44845520830186,
+				"taux_recul": 7.792086210170374E-4
+			},
+			"id": "178"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151883.2655,
+						6863272.8247
+					],
+					[
+						151884.2719,
+						6863270.4365
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R16",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.5915543745743754,
+				"cumulate_dist": 4.856900833727485,
+				"taux_recul": -0.0019268062264493498
+			},
+			"id": "179"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151758.2752,
+						6863213.5923
+					],
+					[
+						151759.348,
+						6863211.3221
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R23",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.5108935855986627,
+				"cumulate_dist": 0.8464819355760431,
+				"taux_recul": -0.0018668353796272585
+			},
+			"id": "18"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151905.2745,
+						6863282.0798
+					],
+					[
+						151912.5899,
+						6863268.7096
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R15",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -15.24067670038157,
+				"cumulate_dist": -9.32276460398954,
+				"taux_recul": -0.0018813327614345845
+			},
+			"id": "180"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151904.1264,
+						6863284.1782
+					],
+					[
+						151905.2745,
+						6863282.0798
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R15",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.3919655334119994,
+				"cumulate_dist": 5.917912096392028,
+				"taux_recul": -0.0017784130359940517
+			},
+			"id": "181"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151908.115,
+						6863276.8882
+					],
+					[
+						151904.1264,
+						6863284.1782
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R15",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 8.309877629804028,
+				"cumulate_dist": 8.309877629804028,
+				"taux_recul": 8.693249952718933E-4
+			},
+			"id": "182"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151313.7965,
+						6862686.5839
+					],
+					[
+						151314.4874,
+						6862685.9915
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R59",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.9099996792546068,
+				"cumulate_dist": -3.6416800593072036,
+				"taux_recul": -6.765796871781463E-4
+			},
+			"id": "183"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151311.7228,
+						6862688.3619
+					],
+					[
+						151313.7965,
+						6862686.5839
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R59",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -2.731680380052597,
+				"cumulate_dist": -2.731680380052597,
+				"taux_recul": -2.857705178420961E-4
+			},
+			"id": "184"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151848.7472,
+						6863251.7324
+					],
+					[
+						151846.5576,
+						6863256.9288
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R18",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 5.638847723111892,
+				"cumulate_dist": 5.638847723111892,
+				"taux_recul": 5.898993328917138E-4
+			},
+			"id": "185"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151846.5576,
+						6863256.9288
+					],
+					[
+						151847.0303,
+						6863255.8069
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R18",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.2174095088761923,
+				"cumulate_dist": 4.4214382142357,
+				"taux_recul": -9.051371813205891E-4
+			},
+			"id": "186"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151864.622,
+						6863265.5638
+					],
+					[
+						151865.4869,
+						6863263.5113
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R17",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.2272782391907446,
+				"cumulate_dist": 3.0752634880462777,
+				"taux_recul": -0.0016559689510711856
+			},
+			"id": "187"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151866.6811,
+						6863260.6773
+					],
+					[
+						151864.622,
+						6863265.5638
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R17",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 5.302541727237022,
+				"cumulate_dist": 5.302541727237022,
+				"taux_recul": 5.547172013010799E-4
+			},
+			"id": "188"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151828.2383,
+						6863248.8983
+					],
+					[
+						151828.1499,
+						6863249.1082
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R19",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.22779145196735037,
+				"cumulate_dist": 5.58769777039223,
+				"taux_recul": 1.6936167432516757E-4
+			},
+			"id": "189"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151203.3361,
+						6862563.7909
+					],
+					[
+						151202.3849,
+						6862564.7836
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R67",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 1.374872957463766,
+				"cumulate_dist": 1.374872957463766,
+				"taux_recul": 1.4383020791544784E-4
+			},
+			"id": "19"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151830.3196,
+						6863243.959
+					],
+					[
+						151828.2383,
+						6863248.8983
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R19",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 5.35990631842488,
+				"cumulate_dist": 5.35990631842488,
+				"taux_recul": 5.607183092818161E-4
+			},
+			"id": "190"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151285.6705,
+						6862658.0094
+					],
+					[
+						151287.446,
+						6862656.487
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R61",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -2.338828175433183,
+				"cumulate_dist": -2.338828175433183,
+				"taux_recul": -2.4467289208423296E-4
+			},
+			"id": "2"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151202.3849,
+						6862564.7836
+					],
+					[
+						151203.8905,
+						6862563.2123
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R67",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.1761816201956377,
+				"cumulate_dist": -0.8013086627318717,
+				"taux_recul": -0.0016179788997737084
+			},
+			"id": "20"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151777.1593,
+						6863220.4414
+					],
+					[
+						151775.5912,
+						6863223.7598
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R22",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 3.670246526410829,
+				"cumulate_dist": 3.670246526410829,
+				"taux_recul": 3.8395716355380574E-4
+			},
+			"id": "21"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151775.5912,
+						6863223.7598
+					],
+					[
+						151776.54,
+						6863221.752
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R22",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.2206986108863265,
+				"cumulate_dist": 1.4495479155245024,
+				"taux_recul": -0.0016510770341162278
+			},
+			"id": "22"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151217.8456,
+						6862577.5562
+					],
+					[
+						151217.2161,
+						6862578.2132
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R66",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 0.9098491947512615,
+				"cumulate_dist": 0.9098491947512615,
+				"taux_recul": 9.518246623613992E-5
+			},
+			"id": "23"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151217.2161,
+						6862578.2132
+					],
+					[
+						151218.4546,
+						6862576.9206
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R66",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.790177919699994,
+				"cumulate_dist": -0.8803287249487326,
+				"taux_recul": -0.0013309873008921888
+			},
+			"id": "24"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151725.0563,
+						6863190.267
+					],
+					[
+						151724.4876,
+						6863191.4704
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R25",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 1.3309787079521227,
+				"cumulate_dist": -0.6732166737288501,
+				"taux_recul": 9.895752475480466E-4
+			},
+			"id": "25"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151724.2,
+						6863192.0791
+					],
+					[
+						151725.0563,
+						6863190.267
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R25",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -2.0041953816809728,
+				"cumulate_dist": -2.0041953816809728,
+				"taux_recul": -2.0966579994570277E-4
+			},
+			"id": "26"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151173.0389,
+						6862537.5942
+					],
+					[
+						151173.2554,
+						6862537.3682
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R69",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -0.31295999587540063,
+				"cumulate_dist": -0.31295999587540063,
+				"taux_recul": -3.273982591017896E-5
+			},
+			"id": "27"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151173.2554,
+						6862537.3682
+					],
+					[
+						151174.264,
+						6862536.3156
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R69",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.4577573490735727,
+				"cumulate_dist": -1.7707173449489733,
+				"taux_recul": -0.0010838344602777492
+			},
+			"id": "28"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151742.0099,
+						6863201.2015
+					],
+					[
+						151740.5501,
+						6863204.2907
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R24",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 3.416765723285607,
+				"cumulate_dist": 3.416765723285607,
+				"taux_recul": 3.5743966139613E-4
+			},
+			"id": "29"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151299.3293,
+						6862672.6432
+					],
+					[
+						151300.4839,
+						6862671.6533
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R60",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -1.5209339124748829,
+				"cumulate_dist": -1.5209339124748829,
+				"taux_recul": -1.591101488100097E-4
+			},
+			"id": "3"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151740.5501,
+						6863204.2907
+					],
+					[
+						151741.7117,
+						6863201.8325
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R24",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.718806032297857,
+				"cumulate_dist": 0.6979596909877497,
+				"taux_recul": -0.0020214171243850237
+			},
+			"id": "30"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151188.9004,
+						6862549.9485
+					],
+					[
+						151189.742,
+						6862549.0703
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R68",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.2163489838972188,
+				"cumulate_dist": -1.1997745503145687,
+				"taux_recul": -9.043486869124303E-4
+			},
+			"id": "31"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151188.9119,
+						6862549.9365
+					],
+					[
+						151188.9004,
+						6862549.9485
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R68",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 0.016574433582650004,
+				"cumulate_dist": 0.016574433582650004,
+				"taux_recul": 1.7339087334083068E-6
+			},
+			"id": "32"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151690.5487,
+						6863178.6604
+					],
+					[
+						151690.741,
+						6863178.331
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R27",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.3815203467832037,
+				"cumulate_dist": 0.33254830367747823,
+				"taux_recul": -2.8365825039643395E-4
+			},
+			"id": "33"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151690.9086,
+						6863178.0438
+					],
+					[
+						151690.5487,
+						6863178.6604
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R27",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 0.7140686504606819,
+				"cumulate_dist": 0.7140686504606819,
+				"taux_recul": 7.470118741088836E-5
+			},
+			"id": "34"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151704.9011,
+						6863186.1079
+					],
+					[
+						151705.1905,
+						6863185.4954
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R26",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.6774057448227894,
+				"cumulate_dist": 2.080771069468885,
+				"taux_recul": -5.036473939202895E-4
+			},
+			"id": "35"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151706.0795,
+						6863183.6141
+					],
+					[
+						151704.9011,
+						6863186.1079
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R26",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 2.7581768142916743,
+				"cumulate_dist": 2.7581768142916743,
+				"taux_recul": 2.885424013277199E-4
+			},
+			"id": "36"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151656.308,
+						6863157.9736
+					],
+					[
+						151655.6371,
+						6863159.123
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R29",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 1.330880356138374,
+				"cumulate_dist": 1.330880356138374,
+				"taux_recul": 1.3922798997158427E-4
+			},
+			"id": "37"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151655.6371,
+						6863159.123
+					],
+					[
+						151655.6288,
+						6863159.1372
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R29",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.016385281133832363,
+				"cumulate_dist": 1.3472656372722063,
+				"taux_recul": 1.2182365155265698E-5
+			},
+			"id": "38"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151672.8538,
+						6863169.3013
+					],
+					[
+						151672.0642,
+						6863170.6538
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R28",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 1.566068080529347,
+				"cumulate_dist": 1.566068080529347,
+				"taux_recul": 1.6383178999156262E-4
+			},
+			"id": "39"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151300.4839,
+						6862671.6533
+					],
+					[
+						151301.8096,
+						6862670.5166
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R60",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.7462736797608458,
+				"cumulate_dist": -3.267207592235729,
+				"taux_recul": -0.0012983447433166139
+			},
+			"id": "4"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151672.0642,
+						6863170.6538
+					],
+					[
+						151672.4208,
+						6863170.043
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R28",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.7072527246328757,
+				"cumulate_dist": 0.8588153558964713,
+				"taux_recul": -5.258384569761157E-4
+			},
+			"id": "40"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152088.1924,
+						6863524.2983
+					],
+					[
+						152086.4407,
+						6863523.5443
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R1",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 1.9071191079348049,
+				"cumulate_dist": 1.9071191079348049,
+				"taux_recul": 0.0014179324222563605
+			},
+			"id": "41"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152106.3088,
+						6863492.8994
+					],
+					[
+						152106.1849,
+						6863492.8977
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R2",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.12387278063621812,
+				"cumulate_dist": 0.5222316032361445,
+				"taux_recul": 9.20987216626157E-5
+			},
+			"id": "42"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152105.9104,
+						6863492.894
+					],
+					[
+						152106.3088,
+						6863492.8994
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R2",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 0.3983588225999264,
+				"cumulate_dist": 0.3983588225999264,
+				"taux_recul": 4.1673692080753884E-5
+			},
+			"id": "43"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152100.665,
+						6863460.4565
+					],
+					[
+						152107.9808,
+						6863458.2843
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R3",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -7.63148775012869,
+				"cumulate_dist": 0.042681194837554504,
+				"taux_recul": -9.420426799319454E-4
+			},
+			"id": "44"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152108.0217,
+						6863458.2721
+					],
+					[
+						152101.6337,
+						6863460.1688
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R3",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 6.663687751747271,
+				"cumulate_dist": 6.663687751747271,
+				"taux_recul": 6.971113873571787E-4
+			},
+			"id": "45"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152101.6337,
+						6863460.1688
+					],
+					[
+						152100.665,
+						6863460.4565
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R3",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 1.0104811932189732,
+				"cumulate_dist": 7.674168944966244,
+				"taux_recul": 7.512871325048128E-4
+			},
+			"id": "46"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152093.5056,
+						6863436.4887
+					],
+					[
+						152093.008,
+						6863436.7002
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R4",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.5406509001970392,
+				"cumulate_dist": 3.947506865577961,
+				"taux_recul": 4.019709295145273E-4
+			},
+			"id": "47"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152096.6411,
+						6863435.1562
+					],
+					[
+						152093.5056,
+						6863436.4887
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R4",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 3.4068559653809216,
+				"cumulate_dist": 3.4068559653809216,
+				"taux_recul": 3.564029674004521E-4
+			},
+			"id": "48"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152093.008,
+						6863436.7002
+					],
+					[
+						152099.1067,
+						6863434.1083
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R4",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -6.626625855346526,
+				"cumulate_dist": -2.6791189897685648,
+				"taux_recul": -8.180009696761543E-4
+			},
+			"id": "49"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151258.9607,
+						6862621.3709
+					],
+					[
+						151260.3246,
+						6862619.9475
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R63",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.9713790454131914,
+				"cumulate_dist": -3.301160479469076,
+				"taux_recul": -0.001465709327444752
+			},
+			"id": "5"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152076.8972,
+						6863409.1608
+					],
+					[
+						152082.8266,
+						6863404.342
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R5",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -7.640613118157162,
+				"cumulate_dist": -2.9012321534227965,
+				"taux_recul": -9.431691295095868E-4
+			},
+			"id": "50"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152076.1257,
+						6863409.7878
+					],
+					[
+						152076.8972,
+						6863409.1608
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R5",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.9940820856000617,
+				"cumulate_dist": 4.739380964734365,
+				"taux_recul": -7.390944874349901E-4
+			},
+			"id": "51"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152080.5751,
+						6863406.1718
+					],
+					[
+						152076.1257,
+						6863409.7878
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R5",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 5.733463050334427,
+				"cumulate_dist": 5.733463050334427,
+				"taux_recul": 5.997973690066353E-4
+			},
+			"id": "52"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152062.9608,
+						6863394.715
+					],
+					[
+						152069.9199,
+						6863389.0594
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R6",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -8.967440156772723,
+				"cumulate_dist": -1.78126177440223,
+				"taux_recul": -0.0011069547163032616
+			},
+			"id": "53"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152064.0684,
+						6863393.8148
+					],
+					[
+						152062.9608,
+						6863394.715
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R6",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 1.4272620824762667,
+				"cumulate_dist": 7.186178382370493,
+				"taux_recul": 0.0010611613996106073
+			},
+			"id": "54"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152068.5376,
+						6863390.1828
+					],
+					[
+						152064.0684,
+						6863393.8148
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R6",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 5.758916299894226,
+				"cumulate_dist": 5.758916299894226,
+				"taux_recul": 6.024601213405405E-4
+			},
+			"id": "55"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152050.1298,
+						6863379.3708
+					],
+					[
+						152050.277,
+						6863379.2512
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R7",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.1897051971965857,
+				"cumulate_dist": 5.745541894137849,
+				"taux_recul": -1.4104475627998937E-4
+			},
+			"id": "56"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152054.7358,
+						6863375.6276
+					],
+					[
+						152050.1298,
+						6863379.3708
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R7",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 5.935247091334435,
+				"cumulate_dist": 5.935247091334435,
+				"taux_recul": 6.209066943544759E-4
+			},
+			"id": "57"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152050.277,
+						6863379.2512
+					],
+					[
+						152061.8315,
+						6863369.8609
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R7",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -14.889073667017229,
+				"cumulate_dist": -9.14353177287938,
+				"taux_recul": -0.0018379303378616503
+			},
+			"id": "58"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152033.0646,
+						6863355.9959
+					],
+					[
+						152028.889,
+						6863361.0878
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R8",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 6.585063684383669,
+				"cumulate_dist": 6.585063684383669,
+				"taux_recul": 6.888862521585593E-4
+			},
+			"id": "59"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151258.0406,
+						6862622.3311
+					],
+					[
+						151258.9607,
+						6862621.3709
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R63",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -1.3297814340558844,
+				"cumulate_dist": -1.3297814340558844,
+				"taux_recul": -1.391130279376383E-4
+			},
+			"id": "6"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152029.1657,
+						6863360.7504
+					],
+					[
+						152040.0921,
+						6863347.4264
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R8",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -17.231281247605992,
+				"cumulate_dist": -11.08252931517085,
+				"taux_recul": -0.002127056073028761
+			},
+			"id": "60"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152028.889,
+						6863361.0878
+					],
+					[
+						152029.1657,
+						6863360.7504
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R8",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.4363117519485287,
+				"cumulate_dist": 6.14875193243514,
+				"taux_recul": -3.2439535460857157E-4
+			},
+			"id": "61"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152017.5887,
+						6863343.3271
+					],
+					[
+						152013.4492,
+						6863348.3751
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R9",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 6.5281907701957635,
+				"cumulate_dist": 6.5281907701957635,
+				"taux_recul": 6.829365802066915E-4
+			},
+			"id": "62"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152015.3286,
+						6863346.0833
+					],
+					[
+						152024.7655,
+						6863334.5755
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R9",
+				"fromDate": "1982-04-20",
+				"toDate": "2004-06-24",
+				"separate_dist": -14.882396721679378,
+				"cumulate_dist": -11.317994162208567,
+				"taux_recul": -0.0018371061253770371
+			},
+			"id": "63"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						152013.4492,
+						6863348.3751
+					],
+					[
+						152015.3286,
+						6863346.0833
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R9",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.9637882107249522,
+				"cumulate_dist": 3.5644025594708113,
+				"taux_recul": -0.002203560007973942
+			},
+			"id": "64"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151157.8367,
+						6862524.5518
+					],
+					[
+						151158.7667,
+						6862523.5812
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R70",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.3442868716507628,
+				"cumulate_dist": -2.8759185966373173,
+				"taux_recul": -9.994697930488944E-4
+			},
+			"id": "65"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151156.777,
+						6862525.6577
+					],
+					[
+						151157.8367,
+						6862524.5518
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R70",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -1.5316317249865545,
+				"cumulate_dist": -1.5316317249865545,
+				"taux_recul": -1.6022928391950565E-4
+			},
+			"id": "66"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151117.0697,
+						6862498.5435
+					],
+					[
+						151120.909,
+						6862493.0061
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R72",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -6.738164926096406,
+				"cumulate_dist": -6.738164926096406,
+				"taux_recul": -7.0490270175713E-4
+			},
+			"id": "67"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151120.909,
+						6862493.0061
+					],
+					[
+						151121.5686,
+						6862492.0547
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R72",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.1576604732994324,
+				"cumulate_dist": -7.8958253993958385,
+				"taux_recul": -8.607141065423289E-4
+			},
+			"id": "68"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151133.4663,
+						6862509.9958
+					],
+					[
+						151135.5925,
+						6862506.9292
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R71",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.731636207338722,
+				"cumulate_dist": -3.731636207338722,
+				"taux_recul": -3.903793500720496E-4
+			},
+			"id": "69"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151273.7423,
+						6862641.8917
+					],
+					[
+						151275.8,
+						6862640.1274
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R62",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -2.7105105924869703,
+				"cumulate_dist": -2.7105105924869703,
+				"taux_recul": -2.8355587325943824E-4
+			},
+			"id": "7"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151135.5925,
+						6862506.9292
+					],
+					[
+						151136.9026,
+						6862505.0396
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R71",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -2.2992416240526903,
+				"cumulate_dist": -6.030877831391413,
+				"taux_recul": -0.001709473326433227
+			},
+			"id": "70"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151639.6095,
+						6863146.9076
+					],
+					[
+						151640.0326,
+						6863146.183
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R30",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.8390633946971021,
+				"cumulate_dist": 2.935351197588644,
+				"taux_recul": -6.238389551651317E-4
+			},
+			"id": "71"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151641.5124,
+						6863143.648
+					],
+					[
+						151639.6095,
+						6863146.9076
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R30",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 3.774414592285746,
+				"cumulate_dist": 3.774414592285746,
+				"taux_recul": 3.948545446475307E-4
+			},
+			"id": "72"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151083.8318,
+						6862476.2801
+					],
+					[
+						151087.6593,
+						6862470.7598
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R74",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -6.717441953507781,
+				"cumulate_dist": -6.717441953507781,
+				"taux_recul": -7.02734800032198E-4
+			},
+			"id": "73"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151087.6593,
+						6862470.7598
+					],
+					[
+						151089.4272,
+						6862468.2099
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R74",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -3.102724278018492,
+				"cumulate_dist": -9.820166231526272,
+				"taux_recul": -0.002306858199270254
+			},
+			"id": "74"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151100.4882,
+						6862487.3578
+					],
+					[
+						151104.5188,
+						6862481.5445
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R73",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -7.073904223015272,
+				"cumulate_dist": -7.073904223015272,
+				"taux_recul": -7.400255490130005E-4
+			},
+			"id": "75"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151104.5188,
+						6862481.5445
+					],
+					[
+						151105.2256,
+						6862480.5251
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R73",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.2404744370283924,
+				"cumulate_dist": -8.314378660043664,
+				"taux_recul": -9.222858267869089E-4
+			},
+			"id": "76"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151622.2856,
+						6863121.445
+					],
+					[
+						151623.4519,
+						6863120.1858
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R32",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.7163154713536868,
+				"cumulate_dist": -1.5815981073155325,
+				"taux_recul": -0.001276070982419098
+			},
+			"id": "77"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151622.3772,
+						6863121.3461
+					],
+					[
+						151622.2856,
+						6863121.445
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R32",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 0.1347173640381543,
+				"cumulate_dist": 0.1347173640381543,
+				"taux_recul": 1.4093248670169922E-5
+			},
+			"id": "78"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151050.9606,
+						6862453.4881
+					],
+					[
+						151054.9232,
+						6862447.7727
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R76",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -6.954709431086627,
+				"cumulate_dist": -6.954709431086627,
+				"taux_recul": -7.275561702151509E-4
+			},
+			"id": "79"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151275.8,
+						6862640.1274
+					],
+					[
+						151275.9692,
+						6862639.9823
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R62",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.22288908882874342,
+				"cumulate_dist": -2.9333996813157137,
+				"taux_recul": -1.657167946682107E-4
+			},
+			"id": "8"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151054.9232,
+						6862447.7727
+					],
+					[
+						151055.8348,
+						6862446.4579
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R76",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.5999013731070295,
+				"cumulate_dist": -8.554610804193656,
+				"taux_recul": -0.001189517749521955
+			},
+			"id": "80"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151634.0944,
+						6863138.128
+					],
+					[
+						151634.4013,
+						6863137.7967
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R31",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -0.4516268199566234,
+				"cumulate_dist": -0.4516268199566234,
+				"taux_recul": -4.724624123408551E-5
+			},
+			"id": "81"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151634.4013,
+						6863137.7967
+					],
+					[
+						151634.0593,
+						6863138.166
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R31",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": 0.5033545832186898,
+				"cumulate_dist": 0.05172776326206635,
+				"taux_recul": 3.742413258131522E-4
+			},
+			"id": "82"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151067.4799,
+						6862464.7633
+					],
+					[
+						151071.8632,
+						6862458.4413
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R75",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -7.692940344583148,
+				"cumulate_dist": -7.692940344583148,
+				"taux_recul": -8.047850554015219E-4
+			},
+			"id": "83"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151071.8632,
+						6862458.4413
+					],
+					[
+						151072.8978,
+						6862456.9491
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R75",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.8157703062454174,
+				"cumulate_dist": -9.508710650828565,
+				"taux_recul": -0.001350015097580236
+			},
+			"id": "84"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151607.4911,
+						6863099.2263
+					],
+					[
+						151608.5335,
+						6863098.5424
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R34",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -1.2467651173575567,
+				"cumulate_dist": -1.6459376267022823,
+				"taux_recul": -9.269629125334994E-4
+			},
+			"id": "85"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151607.1573,
+						6863099.4452
+					],
+					[
+						151607.4911,
+						6863099.2263
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R34",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -0.39917250934472565,
+				"cumulate_dist": -0.39917250934472565,
+				"taux_recul": -4.175881466102371E-5
+			},
+			"id": "86"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151021.3176,
+						6862426.0397
+					],
+					[
+						151023.2646,
+						6862423.2315
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R78",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -3.4171260800904095,
+				"cumulate_dist": -8.801881697439025,
+				"taux_recul": -0.002540614185940825
+			},
+			"id": "87"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151018.2495,
+						6862430.4649
+					],
+					[
+						151021.3176,
+						6862426.0397
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R78",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -5.384755617348615,
+				"cumulate_dist": -5.384755617348615,
+				"taux_recul": -5.633178802540658E-4
+			},
+			"id": "88"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151610.4168,
+						6863104.8267
+					],
+					[
+						151611.5244,
+						6863103.6308
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R33",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -1.630039333417419,
+				"cumulate_dist": -1.630039333417419,
+				"taux_recul": -1.7052404366747767E-4
+			},
+			"id": "89"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151794.9468,
+						6863229.6111
+					],
+					[
+						151792.8668,
+						6863234.0127
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R21",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": 4.868365379608317,
+				"cumulate_dist": 4.868365379608317,
+				"taux_recul": 5.092965142387611E-4
+			},
+			"id": "9"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151611.5244,
+						6863103.6308
+					],
+					[
+						151611.7794,
+						6863103.3555
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R33",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.37521617091556075,
+				"cumulate_dist": -2.00525550433298,
+				"taux_recul": -2.7897113079223846E-4
+			},
+			"id": "90"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151034.9233,
+						6862441.5174
+					],
+					[
+						151037.5485,
+						6862437.731
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R77",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -4.607367686724569,
+				"cumulate_dist": -4.607367686724569,
+				"taux_recul": -4.81992644285445E-4
+			},
+			"id": "91"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151037.5485,
+						6862437.731
+					],
+					[
+						151039.6035,
+						6862434.7672
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R77",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -3.606524614069523,
+				"cumulate_dist": -8.213892300794091,
+				"taux_recul": -0.002681430939828642
+			},
+			"id": "92"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151586.116,
+						6863065.4096
+					],
+					[
+						151586.3422,
+						6863065.2612
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R36",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.27049293186884044,
+				"cumulate_dist": -5.4599663005369345,
+				"taux_recul": -2.0110998651958397E-4
+			},
+			"id": "93"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151581.777,
+						6863068.2563
+					],
+					[
+						151586.116,
+						6863065.4096
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R36",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -5.189473368668094,
+				"cumulate_dist": -5.189473368668094,
+				"taux_recul": -5.428887298533418E-4
+			},
+			"id": "94"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151597.0859,
+						6863082.1327
+					],
+					[
+						151597.4549,
+						6863081.8906
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R35",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -0.44135022217797276,
+				"cumulate_dist": -3.291380114173406,
+				"taux_recul": -3.281414291286043E-4
+			},
+			"id": "95"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151594.703,
+						6863083.6961
+					],
+					[
+						151597.0859,
+						6863082.1327
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R35",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -2.850029891995433,
+				"cumulate_dist": -2.850029891995433,
+				"taux_recul": -2.9815146898163334E-4
+			},
+			"id": "96"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151000.6682,
+						6862413.9747
+					],
+					[
+						151002.2602,
+						6862411.2851
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R79",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -3.1254581286675265,
+				"cumulate_dist": -6.850892546279907,
+				"taux_recul": -0.0023237606904591276
+			},
+			"id": "97"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						150998.7705,
+						6862417.1806
+					],
+					[
+						151000.6682,
+						6862413.9747
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R79",
+				"fromDate": "1952-06-11",
+				"toDate": "1978-08-14",
+				"separate_dist": -3.7254344176123797,
+				"cumulate_dist": -3.7254344176123797,
+				"taux_recul": -3.897305594321979E-4
+			},
+			"id": "98"
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[
+						151566.4621,
+						6863030.4637
+					],
+					[
+						151569.2662,
+						6863028.6241
+					]
+				]
+			},
+			"properties": {
+				"radiale": "R38",
+				"fromDate": "1978-08-14",
+				"toDate": "1982-04-20",
+				"separate_dist": -3.353612085032141,
+				"cumulate_dist": -11.986899642934558,
+				"taux_recul": -0.002493391884782261
+			},
+			"id": "99"
+		}
+	]
+}

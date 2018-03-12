@@ -1,1 +1,1 @@
-WPSProject
+Ce projet est réalisé dans le cadre d'un projet de mise en pratique avancée à l'Université de Bretagne Occidentale au profil de l'Institut Universitaire Europèen de la Mer. Il consiste au dévéloppement d'un webservice pour le suivi de traits de côtes.

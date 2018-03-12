@@ -111,7 +111,7 @@ public class WPSUtils {
 				else
 					throw new Exception("la geometrie n'est pas une LineString !");
 			} else
-				throw new Exception("aucune LineString dans les donn�es.");
+				throw new Exception("aucune LineString dans les donn�es.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -126,7 +126,6 @@ public class WPSUtils {
 	 * @return
 	 */
 	private static double getSlope(LineString segment) {
-
 		return (segment.getEndPoint().getCoordinate().y - segment.getStartPoint().getCoordinate().y)
 				/ (segment.getEndPoint().getCoordinate().x - segment.getStartPoint().getCoordinate().x);
 	}
@@ -139,29 +138,35 @@ public class WPSUtils {
 	 * @return
 	 */
 	private static double calculateX(LineString segment, double length, boolean sense, boolean segmentType) {
+		//choisir le referentiel en metre 2154
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		double slope = 0;
 		double X = 0;
 		double resultX = 0;
+		//récupérer les coordonées de la lineString qui représente un seguement de la ligne de référence
 		Coordinate[] coordinates = segment.getCoordinates();
 		LineString newSegment = null;
-
+		// segmentType = true => tout les seguement sauf le dernier
 		if (segmentType) {
 			X = segment.getStartPoint().getX();
+		// segmentType = false => le dernier seguement
 		} else {
 			X = segment.getEndPoint().getX();
 		}
-
+		
+		// si le seguement est tout droit
 		if (coordinates.length == 2) {
 			slope = getSlope(segment);
+		// si le seguement n'est tout droit on calcule la pente du premier sous-seguement
 		} else {
 			newSegment = geometryFactory.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
 			slope = getSlope(newSegment);
 		}
-
+		//sens = true => x = pente du seguement * racineCarrée(langueur au carée / (pente/2 le tout au carré + 1)) + la coordonée x d'un point du seguement
 		if (sense) {
 			resultX = slope * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + X;
 		} else {
+		//sens = false => x = -1 * pente du seguement * racineCarrée(langueur au carée / (pente/2 le tout au carré + 1)) + la coordonée x d'un pont du seguement
 			resultX = -1 * slope * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + X;
 		}
 
@@ -176,28 +181,35 @@ public class WPSUtils {
 	 * @return
 	 */
 	private static double calculateY(LineString segment, double length, boolean sense, boolean segmentType) {
+		//choisir le referentiel en metre 2154
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		double slope = 0;
 		double Y = 0;
 		double resultY = 0;
+		//récupérer les coordonées de la lineString qui représente un seguement de la ligne de référence
 		Coordinate[] coordinates = segment.getCoordinates();
 		LineString newSegment = null;
+		// segmentType = true => tout les seguement sauf le dernier
 		if (segmentType) {
 			Y = segment.getStartPoint().getY();
+		// segmentType = false => le dernier seguement
 		} else {
 			Y = segment.getEndPoint().getY();
 		}
-
+		// si le seguement est tout droit
 		if (coordinates.length == 2) {
 			slope = getSlope(segment);
 		} else {
+		// si le seguement n'est tout droit on calcule la pente du premier sous-seguement
 			newSegment = geometryFactory.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
 			slope = getSlope(newSegment);
 		}
-
+		//sens = true => y = -1 * racineCarrée(longueur au carré / (pente/2 le tout au carré + 1)) + la coordonée y d'un point du seguement
 		if (sense) {
 			resultY = -1 * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + Y;
 		} else {
+		//sens = true => y = racineCarrée(longueur au carré / (pente/2 le tout au carré + 1)) + la coordonée y d'un point du seguement
+			
 			resultY = Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + Y;
 		}
 
