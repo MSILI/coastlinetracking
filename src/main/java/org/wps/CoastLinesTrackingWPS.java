@@ -8,6 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.geoserver.wps.gs.GeoServerProcess;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
@@ -35,9 +38,7 @@ import org.locationtech.jts.geom.Point;
 public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLinesTrackingWPS>
 		implements GeoServerProcess {
 
-	/**
-	 * 
-	 */
+	private static final Logger LOGGER = LogManager.getLogger(CoastLinesTrackingWPS.class);
 
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -96,14 +97,11 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			}
 
 		} catch (NoSuchAuthorityCodeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("Error while executing drawRadial", e);
 		} catch (FactoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("Error while executing drawRadial", e);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("Error while executing drawRadial", e);
 		}
 
 		return resultFeatureCollection;
@@ -180,7 +178,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error while executing getDistances", e);
 		}
 
 		return resultFeatureCollection;

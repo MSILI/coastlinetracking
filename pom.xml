@@ -13,6 +13,7 @@
 		<geotools.version>25.2</geotools.version>
 		<maven.compiler.target>1.8</maven.compiler.target>
    		<maven.compiler.source>1.8</maven.compiler.source>
+		<log4j.version>2.17.2</log4j.version>
 	</properties>
 
 	<repositories>
@@ -55,5 +56,16 @@
 			<artifactId>json</artifactId>
 			<version>20220320</version>
 		</dependency>
+		<!-- Logger -->
+		<dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
 	</dependencies>  
 </project>

@@ -1,5 +1,8 @@
 package org.wps.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +24,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.locationtech.jts.geom.Geometry;
 
 public class GeoJsonFileUtils {
+
+	private static final Logger LOGGER = LogManager.getLogger(GeoJsonFileUtils.class);
 
 	private static final String POINT = "Point";
 	private static final String MULTIPOINT = "MultiPoint";
@@ -96,13 +101,13 @@ public class GeoJsonFileUtils {
 
 	public static void displayFeatureCollection(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
 		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
-		System.out.println("------------------------------------------");
-		System.out.println("featureCollection geometries : ");
+		LOGGER.debug("------------------------------------------");
+		LOGGER.debug("featureCollection geometries : ");
 		while (iterator.hasNext()) {
 			SimpleFeature feature = iterator.next();
-			System.out.println(feature.getDefaultGeometry());
+			LOGGER.debug(feature.getDefaultGeometry());
 		}
-		System.out.println("------------------------------------------");
+		LOGGER.debug("------------------------------------------");
 	}
 
 }
