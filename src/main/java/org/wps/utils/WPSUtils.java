@@ -1,5 +1,8 @@
 package org.wps.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +40,10 @@ import org.locationtech.jts.geom.PrecisionModel;
  */
 public class WPSUtils {
 
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+	private static final Logger LOGGER = LogManager.getLogger(WPSUtils.class);
+
 	/**
 	 * @param track
 	 * @param segmentLength
@@ -44,9 +51,6 @@ public class WPSUtils {
 	 * @throws NoSuchAuthorityCodeException
 	 * @throws FactoryException
 	 */
-
-	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
 	public static LinkedList<LineString> createSegments(Geometry track, double segmentLength)
 			throws NoSuchAuthorityCodeException, FactoryException {
 
@@ -113,7 +117,7 @@ public class WPSUtils {
 			} else
 				throw new Exception("aucune LineString dans les donn�es.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error while executing getReferenceLineFromFeature", e);
 		} finally {
 			iterator.close();
 		}
@@ -292,7 +296,7 @@ public class WPSUtils {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error while executing getLinesByType", e);
 		} finally {
 			iterator.close();
 		}
@@ -313,8 +317,7 @@ public class WPSUtils {
 				return new TreeMap<Date, LineString>(dataToSort);
 			}
 		} catch (ParseException e) {
-
-			e.printStackTrace();
+			LOGGER.error("Error while executing sortBydate", e);
 		}
 
 		return null;
@@ -453,7 +456,7 @@ public class WPSUtils {
 			Collections.sort(listOfDate);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error while executing getDatesFromFeatures", e);
 		} finally {
 			iterator.close();
 		}
@@ -476,7 +479,7 @@ public class WPSUtils {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error while executing getRadialsNameFromFeatures", e);
 		} finally {
 			iterator.close();
 		}
@@ -509,7 +512,7 @@ public class WPSUtils {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error while executing getDistanceByType", e);
 		} finally {
 			iterator.close();
 		}
