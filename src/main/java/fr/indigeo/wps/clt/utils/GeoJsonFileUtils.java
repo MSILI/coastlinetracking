@@ -1,8 +1,5 @@
 package fr.indigeo.wps.clt.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geojson.feature.FeatureJSON;
@@ -25,7 +23,7 @@ import org.locationtech.jts.geom.Geometry;
 
 public class GeoJsonFileUtils {
 
-	private static final Logger LOGGER = LogManager.getLogger(GeoJsonFileUtils.class);
+	private static final Logger LOGGER = Logger.getLogger(GeoJsonFileUtils.class);
 
 	private static final String POINT = "Point";
 	private static final String MULTIPOINT = "MultiPoint";

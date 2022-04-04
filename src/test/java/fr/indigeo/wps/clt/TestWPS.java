@@ -1,14 +1,12 @@
 package fr.indigeo.wps.clt;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.geotools.feature.FeatureCollection;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
@@ -19,7 +17,7 @@ import fr.indigeo.wps.clt.utils.GeoJsonFileUtils;
 
 public class TestWPS {
 
-	private static final Logger LOGGER = LogManager.getLogger(TestWPS.class);
+	private static final Logger LOGGER = Logger.getLogger(TestWPS.class);
 
 	private static final File dataDir = new File("data");
 	private static final File refLineFile = new File(dataDir, "refLine.json");

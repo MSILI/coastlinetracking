@@ -8,9 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import org.apache.log4j.Logger;
 import org.geoserver.wps.gs.GeoServerProcess;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
@@ -36,10 +34,9 @@ import org.locationtech.jts.geom.Point;
  *
  */
 @DescribeProcess(title = "Coastlines tracking project", description = "WPS for the tracking of coastlines")
-public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLinesTrackingWPS>
-		implements GeoServerProcess {
+public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLinesTrackingWPS> implements GeoServerProcess {
 
-	private static final Logger LOGGER = LogManager.getLogger(CoastLinesTrackingWPS.class);
+	private static final Logger LOGGER = Logger.getLogger(CoastLinesTrackingWPS.class);
 
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
