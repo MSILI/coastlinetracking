@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>coastLinesTracking</groupId>
+  <groupId>fr.indigeo.wps</groupId>
   <artifactId>coastLinesTracking</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
   <name>coastLinesTracking</name>
   
   <properties>
@@ -11,8 +11,8 @@
 		<!-- geotools and geoserver version are linked check geotools version in geoserver notes -->
 		<geoserver.version>2.19.2</geoserver.version>
 		<geotools.version>25.2</geotools.version>
-		<maven.compiler.target>1.8</maven.compiler.target>
-   		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+   		<maven.compiler.source>11</maven.compiler.source>
 		<log4j.version>2.17.2</log4j.version>
 	</properties>
 

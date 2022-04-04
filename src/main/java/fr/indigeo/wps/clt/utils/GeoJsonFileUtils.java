@@ -1,4 +1,4 @@
-package org.wps.utils;
+package fr.indigeo.wps.clt.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

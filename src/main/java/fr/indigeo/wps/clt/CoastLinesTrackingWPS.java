@@ -1,4 +1,4 @@
-package org.wps;
+package fr.indigeo.wps.clt;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,7 +25,8 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.wps.utils.WPSUtils;
+
+import fr.indigeo.wps.clt.utils.WPSUtils;
 
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
@@ -62,6 +63,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			@DescribeParameter(name = "radialDirection", description = "the direction of radial (true or false)") final boolean direction) {
 		DefaultFeatureCollection resultFeatureCollection = null;
 
+		LOGGER.info("DrawRadial with params - length : " + length + " | distance : " + distance + " | direction : " + direction);
 		try {
 			SimpleFeatureTypeBuilder simpleFeatureTypeBuilder = new SimpleFeatureTypeBuilder();
 			simpleFeatureTypeBuilder.setName("featureType");
@@ -73,7 +75,11 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			LinkedList<LineString> segements = WPSUtils.createSegments(refLine, distance);
 			LinkedList<LineString> listRadiales = new LinkedList<LineString>();
 			LineString radiale = null;
+
 			// create radials
+			if(LOGGER.isDebugEnabled()){
+				LOGGER.debug("Create radials with " + segements.size() + " elements");
+			}
 			for (LineString l : segements) {
 				radiale = WPSUtils.createRadialSegment(l, length, direction, true);
 				listRadiales.add(radiale);
@@ -83,8 +89,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			listRadiales.add(radiale);
 
 			// init DefaultFeatureCollection
-			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
-					simpleFeatureTypeBuilder.buildFeatureType());
+			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(simpleFeatureTypeBuilder.buildFeatureType());
 			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 
 			// add geometrie to defaultFeatures

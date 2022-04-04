@@ -1,4 +1,7 @@
-package org.wps.test;
+package fr.indigeo.wps.clt;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,44 +10,44 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.geotools.feature.FeatureCollection;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.wps.CoastLinesTrackingWPS;
-import org.wps.utils.GeoJsonFileUtils;
+
+import fr.indigeo.wps.clt.utils.GeoJsonFileUtils;
+
 
 public class TestWPS {
+
+	private static final Logger LOGGER = LogManager.getLogger(TestWPS.class);
 
 	private static final File dataDir = new File("data");
 	private static final File refLineFile = new File(dataDir, "refLine.json");
 	private static final File coastLinesFile = new File(dataDir, "coastLines.json");
 
-	public static void main(String[] args) {
+	@Test
+	public void testAllServices() {
 		try {
 			// draw radials Test
 			FeatureCollection<SimpleFeatureType, SimpleFeature> refLineFc = getFeatureCollections(refLineFile);
-			FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadialsFc = getRadialsTest(refLineFc, 200, 20,
-					true);
+			FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadialsFc = getRadialsTest(refLineFc, 200, 20, true);
 			getGeoJsonFile(drawRadialsFc, dataDir, "drawRadialsFc");
-			System.out.println(
-					"drawRadialsFc.json est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
+			LOGGER.info("drawRadialsFc.json est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
 
 			// get distance Test
 			FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines = getFeatureCollections(coastLinesFile);
-			FeatureCollection<SimpleFeatureType, SimpleFeature> distanceFc = getDistancesTest(drawRadialsFc,
-					coastLines);
+			FeatureCollection<SimpleFeatureType, SimpleFeature> distanceFc = getDistancesTest(drawRadialsFc, coastLines);
 			getGeoJsonFile(distanceFc, dataDir, "distancesFc");
-			System.out.println(
-					"distanceFc.json est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
+			LOGGER.info("distanceFc.json est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
 			// get distance to csv Test
 			String csvString = getDistancesToCSVTest(distanceFc);
 			getCSVFile(csvString, dataDir, "distances.csv");
-			System.out.println(
-					"distances.csv est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
+			LOGGER.info("distances.csv est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
 
 		} catch (FileNotFoundException e) {
-			System.out.println("Fichiers introuvables");
+			LOGGER.error("Fichiers introuvables", e);
 		} catch (IOException e) {
-			System.out.println("Erreur entrées sorties");
+			LOGGER.error("Erreur entrées sorties", e);
 		}
 	}
 
@@ -73,8 +76,7 @@ public class TestWPS {
 		return GeoJsonFileUtils.geoJsonToFeatureCollection(refLineFile);
 	}
 
-	public static void getGeoJsonFile(FeatureCollection<SimpleFeatureType, SimpleFeature> data, File dir,
-			String fileName) throws FileNotFoundException, IOException {
+	public static void getGeoJsonFile(FeatureCollection<SimpleFeatureType, SimpleFeature> data, File dir, String fileName) throws FileNotFoundException, IOException {
 		GeoJsonFileUtils.featureCollectionToGeoJsonFile(data, dir, fileName);
 	}
 
@@ -83,15 +85,14 @@ public class TestWPS {
 		try {
 
 			bw = new BufferedWriter(new FileWriter(new File(dataDir, fileName)));
-			bw.write(csvString); // Replace with the string
-									// you are trying to write
+			bw.write(csvString); // Replace with the string you are trying to write
 		} catch (IOException e) {
-			System.out.println("erreur entrées sorties");
+			LOGGER.error("erreur entrées sorties", e);
 		} finally {
 			try {
 				bw.close();
 			} catch (IOException e) {
-				System.out.println("erreur entrées sorties");
+				LOGGER.error("erreur entrées sorties", e);
 			}
 		}
 
