@@ -31,7 +31,7 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 
 /**
- * Cette classe est une classe utilitaire : elle contient
+ * Class utilitaire pour les services WPS de trait de côte
  * 
  * @author Fatah M'SILI
  *
@@ -45,6 +45,7 @@ public class WPSUtils {
 	/**
 	 * @param track
 	 * @param segmentLength
+	 * 
 	 * @return
 	 * @throws NoSuchAuthorityCodeException
 	 * @throws FactoryException
@@ -96,8 +97,10 @@ public class WPSUtils {
 	}
 
 	/**
+	 * 
 	 * @param featureCollection
 	 * @return
+	 * @throws Exception
 	 */
 	public static LineString getReferenceLineFromFeature(
 			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) throws Exception {
@@ -124,6 +127,7 @@ public class WPSUtils {
 	}
 
 	/**
+	 * 
 	 * @param segment
 	 * @return
 	 */
@@ -133,6 +137,7 @@ public class WPSUtils {
 	}
 
 	/**
+	 * 
 	 * @param segment
 	 * @param length
 	 * @param sense
@@ -176,6 +181,7 @@ public class WPSUtils {
 	}
 
 	/**
+	 * 
 	 * @param segment
 	 * @param length
 	 * @param sense
@@ -219,6 +225,7 @@ public class WPSUtils {
 	}
 
 	/**
+	 * 
 	 * @param segment
 	 * @param length
 	 * @param sense
@@ -262,8 +269,16 @@ public class WPSUtils {
 		return radialSegment;
 	}
 
+	/**
+	 * 
+	 * @param input
+	 * @param type
+	 * @return
+	 * @throws Exception
+	 */
 	public static Map<String, LineString> getLinesByType(FeatureCollection<SimpleFeatureType, SimpleFeature> input,
 			int type) throws Exception {
+
 		Map<String, LineString> linesBytType = new HashMap<String, LineString>();
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		FeatureIterator<SimpleFeature> iterator = input.features();
@@ -283,16 +298,14 @@ public class WPSUtils {
 					if (type == 2) {
 
 						LineString coastline = geometryFactory.createLineString(geometry.getCoordinates());
-						String date = feature.getProperty("dte").getValue().toString();
+						String date = feature.getProperty("creationDate").getValue().toString();
 						date = date.substring(0, date.length() - 1);
 						linesBytType.put(date, coastline);
 					}
 				} else {
 					throw new Exception("Les geometries sont pas des LineString !");
 				}
-
 			}
-
 		} catch (Exception e) {
 			LOGGER.error("Error while executing getLinesByType", e);
 		} finally {
@@ -302,6 +315,11 @@ public class WPSUtils {
 		return linesBytType;
 	}
 
+	/**
+	 * 
+	 * @param map
+	 * @return
+	 */
 	public static Map<Date, LineString> sortBydate(Map<String, LineString> map) {
 
 		try {
@@ -321,6 +339,11 @@ public class WPSUtils {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param coastLineMap
+	 * @return
+	 */
 	public static List<Date> getDatesFromCoastLinesMap(Map<Date, LineString> coastLineMap) {
 
 		List<Date> dates = null;
@@ -335,6 +358,12 @@ public class WPSUtils {
 		return dates;
 	}
 
+	/**
+	 * 
+	 * @param dates
+	 * @param date
+	 * @return
+	 */
 	public static List<Date> getBeforDates(List<Date> dates, Date date) {
 
 		List<Date> datesBefor = new ArrayList<Date>();
@@ -346,26 +375,42 @@ public class WPSUtils {
 		return datesBefor;
 	}
 
-	// ordonner selon les dates
+	/**
+	 * 
+	 * @param radialsMap
+	 * @param coastLinesMap
+	 * @return
+	 */
 	public static Map<String, Map<Date, Point>> getIntersectedPoints(Map<String, LineString> radialsMap,
 			Map<Date, LineString> coastLinesMap) {
-		Map<String, Map<Date, Point>> intersectedPoints = new HashMap<String, Map<Date, Point>>();
-		for (Map.Entry<String, LineString> radial : radialsMap.entrySet()) {
-			Map<Date, Point> intersectPoints = new HashMap<Date, Point>();
-			for (Map.Entry<Date, LineString> coastLine : coastLinesMap.entrySet()) {
-				if (radial.getValue().intersects(coastLine.getValue())) {
 
-					intersectPoints.put(coastLine.getKey(),
-							(Point) radial.getValue().intersection(coastLine.getValue()));
+		// create a map with a treeMap of intersected point
+		Map<String, Map<Date, Point>> intersectedPoints = new HashMap<String, Map<Date, Point>>();
+
+		// Pour chaque ligne de la radial
+		for (Map.Entry<String, LineString> radial : radialsMap.entrySet()) {
+			
+			Map<Date, Point> intersectPoints = new HashMap<Date, Point>();
+			// pour chaque traits de côte
+			for (Map.Entry<Date, LineString> coastLine : coastLinesMap.entrySet()) {
+				// Si la radial intersect le traît de côte
+				if (radial.getValue().intersects(coastLine.getValue())) {
+					// Ajout le point d'intersection avec la date comme clé
+					intersectPoints.put(coastLine.getKey(),	(Point) radial.getValue().intersection(coastLine.getValue()));
 				}
 			}
-
+			// ajout les points pour la radial
 			intersectedPoints.put(radial.getKey(), new TreeMap<Date, Point>(intersectPoints));
 		}
 
 		return intersectedPoints;
 	}
 
+	/**
+	 * 
+	 * @param intersectedPoints
+	 * @return
+	 */
 	public static Map<String, Map<Date[], LineString>> getComposedSegment(
 			Map<String, Map<Date, Point>> intersectedPoints) {
 
@@ -402,6 +447,13 @@ public class WPSUtils {
 		return composedSegments;
 	}
 
+	/**
+	 * 
+	 * @param distanceSeguments
+	 * @param datesBefor
+	 * @param radialeName
+	 * @return
+	 */
 	public static double getCumulatedDistance(Map<String, Map<Date[], LineString>> distanceSeguments,
 			List<Date> datesBefor, String radialeName) {
 		double cumulDist = 0;
@@ -426,6 +478,12 @@ public class WPSUtils {
 		return cumulDist;
 	}
 
+	/**
+	 * 
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
 	public static int getNbrDaysBetweenTwoDate(Date date1, Date date2) {
 
 		long diff = date2.getTime() - date1.getTime();
@@ -434,6 +492,11 @@ public class WPSUtils {
 
 	}
 
+	/**
+	 * 
+	 * @param featureCollection
+	 * @return
+	 */
 	public static List<Date> getDatesFromFeatures(
 			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
 		List<Date> listOfDate = new ArrayList<Date>();
@@ -462,6 +525,11 @@ public class WPSUtils {
 		return listOfDate;
 	}
 
+	/**
+	 * 
+	 * @param featureCollection
+	 * @return
+	 */
 	public static List<String> getRadialsNameFromFeatures(
 			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
 		List<String> listOfRadialsName = new ArrayList<String>();
@@ -485,6 +553,14 @@ public class WPSUtils {
 		return sortRadialsByName(listOfRadialsName);
 	}
 
+	/**
+	 * 
+	 * @param featureCollection
+	 * @param type
+	 * @param date
+	 * @param radialeName
+	 * @return
+	 */
 	public static double getDistanceByType(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection,
 			int type, Date date, String radialeName) {
 
@@ -518,6 +594,11 @@ public class WPSUtils {
 		return -1;
 	}
 
+	/**
+	 * 
+	 * @param radialsNames
+	 * @return
+	 */
 	private static List<String> sortRadialsByName(List<String> radialsNames) {
 		Collections.sort(radialsNames, new Comparator<String>() {
 			public int compare(String s1, String s2) {
@@ -533,13 +614,5 @@ public class WPSUtils {
 
 		return radialsNames;
 	}
-
-	/*
-	 * private static double round(double value, int places) { if (places < 0) throw
-	 * new IllegalArgumentException();
-	 * 
-	 * long factor = (long) Math.pow(10, places); value = value * factor; long tmp =
-	 * Math.round(value); return (double) tmp / factor; }
-	 */
 
 }

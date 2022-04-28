@@ -12,8 +12,12 @@ Les drois d'accès au service WPS et spécifiquement à ce service doivent être
 
 ## Documentation
 
-> Trois process sont disponibles : 
-> - Draw radial
-> - Calculate distances between coastlines
-> - distancesToCSV
-> - coastLinesTracking
+> Quatres process sont disponibles : 
+> - Draw radial - coa:drawRadial
+> - Calculate distances between coastlines - coa:getDistances
+> - distancesToCSV - coa:getDistancestoCSV
+> - coastLinesTracking - coa:coastLinesTracking
+
+Pour l'application maddog, 
+le service coa:drawRadial permet de récupérer la radiale et de l'afficher sur la carte
+le service coa:coastLinesTracking est la succession du service drawRadial, getDistances et getDistanceToCSV
