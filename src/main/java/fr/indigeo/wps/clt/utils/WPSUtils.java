@@ -289,17 +289,19 @@ public class WPSUtils {
 				if (geometry instanceof LineString) {
 					// 1 pour radials
 					if (type == 1) {
-
+						
+						LOGGER.debug("getLinesByType Type Radial");	
 						LineString radiale = geometryFactory.createLineString(geometry.getCoordinates());
 						linesBytType.put(feature.getProperty("name").getValue().toString(), radiale);
 					}
 
 					// 2 pour coastLines
 					if (type == 2) {
-
+						LOGGER.debug("getLinesByType Type Coastlines");
 						LineString coastline = geometryFactory.createLineString(geometry.getCoordinates());
-						String date = feature.getProperty("creationDate").getValue().toString();
+						String date = feature.getProperty("creationdate").getValue().toString();
 						date = date.substring(0, date.length() - 1);
+						LOGGER.debug("getLinesByType Coastline date :" + date);
 						linesBytType.put(date, coastline);
 					}
 				} else {
@@ -312,6 +314,7 @@ public class WPSUtils {
 			iterator.close();
 		}
 
+		LOGGER.debug("getLinesByType" + linesBytType.size() + " elements in response");
 		return linesBytType;
 	}
 
@@ -350,11 +353,11 @@ public class WPSUtils {
 		if (!coastLineMap.isEmpty()) {
 			dates = new LinkedList<Date>();
 			for (Map.Entry<Date, LineString> entry : coastLineMap.entrySet()) {
-
 				dates.add(entry.getKey());
+				LOGGER.debug("Date : "+ entry.getKey());
 			}
 		}
-
+		LOGGER.debug("getDatesFromCoastLinesMap " + dates.size() + " dates in list");
 		return dates;
 	}
 
@@ -395,14 +398,21 @@ public class WPSUtils {
 			for (Map.Entry<Date, LineString> coastLine : coastLinesMap.entrySet()) {
 				// Si la radial intersect le traît de côte
 				if (radial.getValue().intersects(coastLine.getValue())) {
+					LOGGER.debug("getIntersectedPoints intersection entre la radial et un trait de cote");
+					LOGGER.debug("getIntersectedPoints coastline " +  coastLine.getKey() + "-" + coastLine.getValue());
 					// Ajout le point d'intersection avec la date comme clé
-					intersectPoints.put(coastLine.getKey(),	(Point) radial.getValue().intersection(coastLine.getValue()));
+					try{
+						intersectPoints.put(coastLine.getKey(),	(Point) radial.getValue().intersection(coastLine.getValue()));
+					}catch(ClassCastException e){
+						LOGGER.error("Multipoint found when intersect", e);
+					}
 				}
 			}
 			// ajout les points pour la radial
 			intersectedPoints.put(radial.getKey(), new TreeMap<Date, Point>(intersectPoints));
 		}
 
+		LOGGER.debug("getIntersectedPoints  " +  intersectedPoints.size()+ " nb element in response");
 		return intersectedPoints;
 	}
 
@@ -419,10 +429,12 @@ public class WPSUtils {
 
 		for (Map.Entry<String, Map<Date, Point>> radial : intersectedPoints.entrySet()) {
 
+			LOGGER.debug("getComposedSegment traitement de " + radial.getKey());
 			if (radial.getValue().size() > 1) {
 				Map<Date[], LineString> lines = new HashMap<Date[], LineString>();
 
 				List<Date> keyList = new ArrayList<Date>(radial.getValue().keySet());
+				LOGGER.debug("getComposedSegment keyList size " + keyList.size());
 
 				for (int i = 0; i < keyList.size() - 1; i++) {
 					Coordinate[] coordinates = new Coordinate[2];
@@ -444,6 +456,8 @@ public class WPSUtils {
 			}
 
 		}
+		
+		LOGGER.debug("getComposedSegment  " +  composedSegments.size()+ " nb elements in response");
 		return composedSegments;
 	}
 
@@ -454,8 +468,9 @@ public class WPSUtils {
 	 * @param radialeName
 	 * @return
 	 */
-	public static double getCumulatedDistance(Map<String, Map<Date[], LineString>> distanceSeguments,
-			List<Date> datesBefor, String radialeName) {
+	public static double getCumulatedDistance(Map<String, Map<Date[], LineString>> distanceSeguments, List<Date> datesBefor, String radialeName) {
+
+		LOGGER.debug("getCumulatedDistance for radial  " + radialeName);		
 		double cumulDist = 0;
 
 		for (Map.Entry<String, Map<Date[], LineString>> radial : distanceSeguments.entrySet()) {
@@ -475,6 +490,7 @@ public class WPSUtils {
 				}
 			}
 		}
+		LOGGER.debug("getCumulatedDistance for radial  " + radialeName + " equals " + cumulDist);	
 		return cumulDist;
 	}
 
@@ -497,9 +513,10 @@ public class WPSUtils {
 	 * @param featureCollection
 	 * @return
 	 */
-	public static List<Date> getDatesFromFeatures(
-			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
+	public static List<Date> getDatesFromFeatures(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
+
 		List<Date> listOfDate = new ArrayList<Date>();
+		LOGGER.debug("getDatesFromFeatures nb element in collection features " + featureCollection.size());
 		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
 		try {
 			while (iterator.hasNext()) {
@@ -507,11 +524,14 @@ public class WPSUtils {
 				Date fromDate = dateFormat.parse(feature.getProperty("fromDate").getValue().toString());
 				Date toDate = dateFormat.parse(feature.getProperty("toDate").getValue().toString());
 
-				if (!listOfDate.contains(fromDate))
+				if (!listOfDate.contains(fromDate)){
 					listOfDate.add(fromDate);
-				if (!listOfDate.contains(toDate))
+				}
+					
+				if (!listOfDate.contains(toDate)){
 					listOfDate.add(toDate);
-
+				}
+				LOGGER.debug("FromDate : " + fromDate.toString() + " - toDate : "+ toDate.toString());	
 			}
 
 			Collections.sort(listOfDate);
