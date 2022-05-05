@@ -320,17 +320,12 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 	@DescribeProcess(title = "coastLinesTracking", description = "coastLinesTracking WPS")
 	@DescribeResult(name = "jsonString", description = "the result of coastLinesTracking WPS")
 	public static String coastLinesTracking(
-			@DescribeParameter(name = "referenceLine", description = "the input referenceLine") final FeatureCollection<SimpleFeatureType, SimpleFeature> referenceLine,
-			@DescribeParameter(name = "radialLength", description = "the length of radial in M") final double length,
-			@DescribeParameter(name = "radialDistance", description = "the distance between radials in M") final double distance,
-			@DescribeParameter(name = "radialDirection", description = "the direction of radial (true or false)") final boolean direction,
-			@DescribeParameter(name = "coaslines", description = "the input Coaslines") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
-
-		FeatureCollection<SimpleFeatureType, SimpleFeature> fc1 = drawRadial(referenceLine, length, distance, direction);
+			@DescribeParameter(name = "radiales", description = "the calculated radial") final FeatureCollection<SimpleFeatureType, SimpleFeature> radiales,
+			@DescribeParameter(name = "coastlines", description = "the input Coastlines") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
 		
 		if(LOGGER.isDebugEnabled()){
 			LOGGER.debug("Radial information : ");
-			FeatureIterator<SimpleFeature> iteratorfc1 = fc1.features();
+			FeatureIterator<SimpleFeature> iteratorfc1 = radiales.features();
 			try {
 				while( iteratorfc1.hasNext() ){
 					SimpleFeature feature = iteratorfc1.next();
@@ -345,7 +340,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			}
 		}
 
-		FeatureCollection<SimpleFeatureType, SimpleFeature> fc2 = getDistances(fc1, coastLines);
+		FeatureCollection<SimpleFeatureType, SimpleFeature> fc2 = getDistances(radiales, coastLines);
 
 		if(LOGGER.isDebugEnabled()){
 			LOGGER.debug("Distance information : ");
