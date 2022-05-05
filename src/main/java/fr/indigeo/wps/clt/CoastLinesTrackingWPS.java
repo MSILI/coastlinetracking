@@ -1,6 +1,7 @@
 package fr.indigeo.wps.clt;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,19 +11,27 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.geoserver.wps.gs.GeoServerProcess;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.geotools.filter.SortByImpl;
 import org.geotools.process.factory.DescribeParameter;
 import org.geotools.process.factory.DescribeProcess;
 import org.geotools.process.factory.DescribeResult;
 import org.geotools.process.factory.StaticMethodsProcessFactory;
 import org.geotools.text.Text;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.FilterFactory2;
+import org.opengis.filter.expression.PropertyName;
+import org.opengis.filter.sort.SortBy;
+import org.opengis.filter.sort.SortOrder;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 
@@ -259,8 +268,57 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 		return csv;
 	}
 
+	@DescribeProcess(title = "distancesToJson", description = "parse a feautureCollection of distances to json object.")
+	@DescribeResult(name = "JsonString", description = "the result of parsing distances.")
+	public static String getDistancesToJson(
+			@DescribeParameter(name = "distancesFeatureCollection", description = "the result distance feature collection") final FeatureCollection<SimpleFeatureType, SimpleFeature> distances) {
+
+		List<Date> TDCdates = WPSUtils.getDatesFromFeatures(distances);
+
+		JSONArray results = new JSONArray();
+		
+		// get all tdc result
+		for (Date TDCdate : TDCdates){
+			
+			JSONObject tdc = new JSONObject();
+			JSONArray tdcValues = new JSONArray();
+			tdc.put("date", dateFormat.format(TDCdate));
+
+			FeatureIterator<SimpleFeature> iterator = distances.features();
+			try {
+				while (iterator.hasNext()) {
+					SimpleFeature feature = iterator.next();
+					Date toDate = dateFormat.parse(feature.getProperty("toDate").getValue().toString());
+
+					// if wanted tdc -> store value to json
+					if (TDCdate.equals(toDate)) {
+						JSONObject tdcdata = new JSONObject();
+						tdcdata.put("radiale", (String) feature.getProperty("radiale").getValue());
+						// separate_dist
+						tdcdata.put("separateDist", (Double) feature.getProperty("separate_dist").getValue());
+						// cumulate_dist
+						tdcdata.put("cumulateDist", (Double) feature.getProperty("cumulate_dist").getValue());
+						// taux_recul
+						tdcdata.put("tauxRecul", (Double) feature.getProperty("taux_recul").getValue());
+						tdcValues.put(tdcdata);
+					}
+				}
+				tdc.put("data", tdcValues);
+			} catch (ClassCastException e) {
+				LOGGER.error("Error while casting distance to double", e);
+			} catch (ParseException e) {
+				LOGGER.error("Error while parsing date", e);
+			}  finally {
+				iterator.close();
+			}
+			results.put(tdc);
+		}	
+
+		return results.toString();
+	}
+
 	@DescribeProcess(title = "coastLinesTracking", description = "coastLinesTracking WPS")
-	@DescribeResult(name = "csvString", description = "the result of coastLinesTracking WPS")
+	@DescribeResult(name = "jsonString", description = "the result of coastLinesTracking WPS")
 	public static String coastLinesTracking(
 			@DescribeParameter(name = "referenceLine", description = "the input referenceLine") final FeatureCollection<SimpleFeatureType, SimpleFeature> referenceLine,
 			@DescribeParameter(name = "radialLength", description = "the length of radial in M") final double length,
@@ -306,14 +364,14 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			}
 		}
 
-		String csv = getDistancesToCSV(fc2);
+		String json = getDistancesToJson(fc2);
 
 		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug("CSV information : ");
-			LOGGER.debug("CSV result : " + csv);
+			LOGGER.debug("Json information : ");
+			LOGGER.debug("Json result : " + json);
 		}
 
-		return csv;
+		return json;
 	}
 
 }

@@ -37,10 +37,15 @@ public class TestWPS {
 			FeatureCollection<SimpleFeatureType, SimpleFeature> distanceFc = getDistancesTest(drawRadialsFc, coastLines);
 			getGeoJsonFile(distanceFc, dataDir, "distancesFc");
 			LOGGER.info("distanceFc.json est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
+			
 			// get distance to csv Test
 			String csvString = getDistancesToCSVTest(distanceFc);
 			getCSVFile(csvString, dataDir, "distances.csv");
 			LOGGER.info("distances.csv est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
+
+			String jsonString = getDistancesToJsonTest(distanceFc);
+			getCSVFile(jsonString, dataDir, "distances.json");
+			LOGGER.info("jsonString est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
 
 		} catch (FileNotFoundException e) {
 			LOGGER.error("Fichiers introuvables", e);
@@ -66,6 +71,11 @@ public class TestWPS {
 	public static String getDistancesToCSVTest(FeatureCollection<SimpleFeatureType, SimpleFeature> distances) {
 
 		return CoastLinesTrackingWPS.getDistancesToCSV(distances);
+	}
+
+	public static String getDistancesToJsonTest(FeatureCollection<SimpleFeatureType, SimpleFeature> distances) {
+
+		return CoastLinesTrackingWPS.getDistancesToJson(distances);
 	}
 
 	public static FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatureCollections(File refLineFile)
