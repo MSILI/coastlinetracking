@@ -269,7 +269,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 
 		List<Date> TDCdates = WPSUtils.getDatesFromFeatures(distances);
 
-		JSONArray results = new JSONArray();
+		JSONObject result = new JSONObject();
+		JSONArray resultsArray = new JSONArray();
 		
 		// get all tdc result
 		for (Date TDCdate : TDCdates){
@@ -305,10 +306,10 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			}  finally {
 				iterator.close();
 			}
-			results.put(tdc);
+			resultsArray.put(tdc);
 		}	
-
-		return results.toString();
+		result.put("result", resultsArray);
+		return result.toString();
 	}
 
 	@DescribeProcess(title = "coastLinesTracking", description = "coastLinesTracking WPS")
