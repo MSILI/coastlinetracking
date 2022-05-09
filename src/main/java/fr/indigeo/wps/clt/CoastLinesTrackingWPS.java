@@ -180,7 +180,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					simpleFeatureBuilder.add(separateDistance);
 					simpleFeatureBuilder.add(accumulateDistance);
 					simpleFeatureBuilder.add(taux);
-					resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(id + ""));
+					resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(Integer.toString(id)));
 
 					LOGGER.debug("Distance information : radial - " + radial.getKey() + " Date - " + line.getKey()[0]  + " Date - " + line.getKey()[1]);
 				}
