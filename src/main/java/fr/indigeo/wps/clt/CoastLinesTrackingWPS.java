@@ -122,7 +122,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 	@DescribeResult(name = "resultFeatureCollection", description = "the result of distance calculting.")
 	public static FeatureCollection<SimpleFeatureType, SimpleFeature> getDistances(
 			@DescribeParameter(name = "radials", description = "the result featureCollection from draw radials process") final FeatureCollection<SimpleFeatureType, SimpleFeature> radials,
-			@DescribeParameter(name = "coaslines", description = "the input Coaslines") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
+			@DescribeParameter(name = "coastlines", description = "the input Coaslines") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
 
 		DefaultFeatureCollection resultFeatureCollection = null;
 		try {
@@ -224,7 +224,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 		dataList.add(headers);
 		dataList.add(subHeaders);
 
-		for (String radiale : WPSUtils.getRadialsNameFromFeatures(distances)) {
+		for (Integer radiale : WPSUtils.getRadialsNameFromFeatures(distances)) {
 			String data = radiale + sep;
 			for (int i = 1; i < dates.size(); i++) {
 

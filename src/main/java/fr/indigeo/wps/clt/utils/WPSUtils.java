@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -116,7 +115,7 @@ public class WPSUtils {
 				else
 					throw new Exception("la geometrie n'est pas une LineString !");
 			} else
-				throw new Exception("aucune LineString dans les donn�es.");
+				throw new Exception("aucune LineString dans les données.");
 		} catch (Exception e) {
 			LOGGER.error("Error while executing getReferenceLineFromFeature", e);
 		} finally {
@@ -550,14 +549,14 @@ public class WPSUtils {
 	 * @param featureCollection
 	 * @return
 	 */
-	public static List<String> getRadialsNameFromFeatures(
+	public static List<Integer> getRadialsNameFromFeatures(
 			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
-		List<String> listOfRadialsName = new ArrayList<String>();
+		List<Integer> listOfRadialsName = new ArrayList<Integer>();
 		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
 		try {
 			while (iterator.hasNext()) {
 				SimpleFeature feature = iterator.next();
-				String radiale = feature.getProperty("radiale").getValue().toString();
+				int radiale = Integer.valueOf(feature.getProperty("radiale").getValue().toString());
 
 				if (!listOfRadialsName.contains(radiale))
 					listOfRadialsName.add(radiale);
@@ -568,9 +567,10 @@ public class WPSUtils {
 			LOGGER.error("Error while executing getRadialsNameFromFeatures", e);
 		} finally {
 			iterator.close();
-		}
+		}		
 
-		return sortRadialsByName(listOfRadialsName);
+		Collections.sort(listOfRadialsName);
+		return listOfRadialsName;
 	}
 
 	/**
@@ -582,15 +582,15 @@ public class WPSUtils {
 	 * @return
 	 */
 	public static double getDistanceByType(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection,
-			int type, Date date, String radialeName) {
+			int type, Date date, int radialeKey) {
 
 		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
 		try {
 			while (iterator.hasNext()) {
 				SimpleFeature feature = iterator.next();
-				String radiale = feature.getProperty("radiale").getValue().toString();
+				int radiale = Integer.parseInt(feature.getProperty("radiale").getValue().toString());
 				Date toDate = dateFormat.parse(feature.getProperty("toDate").getValue().toString());
-				if (radialeName.equals(radiale) && date.equals(toDate)) {
+				if (radialeKey == radiale && date.equals(toDate)) {
 					// separate_dist
 					if (type == 1)
 						return (Double) feature.getProperty("separate_dist").getValue();
@@ -600,39 +600,13 @@ public class WPSUtils {
 					// taux_recul
 					if (type == 3)
 						return (Double) feature.getProperty("taux_recul").getValue();
-
 				}
-
 			}
-
 		} catch (Exception e) {
 			LOGGER.error("Error while executing getDistanceByType", e);
 		} finally {
 			iterator.close();
 		}
-
 		return -1;
 	}
-
-	/**
-	 * 
-	 * @param radialsNames
-	 * @return
-	 */
-	private static List<String> sortRadialsByName(List<String> radialsNames) {
-		Collections.sort(radialsNames, new Comparator<String>() {
-			public int compare(String s1, String s2) {
-				return extractInt(s1) - extractInt(s2);
-			}
-
-			int extractInt(String s) {
-				String num = s.replaceAll("\\D", "");
-				// return 0 if no digits found
-				return num.isEmpty() ? 0 : Integer.parseInt(num);
-			}
-		});
-
-		return radialsNames;
-	}
-
 }
