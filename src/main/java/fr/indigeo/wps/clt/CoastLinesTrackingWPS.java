@@ -99,8 +99,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 				int id = i + 1;
 				simpleFeatureBuilder.add(listRadiales.get(i));
 				simpleFeatureBuilder.add("radiale");
-				simpleFeatureBuilder.add("R" + id);
-				resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(id + ""));
+				simpleFeatureBuilder.add(id);
+				resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(Integer.toString(id)));
 			}
 
 		} catch (NoSuchAuthorityCodeException e) {
@@ -129,7 +129,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			SimpleFeatureTypeBuilder simpleFeatureTypeBuilder = new SimpleFeatureTypeBuilder();
 			simpleFeatureTypeBuilder.setName("featureType");
 			simpleFeatureTypeBuilder.add("geometry", LineString.class);
-			simpleFeatureTypeBuilder.add("radiale", String.class);
+			simpleFeatureTypeBuilder.add("radiale", Integer.class);
 			simpleFeatureTypeBuilder.add("fromDate", String.class);
 			simpleFeatureTypeBuilder.add("toDate", String.class);
 			simpleFeatureTypeBuilder.add("separate_dist", Double.class);
@@ -288,7 +288,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					// if wanted tdc -> store value to json
 					if (TDCdate.equals(toDate)) {
 						JSONObject tdcdata = new JSONObject();
-						tdcdata.put("radiale", (String) feature.getProperty("radiale").getValue());
+						tdcdata.put("radiale", (Integer) feature.getProperty("radiale").getValue());
 						// separate_dist
 						tdcdata.put("separateDist", (Double) feature.getProperty("separate_dist").getValue());
 						// cumulate_dist
