@@ -363,18 +363,19 @@ public class WPSUtils {
 	/**
 	 * 
 	 * @param dates
-	 * @param date
+	 * @param currentDate
 	 * @return
 	 */
-	public static List<Date> getBeforDates(List<Date> dates, Date date) {
+	public static List<Date> getBeforDates(List<Date> dates, Date currentDate) {
 
-		List<Date> datesBefor = new ArrayList<Date>();
+		List<Date> datesBefore = new ArrayList<Date>();
 		for (Date d : dates) {
-			if (date.compareTo(d) > 0)
-				datesBefor.add(d);
+			if (currentDate.compareTo(d) < 0){
+				datesBefore.add(d);
+			}
 		}
 
-		return datesBefor;
+		return datesBefore;
 	}
 
 	/**
@@ -420,15 +421,14 @@ public class WPSUtils {
 	 * @param intersectedPoints
 	 * @return
 	 */
-	public static Map<String, Map<Date[], LineString>> getComposedSegment(
-			Map<String, Map<Date, Point>> intersectedPoints) {
+	public static Map<String, Map<Date[], LineString>> getComposedSegment(Map<String, Map<Date, Point>> intersectedPoints) {
 
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		Map<String, Map<Date[], LineString>> composedSegments = new HashMap<String, Map<Date[], LineString>>();
 
 		for (Map.Entry<String, Map<Date, Point>> radial : intersectedPoints.entrySet()) {
 
-			LOGGER.debug("getComposedSegment traitement de " + radial.getKey());
+			LOGGER.debug("getComposedSegment traitement de radial :" + radial.getKey());
 			if (radial.getValue().size() > 1) {
 				Map<Date[], LineString> lines = new HashMap<Date[], LineString>();
 
@@ -450,10 +450,9 @@ public class WPSUtils {
 
 					lines.put(formToCoastLinesDate, geometryFactory.createLineString(coordinates));
 				}
-
 				composedSegments.put(radial.getKey(), lines);
+				LOGGER.debug("getComposedSegment  radiale n° " + radial.getKey());
 			}
-
 		}
 		
 		LOGGER.debug("getComposedSegment  " +  composedSegments.size()+ " nb elements in response");
@@ -463,11 +462,11 @@ public class WPSUtils {
 	/**
 	 * 
 	 * @param distanceSeguments
-	 * @param datesBefor
+	 * @param datesBefore
 	 * @param radialeName
 	 * @return
 	 */
-	public static double getCumulatedDistance(Map<String, Map<Date[], LineString>> distanceSeguments, List<Date> datesBefor, String radialeName) {
+	public static double getCumulatedDistance(Map<String, Map<Date[], LineString>> distanceSeguments, List<Date> datesBefore, String radialeName) {
 
 		LOGGER.debug("getCumulatedDistance for radial  " + radialeName);		
 		double cumulDist = 0;
@@ -475,7 +474,7 @@ public class WPSUtils {
 		for (Map.Entry<String, Map<Date[], LineString>> radial : distanceSeguments.entrySet()) {
 			for (Map.Entry<Date[], LineString> line : radial.getValue().entrySet()) {
 
-				for (Date d : datesBefor) {
+				for (Date d : datesBefore) {
 					double separateDistance = 0;
 					if (line.getKey()[0].compareTo(d) == 0 && radial.getKey().equals(radialeName))
 						if ((line.getValue().getStartPoint().getX() < line.getValue().getEndPoint().getX())
