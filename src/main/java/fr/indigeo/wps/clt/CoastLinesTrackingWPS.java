@@ -171,7 +171,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					}
 
 					int nbrJours = WPSUtils.getNbrDaysBetweenTwoDate(line.getKey()[0], line.getKey()[1]);
-					double taux = separateDistance / nbrJours;
+					// Taux annuel
+					double taux = (separateDistance / nbrJours) * 365;
 
 					simpleFeatureBuilder.add(line.getValue());
 					simpleFeatureBuilder.add(radial.getKey());
