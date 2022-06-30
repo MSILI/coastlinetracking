@@ -87,9 +87,6 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 				listRadiales.add(radiale);
 			}
 
-			radiale = WPSUtils.createRadialSegment(segements.get(segements.size() - 1), length, direction, false);
-			listRadiales.add(radiale);
-
 			// init DefaultFeatureCollection
 			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(simpleFeatureTypeBuilder.buildFeatureType());
 			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
