@@ -26,6 +26,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiPoint;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 
@@ -395,10 +396,14 @@ public class WPSUtils {
 					LOGGER.debug("getIntersectedPoints intersection entre la radial et un trait de cote");
 					LOGGER.debug("getIntersectedPoints coastline " +  coastLine.getKey() + "-" + coastLine.getValue());
 					// Ajout le point d'intersection avec la date comme clé
-					try{
-						intersectPoints.put(coastLine.getKey(),	(Point) radial.getValue().intersection(coastLine.getValue()));
-					}catch(ClassCastException e){
-						LOGGER.error("Multipoint found when intersect", e);
+					Geometry intersectValues = radial.getValue().intersection(coastLine.getValue());
+					if(intersectValues.getGeometryType() == Geometry.TYPENAME_POINT){
+						intersectPoints.put(coastLine.getKey(), (Point) intersectValues);
+					}else if (intersectValues.getGeometryType() == Geometry.TYPENAME_MULTIPOINT){
+						// Get Mutipoint centroid
+						intersectPoints.put(coastLine.getKey(),	(Point) intersectValues.getCentroid());
+					}else{
+						LOGGER.error("Intersection geometry type not handle " + intersectValues.getGeometryType());
 					}
 				}
 			}
