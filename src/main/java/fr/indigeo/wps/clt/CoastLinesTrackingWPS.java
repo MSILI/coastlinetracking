@@ -74,6 +74,10 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			simpleFeatureTypeBuilder.add("name", String.class);
 
 			LineString refLine = WPSUtils.getReferenceLineFromFeature(referenceLine);
+			if(referenceLine == null){
+				throw new Exception("Erreur de lecture de la line de référence vérifier les données en entrée");
+			}
+			// create radials
 			LinkedList<LineString> segements = WPSUtils.createSegments(refLine, distance);
 			LinkedList<LineString> listRadiales = new LinkedList<LineString>();
 			LineString radiale = null;

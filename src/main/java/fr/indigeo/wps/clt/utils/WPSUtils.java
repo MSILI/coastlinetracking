@@ -99,30 +99,24 @@ public class WPSUtils {
 	 * 
 	 * @param featureCollection
 	 * @return
-	 * @throws Exception
 	 */
 	public static LineString getReferenceLineFromFeature(
-			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) throws Exception {
+			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		FeatureIterator<SimpleFeature> iterator = featureCollection.features();
-		try {
-			// getLineString from Feature
-			if (iterator.hasNext()) {
-				SimpleFeature feature = iterator.next();
-				Geometry geometry = (Geometry) feature.getDefaultGeometry();
-				if (geometry instanceof LineString)
-					return geometryFactory.createLineString(geometry.getCoordinates());
-				else
-					throw new Exception("la geometrie n'est pas une LineString !");
-			} else
-				throw new Exception("aucune LineString dans les données.");
-		} catch (Exception e) {
-			LOGGER.error("Error while executing getReferenceLineFromFeature", e);
-		} finally {
-			iterator.close();
-		}
 
-		return null;
+		LineString result = null;
+		// getLineString from Feature
+		if (iterator.hasNext()) {
+			SimpleFeature feature = iterator.next();
+			Geometry geometry = (Geometry) feature.getDefaultGeometry();
+			if (geometry instanceof LineString){
+				result = geometryFactory.createLineString(geometry.getCoordinates());
+			}
+			iterator.close();
+		} 
+			
+		return result;
 	}
 
 	/**
