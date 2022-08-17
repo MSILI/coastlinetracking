@@ -34,22 +34,26 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-process</artifactId>
 			<version>${geotools.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-process-geometry</artifactId>
 			<version>${geotools.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.geoserver.extension</groupId>
 			<artifactId>gs-wps-core</artifactId>
 			<version>${geoserver.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-wps</artifactId>
 			<version>${geotools.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
@@ -62,6 +66,7 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
+			<scope>provided</scope>
         </dependency>
 	</dependencies>  
 </project>
