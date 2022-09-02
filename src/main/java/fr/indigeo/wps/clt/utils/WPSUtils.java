@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -429,7 +430,7 @@ public class WPSUtils {
 
 			LOGGER.debug("getComposedSegment traitement de radial :" + radial.getKey());
 			if (radial.getValue().size() > 1) {
-				Map<Date[], LineString> lines = new HashMap<Date[], LineString>();
+				Map<Date[], LineString> lines = new LinkedHashMap<Date[], LineString>();
 
 				List<Date> keyList = new ArrayList<Date>(radial.getValue().keySet());
 				LOGGER.debug("getComposedSegment keyList size " + keyList.size());

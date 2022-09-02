@@ -150,11 +150,12 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			int id = 0;
 			for (Map.Entry<String, Map<Date[], LineString>> radial : composedSegments.entrySet()) {
 
+				double accumulateDistance = 0;
+
 				for (Map.Entry<Date[], LineString> line : radial.getValue().entrySet()) {
 
 					LineString ln = line.getValue();
-					double separateDistance = 0;
-					double accumulateDistance = 0;
+					double separateDistance = 0;					
 					id++;
 
 					if ((ln.getStartPoint().getX() < ln.getEndPoint().getX())
@@ -164,12 +165,14 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 						separateDistance = line.getValue().getLength();
 					}
 
-					List<Date> datesBefor = WPSUtils.getBeforDates(dates, line.getKey()[1]);
-					if (!datesBefor.isEmpty()) {
-						accumulateDistance = WPSUtils.getCumulatedDistance(composedSegments, datesBefor, radial.getKey());
-					} else {
-						accumulateDistance = separateDistance;
-					}
+					// List<Date> datesBefor = WPSUtils.getBeforDates(dates, line.getKey()[1]);
+					// if (!datesBefor.isEmpty()) {
+					// 	accumulateDistance = WPSUtils.getCumulatedDistance(composedSegments, datesBefor, radial.getKey());
+					// } else {
+					// 	accumulateDistance = separateDistance;
+					// }
+
+					accumulateDistance = accumulateDistance + separateDistance;
 
 					int nbrJours = WPSUtils.getNbrDaysBetweenTwoDate(line.getKey()[0], line.getKey()[1]);
 					// Taux annuel
