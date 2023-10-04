@@ -20,8 +20,22 @@ public class TestWPS {
 	private static final Logger LOGGER = Logger.getLogger(TestWPS.class);
 
 	private static final File dataDir = new File("data");
-	private static final File refLineFile = new File(dataDir, "refLine.json");
+	private static final File refLineFile = new File(dataDir, "refLine_z.json");
 	private static final File coastLinesFile = new File(dataDir, "coastLines.json");
+
+	@Test
+	public void testCreateRadials() {
+		try{
+			FeatureCollection<SimpleFeatureType, SimpleFeature> refLineFc = getFeatureCollections(refLineFile);
+			FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadialsFc = getRadialsTest(refLineFc, 100, 50,
+					true);
+			getGeoJsonFile(drawRadialsFc, dataDir, "drawRadialsFc");
+		} catch (FileNotFoundException e) {
+			LOGGER.error("Fichiers introuvables", e);
+		} catch (IOException e) {
+			LOGGER.error("Erreur entrées sorties", e);
+		}
+	}
 
 	@Test
 	public void testAllServices() {
