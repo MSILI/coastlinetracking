@@ -134,24 +134,16 @@ public class WPSUtils {
 				/ (segment.getEndPoint().getCoordinate().x - segment.getStartPoint().getCoordinate().x);
 	}
 
-	private static double getSlopeInvert(LineString segment) {
-		// coefficient directeur entre le point de départ du segment et le point de fin
-		// point de départ = x1,y1
-		// point de fin = x2,y2
-		// coefficient directeur = y2-y1/x2-x1
-		Point startPoint = segment.getEndPoint();
-		Point endPoint = segment.getStartPoint();
-		return (segment.getStartPoint().getCoordinate().y - segment.getEndPoint().getCoordinate().y)
-				/ (segment.getStartPoint().getCoordinate().x - segment.getEndPoint().getCoordinate().x);
-	}
-
-	private static Coordinate getNewPoint(LineString line, double slope, double distance) {
+		private static Coordinate getNewPoint(LineString line, double slope, double distance, boolean sens, boolean segmentType) {
 		// Calcule de b (ordonnée à l'origine) pour l'équation de la droite initiale
 		// y1 = m*x1+b
-		double y = line.getStartPoint().getCoordinate().y;
-		double x = line.getStartPoint().getCoordinate().x;
+		double y = line.getEndPoint().getCoordinate().y;
+		double x = line.getEndPoint().getCoordinate().x;
+		if(!segmentType) {
+			y = line.getStartPoint().getCoordinate().y;
+			x = line.getStartPoint().getCoordinate().x;
+		}
 		double m = slope;
-		double b = y - m * x;
 		// on connait l'équation de droite initiale. On défini la pente de la perpendiculaire
 		// double m2 = -1 / m;
 		// on utilise le point d'intersection (x,y) précédent pour avoir l'équation de la droite perpendiculaire
@@ -167,7 +159,11 @@ public class WPSUtils {
 		// y2 = y1 + m * (d / sqrt(1 + m^2))
 		m = -1 / m;
 		double x2 = x + (distance / Math.sqrt(1 + (m * m)));
-		double y2 = y + m * (distance / Math.sqrt(1 + (m * m)));
+		double y2 = y + m * (distance / Math.sqrt(1 + (m * m)));			
+		if (!sens) {
+			x2 = x + -1*(distance / Math.sqrt(1 + (m * m)));
+			y2 = y + -1*m * (distance / Math.sqrt(1 + (m * m)));			
+		}
 
 		Coordinate newPoint = new Coordinate(x2, y2);
 
@@ -182,134 +178,25 @@ public class WPSUtils {
 	 * @param segmentType
 	 * @return
 	 */
-	private static double calculateX(LineString segment, double length, boolean sense, boolean segmentType) {
-		// choisir le referentiel en metre 2154
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
-		double slope = 0;
-		double X = 0;
-		double resultX = 0;
-		// récupérer les coordonées de la lineString qui représente un seguement de la
-		// ligne de référence
-		Coordinate[] coordinates = segment.getCoordinates();
-		LineString newSegment = null;
-
-		X = segment.getStartPoint().getX();
-
-		if (coordinates.length == 2) {
-			// si la ligne est composée de seulement 2 points,
-			// alors c'est une ligne d'une seule direction
-			slope = getSlope(segment);
-		} else {
-			// si la ligne est composée de plusieurs points
-			// qui forme un ensemble de sous-segments,
-			// alors on calcule la pente entre les deux première coordonnées qui forment le premier 
-			// sous-segment
-			newSegment = geometryFactory.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
-			slope = getSlope(newSegment);
-		}
-		// sens = true => x = pente du seguement * racineCarrée(langueur au carée /
-		// (pente/2 le tout au carré + 1)) + la coordonée x d'un point du seguement
-		if (sense) {
-			resultX = slope * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + X;
-		} else {
-			// la pente inverse est calculée avec -1
-			// -----------
-			// sens = false => x = -1 * pente du seguement * racineCarrée(langueur au carée
-			// / (pente/2 le tout au carré + 1)) + la coordonée x d'un pont du seguement
-			resultX = -1 * slope * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + X;
-		}
-
-		return resultX;
-	}
-
-	/**
-	 * 
-	 * @param segment
-	 * @param length
-	 * @param sense
-	 * @param segmentType
-	 * @return
-	 */
-	private static double calculateY(LineString segment, double length, boolean sense, boolean segmentType) {
-		// choisir le referentiel en metre 2154
-		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
-		double slope = 0;
-		double Y = 0;
-		double resultY = 0;
-		// récupérer les coordonées de la lineString qui représente un seguement de la
-		// ligne de référence
-		Coordinate[] coordinates = segment.getCoordinates();
-		LineString newSegment = null;
-		// segmentType = true => tout les seguement sauf le dernier
-		if (segmentType) {
-			Y = segment.getStartPoint().getY();
-			// segmentType = false => le dernier seguement
-		} else {
-			Y = segment.getEndPoint().getY();
-		}
-		// si le seguement est tout droit
-		if (coordinates.length == 2) {
-			slope = getSlope(segment);
-		} else {
-			// si le seguement n'est tout droit on calcule la pente du premier
-			// sous-seguement
-			newSegment = geometryFactory.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
-			slope = getSlope(newSegment);
-		}
-		// sens = true => y = -1 * racineCarrée(longueur au carré / (pente/2 le tout au
-		// carré + 1)) + la coordonée y d'un point du seguement
-		if (sense) {
-			resultY = -1 * Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + Y;
-		} else {
-			// sens = true => y = racineCarrée(longueur au carré / (pente/2 le tout au carré
-			// + 1)) + la coordonée y d'un point du seguement
-
-			resultY = Math.sqrt(Math.pow(length, 2) / (Math.pow(slope, 2) + 1)) + Y;
-		}
-
-		return resultY;
-	}
-
-	/**
-	 * 
-	 * @param segment
-	 * @param length
-	 * @param sense
-	 * @param segmentType
-	 * @return
-	 */
 	public static LineString createRadialSegment(LineString segment, double length,
-			boolean sense,
+			boolean sens,
 			boolean segmentType) {
+		Coordinate p = null;
 		LineString radialSegment = null;
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
-		double X = calculateX(segment, length, sense, segmentType);
-		
-		double Y = calculateY(segment, length, sense, segmentType);
 		// get point according to sens
 		double slope = getSlope(segment);
-		Coordinate p = getNewPoint(segment, slope, length);
-		// TO DO : return previous upstream point for other sens
-		// double slope_invert = getSlopeInvert(segment);
-		//Coordinate pInvert = getNewPoint(segment, slope_invert, length);
-
+		
 		if (segmentType) {
-
+			p = getNewPoint(segment, slope, length, sens, segmentType);
 			radialSegment = geometryFactory.createLineString(
-					new Coordinate[] { segment.getEndPoint().getCoordinate(), new Coordinate(p.x, p.y)});
+				new Coordinate[] { segment.getEndPoint().getCoordinate(), new Coordinate(p.x, p.y)});			
 		} else {
-			if (sense && X < segment.getEndPoint().getX()) {
-				X = calculateX(segment, length, !sense, segmentType);
-				Y = calculateY(segment, length, !sense, segmentType);
-			}
-
-			if (!sense && X > segment.getStartPoint().getX() && Y > segment.getEndPoint().getY()) {
-				X = calculateX(segment, length, !sense, segmentType);
-				Y = calculateY(segment, length, !sense, segmentType);
-			}
-			radialSegment = geometryFactory
-					.createLineString(new Coordinate[] { new Coordinate(X, Y), segment.getEndPoint().getCoordinate() });
+			p = getNewPoint(segment, slope, length, sens, segmentType);
+			radialSegment = geometryFactory.createLineString(
+				new Coordinate[] { segment.getStartPoint().getCoordinate(), new Coordinate(p.x, p.y)});
 		}
+
 		return radialSegment;
 	}
 

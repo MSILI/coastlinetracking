@@ -83,12 +83,24 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			LineString radiale = null;
 
 			// create radials
-			if(LOGGER.isDebugEnabled()){
+			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("Create radials with " + segements.size() + " elements");
 			}
+			int n = 0;
 			for (LineString l : segements) {
-				radiale = WPSUtils.createRadialSegment(l, length, direction, true);
-				listRadiales.add(radiale);
+				if (n == segements.size() - 1) {
+					continue;
+				}
+				if (n == 0) {
+					radiale = WPSUtils.createRadialSegment(l, length, direction, false);
+					listRadiales.add(radiale);
+					radiale = WPSUtils.createRadialSegment(l, length, direction, true);
+					listRadiales.add(radiale);
+				} else {
+					radiale = WPSUtils.createRadialSegment(l, length, direction, true);
+					listRadiales.add(radiale);
+				}
+				n++;
 			}
 
 			// init DefaultFeatureCollection
