@@ -134,36 +134,67 @@ public class WPSUtils {
 				/ (segment.getEndPoint().getCoordinate().x - segment.getStartPoint().getCoordinate().x);
 	}
 
-		private static Coordinate getNewPoint(LineString line, double slope, double distance, boolean sens, boolean segmentType) {
+	private static double getRealDirection(LineString line, boolean direction) {
+		double orientation = 0;
+		double yStart = line.getStartPoint().getCoordinate().y;
+		double yEnd = line.getEndPoint().getCoordinate().y;
+		double xEnd = line.getEndPoint().getCoordinate().y;
+		double xStart = line.getEndPoint().getCoordinate().x;
+		if (direction == false) {
+			orientation = 1;
+			if (yStart < yEnd) {
+				orientation = -1;
+			}
+			if (yEnd == yStart && xStart > xEnd) {
+				orientation = -1;
+			}
+			if (yEnd == yStart && xStart < xEnd) {
+				orientation = 1;
+			}
+		} else if (direction == true) {
+			orientation = -1;
+			if (yStart < yEnd) {
+				orientation = 1;
+			}
+			if (yEnd == yStart && xStart > xEnd) {
+				orientation = 1;
+			}
+			if (yEnd == yStart && xStart < xEnd) {
+				orientation = -1;
+			}
+		}
+		return orientation;
+	}
+
+	private static Coordinate getNewPoint(LineString line, double slope, double distance, boolean sens,
+			boolean segmentType) {
 		// Calcule de b (ordonnée à l'origine) pour l'équation de la droite initiale
 		// y1 = m*x1+b
 		double y = line.getEndPoint().getCoordinate().y;
 		double x = line.getEndPoint().getCoordinate().x;
-		if(!segmentType) {
+		if (!segmentType) {
 			y = line.getStartPoint().getCoordinate().y;
 			x = line.getStartPoint().getCoordinate().x;
 		}
 		double m = slope;
-		// on connait l'équation de droite initiale. On défini la pente de la perpendiculaire
+		// on connait l'équation de droite initiale. On défini la pente de la
+		// perpendiculaire
 		// double m2 = -1 / m;
-		// on utilise le point d'intersection (x,y) précédent pour avoir l'équation de la droite perpendiculaire
+		// on utilise le point d'intersection (x,y) précédent pour avoir l'équation de
+		// la droite perpendiculaire
 		// double b2 = y - m2 * x;
 
-
-		// on défini un point de la droite paralèlle
-		// avec b, on peut calculer un nouveau point en prenant :
+		// On défini un point de la droite paralèlle.
 		// d : la distance
 		// m : le coefficient directeur appelé aussi pente
 		// x et y les coordonnée d'un point sur la droite (segment)
 		// x2 = x1 + (d / sqrt(1 + m^2))
 		// y2 = y1 + m * (d / sqrt(1 + m^2))
 		m = -1 / m;
-		double x2 = x + (distance / Math.sqrt(1 + (m * m)));
-		double y2 = y + m * (distance / Math.sqrt(1 + (m * m)));			
-		if (!sens) {
-			x2 = x + -1*(distance / Math.sqrt(1 + (m * m)));
-			y2 = y + -1*m * (distance / Math.sqrt(1 + (m * m)));			
-		}
+		// on va maintenant calculer le sens
+		double orientation = getRealDirection(line, sens);
+		double x2 = x + orientation * (distance / Math.sqrt(1 + (m * m)));
+		double y2 = y + orientation * m * (distance / Math.sqrt(1 + (m * m)));
 
 		Coordinate newPoint = new Coordinate(x2, y2);
 
@@ -186,15 +217,15 @@ public class WPSUtils {
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		// get point according to sens
 		double slope = getSlope(segment);
-		
+
 		if (segmentType) {
 			p = getNewPoint(segment, slope, length, sens, segmentType);
 			radialSegment = geometryFactory.createLineString(
-				new Coordinate[] { segment.getEndPoint().getCoordinate(), new Coordinate(p.x, p.y)});			
+					new Coordinate[] { segment.getEndPoint().getCoordinate(), new Coordinate(p.x, p.y) });
 		} else {
 			p = getNewPoint(segment, slope, length, sens, segmentType);
 			radialSegment = geometryFactory.createLineString(
-				new Coordinate[] { segment.getStartPoint().getCoordinate(), new Coordinate(p.x, p.y)});
+					new Coordinate[] { segment.getStartPoint().getCoordinate(), new Coordinate(p.x, p.y) });
 		}
 
 		return radialSegment;
@@ -285,7 +316,7 @@ public class WPSUtils {
 			dates = new LinkedList<Date>();
 			for (Map.Entry<Date, LineString> entry : coastLineMap.entrySet()) {
 				dates.add(entry.getKey());
-				LOGGER.debug("Date : "+ entry.getKey());
+				LOGGER.debug("Date : " + entry.getKey());
 			}
 		}
 		LOGGER.debug("getDatesFromCoastLinesMap " + dates.size() + " dates in list");
@@ -302,7 +333,7 @@ public class WPSUtils {
 
 		List<Date> datesBefore = new ArrayList<Date>();
 		for (Date d : dates) {
-			if (currentDate.compareTo(d) < 0){
+			if (currentDate.compareTo(d) < 0) {
 				datesBefore.add(d);
 			}
 		}
@@ -331,15 +362,15 @@ public class WPSUtils {
 				// Si la radial intersect le traît de côte
 				if (radial.getValue().intersects(coastLine.getValue())) {
 					LOGGER.debug("getIntersectedPoints intersection entre la radial et un trait de cote");
-					LOGGER.debug("getIntersectedPoints coastline " +  coastLine.getKey() + "-" + coastLine.getValue());
+					LOGGER.debug("getIntersectedPoints coastline " + coastLine.getKey() + "-" + coastLine.getValue());
 					// Ajout le point d'intersection avec la date comme clé
 					Geometry intersectValues = radial.getValue().intersection(coastLine.getValue());
-					if(intersectValues.getGeometryType() == Geometry.TYPENAME_POINT){
+					if (intersectValues.getGeometryType() == Geometry.TYPENAME_POINT) {
 						intersectPoints.put(coastLine.getKey(), (Point) intersectValues);
-					}else if (intersectValues.getGeometryType() == Geometry.TYPENAME_MULTIPOINT){
+					} else if (intersectValues.getGeometryType() == Geometry.TYPENAME_MULTIPOINT) {
 						// Get Mutipoint centroid
-						intersectPoints.put(coastLine.getKey(),	(Point) intersectValues.getCentroid());
-					}else{
+						intersectPoints.put(coastLine.getKey(), (Point) intersectValues.getCentroid());
+					} else {
 						LOGGER.error("Intersection geometry type not handle " + intersectValues.getGeometryType());
 					}
 				}
@@ -348,7 +379,7 @@ public class WPSUtils {
 			intersectedPoints.put(radial.getKey(), new TreeMap<Date, Point>(intersectPoints));
 		}
 
-		LOGGER.debug("getIntersectedPoints  " +  intersectedPoints.size()+ " nb element in response");
+		LOGGER.debug("getIntersectedPoints  " + intersectedPoints.size() + " nb element in response");
 		return intersectedPoints;
 	}
 
@@ -357,7 +388,8 @@ public class WPSUtils {
 	 * @param intersectedPoints
 	 * @return
 	 */
-	public static Map<String, Map<Date[], LineString>> getComposedSegment(Map<String, Map<Date, Point>> intersectedPoints) {
+	public static Map<String, Map<Date[], LineString>> getComposedSegment(
+			Map<String, Map<Date, Point>> intersectedPoints) {
 
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		Map<String, Map<Date[], LineString>> composedSegments = new HashMap<String, Map<Date[], LineString>>();
@@ -391,7 +423,7 @@ public class WPSUtils {
 			}
 		}
 
-		LOGGER.debug("getComposedSegment  " +  composedSegments.size()+ " nb elements in response");
+		LOGGER.debug("getComposedSegment  " + composedSegments.size() + " nb elements in response");
 		return composedSegments;
 	}
 
@@ -402,7 +434,8 @@ public class WPSUtils {
 	 * @param radialeName
 	 * @return
 	 */
-	public static double getCumulatedDistance(Map<String, Map<Date[], LineString>> distanceSeguments, List<Date> datesBefore, String radialeName) {
+	public static double getCumulatedDistance(Map<String, Map<Date[], LineString>> distanceSeguments,
+			List<Date> datesBefore, String radialeName) {
 
 		LOGGER.debug("getCumulatedDistance for radial  " + radialeName);
 		double cumulDist = 0;
@@ -447,7 +480,8 @@ public class WPSUtils {
 	 * @param featureCollection
 	 * @return
 	 */
-	public static List<Date> getDatesFromFeatures(FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
+	public static List<Date> getDatesFromFeatures(
+			FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection) {
 
 		List<Date> listOfDate = new ArrayList<Date>();
 		LOGGER.debug("getDatesFromFeatures nb element in collection features " + featureCollection.size());
@@ -458,14 +492,14 @@ public class WPSUtils {
 				Date fromDate = dateFormat.parse(feature.getProperty("fromDate").getValue().toString());
 				Date toDate = dateFormat.parse(feature.getProperty("toDate").getValue().toString());
 
-				if (!listOfDate.contains(fromDate)){
+				if (!listOfDate.contains(fromDate)) {
 					listOfDate.add(fromDate);
 				}
 
-				if (!listOfDate.contains(toDate)){
+				if (!listOfDate.contains(toDate)) {
 					listOfDate.add(toDate);
 				}
-				LOGGER.debug("FromDate : " + fromDate.toString() + " - toDate : "+ toDate.toString());
+				LOGGER.debug("FromDate : " + fromDate.toString() + " - toDate : " + toDate.toString());
 			}
 
 			Collections.sort(listOfDate);
