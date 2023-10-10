@@ -122,23 +122,6 @@ public class WPSUtils {
 	}
 
 	/**
-	 * Fonction mathématique contenant la définition du coefficient directeur d'une
-	 * pente
-	 * 
-	 * @param startPoint le point de départ
-	 * @param endPoint le point d'arrivée
-	 * @return
-	 */
-	private static double slopeFunc(Point startPoint, Point endPoint) {
-		// coefficient directeur entre le point de départ du segment et le point de fin
-		// point de départ = x1,y1
-		// point de fin = x2,y2
-		// coefficient directeur = y2-y1/x2-x1
-		return (endPoint.getCoordinate().y - startPoint.getCoordinate().y)
-				/ (endPoint.getCoordinate().x - startPoint.getCoordinate().x);
-	}
-
-	/**
 	 * Fonction utilitaire petmettant de calculer la pente d'une géométrie de type
 	 * ligne.
 	 * 
@@ -146,20 +129,12 @@ public class WPSUtils {
 	 * @return {double}
 	 */
 	private static double getSlope(LineString segment) {
-		if (segment.getCoordinates().length > 2) {
-			// si la géométrie est composé de plusieurs segments
-			// alors on calcule la pente du dernier segments de la géométrie
-			// afin d'avoir le coef. directeur de ce dernier segment
-			Coordinate[] coordinates = segment.getCoordinates();
-			int size = coordinates.length;
-			GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
-			LineString newSegment = geometryFactory
-					.createLineString(new Coordinate[] { coordinates[size-2], coordinates[size-1] });
-			return slopeFunc(newSegment.getStartPoint(), newSegment.getEndPoint());
-		} else {
-			// sinon on calcule la pente du segment entre les deux uniques points
-			return slopeFunc(segment.getStartPoint(), segment.getEndPoint());
-		}
+		// coefficient directeur entre le point de départ du segment et le point de fin
+		// point de départ = x1,y1
+		// point de fin = x2,y2
+		// coefficient directeur = y2-y1/x2-x1
+		return (segment.getEndPoint().getCoordinate().y - segment.getStartPoint().getCoordinate().y)
+				/ (segment.getEndPoint().getCoordinate().x - segment.getStartPoint().getCoordinate().x);
 	}
 
 	/**
@@ -264,8 +239,17 @@ public class WPSUtils {
 		LineString radialSegment = null;
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		// get point according to sens
+		
+		if (segment.getCoordinates().length > 2) {
+			// si la géométrie est composé de plusieurs segments
+			// alors on se base sur  dernier segments de la géométrie
+			// afin d'avoir le coef. directeur de ce dernier segment, et une radiale correcte
+			Coordinate[] coordinates = segment.getCoordinates();
+			int size = coordinates.length;
+			segment = geometryFactory
+					.createLineString(new Coordinate[] { coordinates[size - 2], coordinates[size - 1] });
+		}
 		double slope = getSlope(segment);
-
 		if (segmentType) {
 			p = getNewPoint(segment, slope, length, sens, segmentType);
 			radialSegment = geometryFactory.createLineString(

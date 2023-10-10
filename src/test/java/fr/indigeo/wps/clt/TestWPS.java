@@ -28,7 +28,7 @@ public class TestWPS {
 		try{
 			FeatureCollection<SimpleFeatureType, SimpleFeature> refLineFc = getFeatureCollections(refLineFile);
 			FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadialsFc = getRadialsTest(refLineFc, 50, 20,
-					false);
+					true);
 			getGeoJsonFile(drawRadialsFc, dataDir, "drawRadialsFc");
 		} catch (FileNotFoundException e) {
 			LOGGER.error("Fichiers introuvables", e);
