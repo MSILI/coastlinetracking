@@ -151,9 +151,10 @@ public class WPSUtils {
 			// alors on calcule la pente du dernier segments de la géométrie
 			// afin d'avoir le coef. directeur de ce dernier segment
 			Coordinate[] coordinates = segment.getCoordinates();
+			int size = coordinates.length;
 			GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 			LineString newSegment = geometryFactory
-					.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
+					.createLineString(new Coordinate[] { coordinates[size-2], coordinates[size-1] });
 			return slopeFunc(newSegment.getStartPoint(), newSegment.getEndPoint());
 		} else {
 			// sinon on calcule la pente du segment entre les deux uniques points
@@ -214,7 +215,7 @@ public class WPSUtils {
 	 * @param sens        le sens de la radiale
 	 * @param segmentType indique si on utilise le point de départ ou de fin du
 	 *                    segment
-	 * @return {Point}
+	 * @return {Coordinate}
 	 */
 	private static Coordinate getNewPoint(LineString line, double slope, double distance, boolean sens,
 			boolean segmentType) {
