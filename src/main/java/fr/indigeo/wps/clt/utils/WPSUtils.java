@@ -97,6 +97,7 @@ public class WPSUtils {
 	}
 
 	/**
+	 * Permet de calculer la ligne de référence à partir d'entités.
 	 * 
 	 * @param featureCollection
 	 * @return
@@ -121,19 +122,56 @@ public class WPSUtils {
 	}
 
 	/**
+	 * Fonction mathématique contenant la définition du coefficient directeur d'une
+	 * pente
 	 * 
-	 * @param segment
+	 * @param startPoint le point de départ
+	 * @param endPoint le point d'arrivée
 	 * @return
 	 */
-	private static double getSlope(LineString segment) {
+	private static double slopeFunc(Point startPoint, Point endPoint) {
 		// coefficient directeur entre le point de départ du segment et le point de fin
 		// point de départ = x1,y1
 		// point de fin = x2,y2
 		// coefficient directeur = y2-y1/x2-x1
-		return (segment.getEndPoint().getCoordinate().y - segment.getStartPoint().getCoordinate().y)
-				/ (segment.getEndPoint().getCoordinate().x - segment.getStartPoint().getCoordinate().x);
+		return (endPoint.getCoordinate().y - startPoint.getCoordinate().y)
+				/ (endPoint.getCoordinate().x - startPoint.getCoordinate().x);
 	}
 
+	/**
+	 * Fonction utilitaire petmettant de calculer la pente d'une géométrie de type
+	 * ligne.
+	 * 
+	 * @param segment le segment
+	 * @return {double}
+	 */
+	private static double getSlope(LineString segment) {
+		if (segment.getCoordinates().length > 2) {
+			// si la géométrie est composé de plusieurs segments
+			// alors on calcule la pente du dernier segments de la géométrie
+			// afin d'avoir le coef. directeur de ce dernier segment
+			Coordinate[] coordinates = segment.getCoordinates();
+			GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
+			LineString newSegment = geometryFactory
+					.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
+			return slopeFunc(newSegment.getStartPoint(), newSegment.getEndPoint());
+		} else {
+			// sinon on calcule la pente du segment entre les deux uniques points
+			return slopeFunc(segment.getStartPoint(), segment.getEndPoint());
+		}
+	}
+
+	/**
+	 * Permet d'avoir le coefficient directeur de la radiale ou son inverse selon
+	 * l'orientation.
+	 * Cette méthode est obligatoire car le coef. directeur ne donne pas
+	 * l'orientation mais si la pente est
+	 * positive ou négative seulement.
+	 * 
+	 * @param line
+	 * @param direction
+	 * @return {double}
+	 */
 	private static double getRealDirection(LineString line, boolean direction) {
 		double orientation = 0;
 		double yStart = line.getStartPoint().getCoordinate().y;
@@ -166,48 +204,57 @@ public class WPSUtils {
 		return orientation;
 	}
 
+	/**
+	 * Permet de calculer le second point de la radiale. Le premier étant un point
+	 * du segment sur la ligne de référence.
+	 * 
+	 * @param line        le segment de la ligne
+	 * @param slope       la pente ou coefficient directeur
+	 * @param distance    la distance entre les radiales
+	 * @param sens        le sens de la radiale
+	 * @param segmentType indique si on utilise le point de départ ou de fin du
+	 *                    segment
+	 * @return {Point}
+	 */
 	private static Coordinate getNewPoint(LineString line, double slope, double distance, boolean sens,
 			boolean segmentType) {
-		// Calcule de b (ordonnée à l'origine) pour l'équation de la droite initiale
-		// y1 = m*x1+b
+		// on identifie les coordonnées du point d'origine de la radiale
 		double y = line.getEndPoint().getCoordinate().y;
 		double x = line.getEndPoint().getCoordinate().x;
 		if (!segmentType) {
 			y = line.getStartPoint().getCoordinate().y;
 			x = line.getStartPoint().getCoordinate().x;
 		}
+		// on calcule la pente ou le coefficient directeur
 		double m = slope;
-		// on connait l'équation de droite initiale. On défini la pente de la
-		// perpendiculaire
-		// double m2 = -1 / m;
-		// on utilise le point d'intersection (x,y) précédent pour avoir l'équation de
-		// la droite perpendiculaire
-		// double b2 = y - m2 * x;
 
-		// On défini un point de la droite paralèlle.
+		// On défini un point sur la perpendiculaire selon la distance.
 		// d : la distance
 		// m : le coefficient directeur appelé aussi pente
 		// x et y les coordonnée d'un point sur la droite (segment)
-		// x2 = x1 + (d / sqrt(1 + m^2))
-		// y2 = y1 + m * (d / sqrt(1 + m^2))
 		m = -1 / m;
-		// on va maintenant calculer le sens
+		// on va maintenant calculer le sens selon l'orientation du segment
 		double orientation = getRealDirection(line, sens);
+		// ensuite on défini le point de la radiale selon la distance et le point de départ
 		double x2 = x + orientation * (distance / Math.sqrt(1 + (m * m)));
 		double y2 = y + orientation * m * (distance / Math.sqrt(1 + (m * m)));
 
 		Coordinate newPoint = new Coordinate(x2, y2);
 
+		LOGGER.debug("Calculate new radiale point");
+
 		return newPoint;
 	}
 
 	/**
+	 * Fonction de création d'un segment sur la ligne de référence.
+	 * C'est la géométrie qui permettra le calcul de la radiale.
 	 * 
 	 * @param segment
 	 * @param length
 	 * @param sense
 	 * @param segmentType
-	 * @return
+	 * @return {LineString}
 	 */
 	public static LineString createRadialSegment(LineString segment, double length,
 			boolean sens,
@@ -227,6 +274,8 @@ public class WPSUtils {
 			radialSegment = geometryFactory.createLineString(
 					new Coordinate[] { segment.getStartPoint().getCoordinate(), new Coordinate(p.x, p.y) });
 		}
+
+		LOGGER.debug("Create radiale segment");
 
 		return radialSegment;
 	}
