@@ -267,7 +267,7 @@ public class WPSUtils {
 
 	/**
 	 * 
-	 * @param input
+	 * @param input radiales ou coastLines
 	 * @param type
 	 * @return
 	 * @throws Exception
@@ -283,22 +283,21 @@ public class WPSUtils {
 				SimpleFeature feature = iterator.next();
 				Geometry geometry = (Geometry) feature.getDefaultGeometry();
 				if (geometry instanceof LineString) {
+					LineString geomLineString = geometryFactory.createLineString(geometry.getCoordinates());
 					// 1 pour radials
 					if (type == 1) {
 
 						LOGGER.debug("getLinesByType Type Radial");
-						LineString radiale = geometryFactory.createLineString(geometry.getCoordinates());
-						linesBytType.put(feature.getProperty("name").getValue().toString(), radiale);
+						linesBytType.put(feature.getProperty("name").getValue().toString(), geomLineString);
 					}
 
 					// 2 pour coastLines
 					if (type == 2) {
 						LOGGER.debug("getLinesByType Type Coastlines");
-						LineString coastline = geometryFactory.createLineString(geometry.getCoordinates());
 						String date = feature.getProperty("creationdate").getValue().toString();
 						date = date.substring(0, date.length() - 1);
 						LOGGER.debug("getLinesByType Coastline date :" + date);
-						linesBytType.put(date, coastline);
+						linesBytType.put(date, geomLineString);
 					}
 				} else {
 					throw new Exception("Les geometries sont pas des LineString !");
@@ -376,6 +375,19 @@ public class WPSUtils {
 	}
 
 	/**
+	 * Mesure la distance entre deux points via une ligne géométrique
+	 * @param startPoint
+	 * @param endPoint
+	 * @return
+	 */
+	public static double getDistance(Point startPoint, Point endPoint) {
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
+		LineString line = geometryFactory.createLineString(
+				new Coordinate[] { startPoint.getCoordinate(), endPoint.getCoordinate() });
+		return line.getLength();
+	}
+
+	/**
 	 * 
 	 * @param radialsMap
 	 * @param coastLinesMap
@@ -389,23 +401,24 @@ public class WPSUtils {
 
 		// Pour chaque ligne de la radial
 		for (Map.Entry<String, LineString> radial : radialsMap.entrySet()) {
-
+			LineString radialGeom = radial.getValue();
 			Map<Date, Point> intersectPoints = new HashMap<Date, Point>();
 			// pour chaque traits de côte
 			for (Map.Entry<Date, LineString> coastLine : coastLinesMap.entrySet()) {
 				// Si la radial intersect le traît de côte
-				if (radial.getValue().intersects(coastLine.getValue())) {
+				LineString coastGeom = coastLine.getValue();
+				Geometry intersectPoint = radialGeom.intersection(coastGeom);
+				if (intersectPoint != null) {
 					LOGGER.debug("getIntersectedPoints intersection entre la radial et un trait de cote");
 					LOGGER.debug("getIntersectedPoints coastline " + coastLine.getKey() + "-" + coastLine.getValue());
 					// Ajout le point d'intersection avec la date comme clé
-					Geometry intersectValues = radial.getValue().intersection(coastLine.getValue());
-					if (intersectValues.getGeometryType() == Geometry.TYPENAME_POINT) {
-						intersectPoints.put(coastLine.getKey(), (Point) intersectValues);
-					} else if (intersectValues.getGeometryType() == Geometry.TYPENAME_MULTIPOINT) {
+					if (intersectPoint.getGeometryType() == Geometry.TYPENAME_POINT) {
+						intersectPoints.put(coastLine.getKey(), (Point) intersectPoint);
+					} else if (intersectPoint.getGeometryType() == Geometry.TYPENAME_MULTIPOINT) {
 						// Get Mutipoint centroid
-						intersectPoints.put(coastLine.getKey(), (Point) intersectValues.getCentroid());
+						intersectPoints.put(coastLine.getKey(), (Point) intersectPoint.getCentroid());
 					} else {
-						LOGGER.error("Intersection geometry type not handle " + intersectValues.getGeometryType());
+						LOGGER.error("Intersection geometry type not handle " + intersectPoint.getGeometryType());
 					}
 				}
 			}
@@ -418,7 +431,7 @@ public class WPSUtils {
 	}
 
 	/**
-	 * 
+	 * Créer une géométrie sur la radiale pour chaque trait de côte date intersecté par date
 	 * @param intersectedPoints
 	 * @return
 	 */
@@ -433,25 +446,27 @@ public class WPSUtils {
 			LOGGER.debug("getComposedSegment traitement de radial :" + radial.getKey());
 			if (radial.getValue().size() > 1) {
 				Map<Date[], LineString> lines = new LinkedHashMap<Date[], LineString>();
+				// dates et points d'intersections correspondants
+				List<Date> DateList = new ArrayList<Date>(radial.getValue().keySet());
+				LOGGER.debug("getComposedSegment keyList size " + DateList.size());
 
-				List<Date> keyList = new ArrayList<Date>(radial.getValue().keySet());
-				LOGGER.debug("getComposedSegment keyList size " + keyList.size());
-
-				for (int i = 0; i < keyList.size() - 1; i++) {
+				for (int i = 0; i < DateList.size() - 1; i++) {
 					Coordinate[] coordinates = new Coordinate[2];
 					Date[] formToCoastLinesDate = new Date[2];
 
-					Date firstPointKey = keyList.get(i);
-					Date secondPointKey = keyList.get(i + 1);
+					Date firstDate = DateList.get(i);
+					Date secondDate = DateList.get(i + 1);
+					// point d'intersection pour la ligne à cette première date
+					coordinates[0] = radial.getValue().get(firstDate).getCoordinate();
+					// point d'intersection pour la ligne à cette seconde date
+					coordinates[1] = radial.getValue().get(secondDate).getCoordinate();
 
-					coordinates[0] = radial.getValue().get(firstPointKey).getCoordinate();
-					coordinates[1] = radial.getValue().get(secondPointKey).getCoordinate();
-
-					formToCoastLinesDate[0] = firstPointKey;
-					formToCoastLinesDate[1] = secondPointKey;
+					formToCoastLinesDate[0] = firstDate;
+					formToCoastLinesDate[1] = secondDate;
 
 					lines.put(formToCoastLinesDate, geometryFactory.createLineString(coordinates));
 				}
+				// {radialId: [lineA: {key: [Date1, Date2], value: LineString}}, lineB: {key: [Date2, Date3], value: LineString}}]}
 				composedSegments.put(radial.getKey(), lines);
 				LOGGER.debug("getComposedSegment  radiale n° " + radial.getKey());
 			}
@@ -476,7 +491,6 @@ public class WPSUtils {
 
 		for (Map.Entry<String, Map<Date[], LineString>> radial : distanceSeguments.entrySet()) {
 			for (Map.Entry<Date[], LineString> line : radial.getValue().entrySet()) {
-
 				for (Date d : datesBefore) {
 					double separateDistance = 0;
 					if (line.getKey()[0].compareTo(d) == 0 && radial.getKey().equals(radialeName))
@@ -603,6 +617,9 @@ public class WPSUtils {
 					// taux_recul
 					if (type == 3)
 						return (Double) feature.getProperty("taux_recul").getValue();
+					if (type == 4)
+						return (Double) feature.getProperty("fromStartDist").getValue();
+
 				}
 			}
 		} catch (Exception e) {

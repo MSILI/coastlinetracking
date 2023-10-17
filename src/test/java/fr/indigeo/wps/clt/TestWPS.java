@@ -20,8 +20,27 @@ public class TestWPS {
 	private static final Logger LOGGER = Logger.getLogger(TestWPS.class);
 
 	private static final File dataDir = new File("data");
-	private static final File refLineFile = new File(dataDir, "refLine_z_circle.json");
-	private static final File coastLinesFile = new File(dataDir, "coastLines.json");
+	private static final File refLineFile = new File(dataDir, "refLine_boutro.json");
+	private static final File coastLinesFile = new File(dataDir, "coastLines_boutro.json");
+
+	@Test
+	public void testDistance() {
+		try {
+			FeatureCollection<SimpleFeatureType, SimpleFeature> refLineFc = getFeatureCollections(refLineFile);
+			FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadialsFc = getRadialsTest(refLineFc, 50, 20,
+					true);
+			getGeoJsonFile(drawRadialsFc, dataDir, "drawRadialsFc");
+			FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines = getFeatureCollections(coastLinesFile);
+			
+			FeatureCollection<SimpleFeatureType, SimpleFeature> distanceFc = CoastLinesTrackingWPS.getDistances(drawRadialsFc, coastLines);
+			getGeoJsonFile(distanceFc, dataDir, "distancesFc");
+			LOGGER.info("distanceFc.json est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
+		} catch (FileNotFoundException e) {
+			LOGGER.error("Fichiers introuvables", e);
+		} catch (IOException e) {
+			LOGGER.error("Erreur entrées sorties", e);
+		}
+	}
 
 	@Test
 	public void testCreateRadials() {

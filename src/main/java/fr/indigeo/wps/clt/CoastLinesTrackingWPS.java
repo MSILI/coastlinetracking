@@ -148,6 +148,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			simpleFeatureTypeBuilder.add("separate_dist", Double.class);
 			simpleFeatureTypeBuilder.add("cumulate_dist", Double.class);
 			simpleFeatureTypeBuilder.add("taux_recul", Double.class);
+			simpleFeatureTypeBuilder.add("fromStartDist", Double.class);
+
 
 			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(simpleFeatureTypeBuilder.buildFeatureType());
 
@@ -157,50 +159,73 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 
 			Map<String, Map<Date, Point>> intersectedPoints = WPSUtils.getIntersectedPoints(radialsMap, coastLinesMap);
 			Map<String, Map<Date[], LineString>> composedSegments = WPSUtils.getComposedSegment(intersectedPoints);
-			
 			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 			int id = 0;
-			for (Map.Entry<String, Map<Date[], LineString>> radial : composedSegments.entrySet()) {
-
+			for (Map.Entry<String, Map<Date[], LineString>> radialInfos : composedSegments.entrySet()) {
 				double accumulateDistance = 0;
+				Point firstPoint = null;
+				double distLineRefToRefDate = 0;
+				int n = 0;
+				Point RadialFirstPoint = null;
+				for (Map.Entry<String, LineString> radial : radialsMap.entrySet()) {
+					if (radialInfos.getKey() == radial.getKey() && RadialFirstPoint == null) {
+						LineString radialGeom = radial.getValue();
+						RadialFirstPoint = radialGeom.getStartPoint();
+					}
+				}
+				for (Map.Entry<Date[], LineString> line : radialInfos.getValue().entrySet()) {
+					LOGGER.debug("Traitement de l'id : " + id);
+					double separateDistance = 0;
+					double distFromStart = 0;
+					Point endPoint = line.getValue().getEndPoint();
 
-				for (Map.Entry<Date[], LineString> line : radial.getValue().entrySet()) {
+					// distance depuis la radiale pour savoir si on est en positif ou négatif
+					// par rapport à la date de référence
+					double distFromLineRef = WPSUtils.getDistance(RadialFirstPoint, endPoint);
 
-					LineString ln = line.getValue();
-					double separateDistance = 0;					
-					id++;
+					// un point d'intersection correspond à une intersection entre 
+					// la radiale et un trait de côte à une date donnée
 
-					if ((ln.getStartPoint().getX() < ln.getEndPoint().getX())
-							&& (ln.getStartPoint().getY() > ln.getEndPoint().getY())) {
-						separateDistance = -line.getValue().getLength();
-					} else {
-						separateDistance = line.getValue().getLength();
+					// en partant de la première date utilisée comme date de référence la plus ancienne
+					// on va calculer la distance de chaque segment de date
+					// line => LineString point[i] -> point[i+1]
+					separateDistance = line.getValue().getLength();
+					if (n == 0) {
+						// premier segment date ref -> date ref + 1
+						firstPoint = line.getValue().getStartPoint();
+						distLineRefToRefDate = WPSUtils.getDistance(RadialFirstPoint, firstPoint);
 					}
 
-					// List<Date> datesBefor = WPSUtils.getBeforDates(dates, line.getKey()[1]);
-					// if (!datesBefor.isEmpty()) {
-					// 	accumulateDistance = WPSUtils.getCumulatedDistance(composedSegments, datesBefor, radial.getKey());
-					// } else {
-					// 	accumulateDistance = separateDistance;
-					// }
+					distFromStart = WPSUtils.getDistance(firstPoint, endPoint);
 
+					if (distFromLineRef > distLineRefToRefDate) {
+						// le recule du trait de côte est négatif car on perd de la distance
+						// vis à vis de la ligne de référence et la date de référence
+						distFromStart = -1 * distFromStart;
+					}
+					
+					// La distance cummulée est la distance totale de mouvement du trait parcourus
+					// depuis la 1ere date de référence intersectée la plus ancienne jusqu'à
+					// la date intersectée la plus récente.
+					id++;
 					accumulateDistance = accumulateDistance + separateDistance;
-
 					int nbrJours = WPSUtils.getNbrDaysBetweenTwoDate(line.getKey()[0], line.getKey()[1]);
 					// Taux annuel
 					double taux = (separateDistance / nbrJours) * 365;
-
+					// distance = Line -> point[i] -> point[i+1]
 					simpleFeatureBuilder.add(line.getValue());
-					simpleFeatureBuilder.add(radial.getKey());
+					simpleFeatureBuilder.add(radialInfos.getKey());
 					simpleFeatureBuilder.add(dateFormat.format(line.getKey()[0]));
 					simpleFeatureBuilder.add(dateFormat.format(line.getKey()[1]));
 					simpleFeatureBuilder.add(separateDistance);
 					simpleFeatureBuilder.add(accumulateDistance);
 					simpleFeatureBuilder.add(taux);
+					simpleFeatureBuilder.add(distFromStart);
 					resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(Integer.toString(id)));
-
-					LOGGER.debug("Distance information : radial - " + radial.getKey() + " Date - " + line.getKey()[0]  + " Date - " + line.getKey()[1]);
-				}
+					n++;
+					LOGGER.debug("Distance information : radial - " + radialInfos.getKey() + " Date - "
+							+ line.getKey()[0] + " Date - " + line.getKey()[1]);
+				}				
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error while executing getDistances", e);
@@ -234,7 +259,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 		headers = headers.substring(0, headers.length() - 1) + eol;
 
 		for (int i = 1; i < dates.size(); i++){
-			subHeaders = subHeaders + "separe;cumule;taux" + sep;
+			subHeaders = subHeaders + "separe;cumule;taux,fromStartDist" + sep;
 		}
 			
 		subHeaders = rad + sep + subHeaders.substring(0, subHeaders.length() - 1) + eol;
@@ -248,6 +273,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 				double cumulateDist = WPSUtils.getDistanceByType(distances, 1, dates.get(i), radiale);
 				double separateDist = WPSUtils.getDistanceByType(distances, 2, dates.get(i), radiale);
 				double taux = WPSUtils.getDistanceByType(distances, 3, dates.get(i), radiale);
+				double distFromStart = WPSUtils.getDistanceByType(distances, 4, dates.get(i), radiale);
 
 				if (cumulateDist != -1)
 					data = data + cumulateDist + ";";
@@ -261,6 +287,11 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 
 				if (taux != -1)
 					data = data + taux;
+				else
+					data = data + "none";
+
+				if (distFromStart != -1)
+					data = data + distFromStart;
 				else
 					data = data + "none";
 
@@ -312,6 +343,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 						tdcdata.put("cumulateDist", (Double) feature.getProperty("cumulate_dist").getValue());
 						// taux_recul
 						tdcdata.put("tauxRecul", (Double) feature.getProperty("taux_recul").getValue());
+						tdcdata.put("fromStartDist", (Double) feature.getProperty("fromStartDist").getValue());
 						tdcValues.put(tdcdata);
 					}
 				}
