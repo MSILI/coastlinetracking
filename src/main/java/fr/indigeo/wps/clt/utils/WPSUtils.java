@@ -247,9 +247,8 @@ public class WPSUtils {
 			// afin d'avoir le coef. directeur de ce dernier segment, et une radiale
 			// correcte
 			Coordinate[] coordinates = segment.getCoordinates();
-			int size = coordinates.length;
 			segment = geometryFactory
-					.createLineString(new Coordinate[] { coordinates[size - 2], coordinates[size - 1] });
+					.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
 		}
 		double slope = getSlope(segment);
 		if (segmentType) {
