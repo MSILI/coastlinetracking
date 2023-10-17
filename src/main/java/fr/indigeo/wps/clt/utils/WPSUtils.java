@@ -195,12 +195,8 @@ public class WPSUtils {
 	private static Coordinate getNewPoint(LineString line, double slope, double distance, boolean sens,
 			boolean segmentType) {
 		// on identifie les coordonnées du point d'origine de la radiale
-		double y = line.getEndPoint().getCoordinate().y;
-		double x = line.getEndPoint().getCoordinate().x;
-		if (!segmentType) {
-			y = line.getStartPoint().getCoordinate().y;
-			x = line.getStartPoint().getCoordinate().x;
-		}
+		double y = line.getStartPoint().getCoordinate().y;
+		double x = line.getStartPoint().getCoordinate().x;
 		// on calcule la pente ou le coefficient directeur
 		double m = slope;
 
@@ -236,8 +232,6 @@ public class WPSUtils {
 	public static LineString createRadialSegment(LineString segment, double length,
 			boolean sens,
 			boolean segmentType) {
-		Coordinate p = null;
-		LineString radialSegment = null;
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		// get point according to sens
 
@@ -251,15 +245,9 @@ public class WPSUtils {
 					.createLineString(new Coordinate[] { coordinates[0], coordinates[1] });
 		}
 		double slope = getSlope(segment);
-		if (segmentType) {
-			p = getNewPoint(segment, slope, length, sens, segmentType);
-			radialSegment = geometryFactory.createLineString(
-					new Coordinate[] { segment.getEndPoint().getCoordinate(), new Coordinate(p.x, p.y) });
-		} else {
-			p = getNewPoint(segment, slope, length, sens, segmentType);
-			radialSegment = geometryFactory.createLineString(
-					new Coordinate[] { segment.getStartPoint().getCoordinate(), new Coordinate(p.x, p.y) });
-		}
+		Coordinate p = getNewPoint(segment, slope, length, sens, segmentType);
+		LineString radialSegment = geometryFactory.createLineString(
+				new Coordinate[] { segment.getStartPoint().getCoordinate(), new Coordinate(p.x, p.y) });
 
 		LOGGER.debug("Create radiale segment");
 

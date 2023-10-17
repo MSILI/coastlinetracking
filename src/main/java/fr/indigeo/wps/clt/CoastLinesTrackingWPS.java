@@ -90,13 +90,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			}
 			int n = 0;
 			for (LineString l : segements) {
-				if (n == segements.size() - 1) {
-					continue;
-				}
 				if (n == 0) {
 					radiale = WPSUtils.createRadialSegment(l, length, direction, false);
-					listRadiales.add(radiale);
-					radiale = WPSUtils.createRadialSegment(l, length, direction, true);
 					listRadiales.add(radiale);
 				} else {
 					radiale = WPSUtils.createRadialSegment(l, length, direction, true);

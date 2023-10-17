@@ -20,8 +20,8 @@ public class TestWPS {
 	private static final Logger LOGGER = Logger.getLogger(TestWPS.class);
 
 	private static final File dataDir = new File("data");
-	private static final File refLineFile = new File(dataDir, "refLine_boutro.json");
-	private static final File coastLinesFile = new File(dataDir, "coastLines_boutro.json");
+	private static final File refLineFile = new File(dataDir, "refLine.json");
+	private static final File coastLinesFile = new File(dataDir, "coastLines_vougot.json");
 
 	@Test
 	public void testDistance() {
