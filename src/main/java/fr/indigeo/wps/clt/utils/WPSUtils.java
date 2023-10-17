@@ -211,7 +211,8 @@ public class WPSUtils {
 		m = -1 / m;
 		// on va maintenant calculer le sens selon l'orientation du segment
 		double orientation = getRealDirection(line, sens);
-		// ensuite on défini le point de la radiale selon la distance et le point de départ
+		// ensuite on défini le point de la radiale selon la distance et le point de
+		// départ
 		double x2 = x + orientation * (distance / Math.sqrt(1 + (m * m)));
 		double y2 = y + orientation * m * (distance / Math.sqrt(1 + (m * m)));
 
@@ -239,11 +240,12 @@ public class WPSUtils {
 		LineString radialSegment = null;
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		// get point according to sens
-		
+
 		if (segment.getCoordinates().length > 2) {
 			// si la géométrie est composé de plusieurs segments
-			// alors on se base sur  dernier segments de la géométrie
-			// afin d'avoir le coef. directeur de ce dernier segment, et une radiale correcte
+			// alors on se base sur dernier segments de la géométrie
+			// afin d'avoir le coef. directeur de ce dernier segment, et une radiale
+			// correcte
 			Coordinate[] coordinates = segment.getCoordinates();
 			int size = coordinates.length;
 			segment = geometryFactory
@@ -376,6 +378,7 @@ public class WPSUtils {
 
 	/**
 	 * Mesure la distance entre deux points via une ligne géométrique
+	 * 
 	 * @param startPoint
 	 * @param endPoint
 	 * @return
@@ -431,7 +434,9 @@ public class WPSUtils {
 	}
 
 	/**
-	 * Créer une géométrie sur la radiale pour chaque trait de côte date intersecté par date
+	 * Créer une géométrie sur la radiale pour chaque trait de côte date intersecté
+	 * par date
+	 * 
 	 * @param intersectedPoints
 	 * @return
 	 */
@@ -466,7 +471,8 @@ public class WPSUtils {
 
 					lines.put(formToCoastLinesDate, geometryFactory.createLineString(coordinates));
 				}
-				// {radialId: [lineA: {key: [Date1, Date2], value: LineString}}, lineB: {key: [Date2, Date3], value: LineString}}]}
+				// {radialId: [lineA: {key: [Date1, Date2], value: LineString}}, lineB: {key:
+				// [Date2, Date3], value: LineString}}]}
 				composedSegments.put(radial.getKey(), lines);
 				LOGGER.debug("getComposedSegment  radiale n° " + radial.getKey());
 			}

@@ -39,7 +39,8 @@ import org.locationtech.jts.geom.Point;
  *
  */
 @DescribeProcess(title = "Coastlines tracking project", description = "WPS for the tracking of coastlines")
-public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLinesTrackingWPS> implements GeoServerProcess {
+public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLinesTrackingWPS>
+		implements GeoServerProcess {
 
 	private static final Logger LOGGER = Logger.getLogger(CoastLinesTrackingWPS.class);
 
@@ -65,7 +66,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			@DescribeParameter(name = "radialDirection", description = "the direction of radial (true or false)") final boolean direction) {
 		DefaultFeatureCollection resultFeatureCollection = null;
 
-		LOGGER.info("DrawRadial with params - length : " + length + " | distance : " + distance + " | direction : " + direction);
+		LOGGER.info("DrawRadial with params - length : " + length + " | distance : " + distance + " | direction : "
+				+ direction);
 		try {
 			SimpleFeatureTypeBuilder simpleFeatureTypeBuilder = new SimpleFeatureTypeBuilder();
 			simpleFeatureTypeBuilder.setName("featureType");
@@ -104,7 +106,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			}
 
 			// init DefaultFeatureCollection
-			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(simpleFeatureTypeBuilder.buildFeatureType());
+			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
+					simpleFeatureTypeBuilder.buildFeatureType());
 			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 
 			// add geometrie to defaultFeatures
@@ -150,8 +153,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			simpleFeatureTypeBuilder.add("taux_recul", Double.class);
 			simpleFeatureTypeBuilder.add("fromStartDist", Double.class);
 
-
-			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(simpleFeatureTypeBuilder.buildFeatureType());
+			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
+					simpleFeatureTypeBuilder.buildFeatureType());
 
 			Map<String, LineString> radialsMap = WPSUtils.getLinesByType(radials, 1);
 			Map<Date, LineString> coastLinesMap = WPSUtils.sortBydate(WPSUtils.getLinesByType(coastLines, 2));
@@ -183,10 +186,11 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					// par rapport à la date de référence
 					double distFromLineRef = WPSUtils.getDistance(RadialFirstPoint, endPoint);
 
-					// un point d'intersection correspond à une intersection entre 
+					// un point d'intersection correspond à une intersection entre
 					// la radiale et un trait de côte à une date donnée
 
-					// en partant de la première date utilisée comme date de référence la plus ancienne
+					// en partant de la première date utilisée comme date de référence la plus
+					// ancienne
 					// on va calculer la distance de chaque segment de date
 					// line => LineString point[i] -> point[i+1]
 					separateDistance = line.getValue().getLength();
@@ -203,7 +207,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 						// vis à vis de la ligne de référence et la date de référence
 						distFromStart = -1 * distFromStart;
 					}
-					
+
 					// La distance cummulée est la distance totale de mouvement du trait parcourus
 					// depuis la 1ere date de référence intersectée la plus ancienne jusqu'à
 					// la date intersectée la plus récente.
@@ -225,7 +229,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					n++;
 					LOGGER.debug("Distance information : radial - " + radialInfos.getKey() + " Date - "
 							+ line.getKey()[0] + " Date - " + line.getKey()[1]);
-				}				
+				}
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error while executing getDistances", e);
@@ -250,18 +254,18 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 
 		List<String> dataList = new ArrayList<String>();
 
-		for (Date d : dates){
+		for (Date d : dates) {
 			headers = headers + dateFormat.format(d) + "|";
-		}	
-		
+		}
+
 		LOGGER.debug("distancesToCSV - headers " + headers);
 
 		headers = headers.substring(0, headers.length() - 1) + eol;
 
-		for (int i = 1; i < dates.size(); i++){
+		for (int i = 1; i < dates.size(); i++) {
 			subHeaders = subHeaders + "separe;cumule;taux,fromStartDist" + sep;
 		}
-			
+
 		subHeaders = rad + sep + subHeaders.substring(0, subHeaders.length() - 1) + eol;
 		dataList.add(headers);
 		dataList.add(subHeaders);
@@ -303,7 +307,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 
 		}
 
-		for (String line : dataList){
+		for (String line : dataList) {
 			csv = csv + line;
 		}
 
@@ -319,10 +323,10 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 
 		JSONObject result = new JSONObject();
 		JSONArray resultsArray = new JSONArray();
-		
+
 		// get all tdc result
-		for (Date TDCdate : TDCdates){
-			
+		for (Date TDCdate : TDCdates) {
+
 			JSONObject tdc = new JSONObject();
 			JSONArray tdcValues = new JSONArray();
 			tdc.put("date", dateFormat.format(TDCdate));
@@ -352,11 +356,11 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 				LOGGER.error("Error while casting distance to double", e);
 			} catch (ParseException e) {
 				LOGGER.error("Error while parsing date", e);
-			}  finally {
+			} finally {
 				iterator.close();
 			}
 			resultsArray.put(tdc);
-		}	
+		}
 		result.put("result", resultsArray);
 		return result.toString();
 	}
@@ -366,46 +370,44 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 	public static String coastLinesTracking(
 			@DescribeParameter(name = "radiales", description = "the calculated radial") final FeatureCollection<SimpleFeatureType, SimpleFeature> radiales,
 			@DescribeParameter(name = "coastlines", description = "the input Coastlines") final FeatureCollection<SimpleFeatureType, SimpleFeature> coastLines) {
-		
-		if(LOGGER.isDebugEnabled()){
+
+		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Radial information : ");
 			FeatureIterator<SimpleFeature> iteratorfc1 = radiales.features();
 			try {
-				while( iteratorfc1.hasNext() ){
+				while (iteratorfc1.hasNext()) {
 					SimpleFeature feature = iteratorfc1.next();
 					LOGGER.debug("Radial feature id = " + feature.getID());
 					for (Property property : feature.getProperties()) {
 						LOGGER.debug(property.getName() + " = " + property.getValue());
 					}
 				}
-			}
-			finally {
+			} finally {
 				iteratorfc1.close();
 			}
 		}
 
 		FeatureCollection<SimpleFeatureType, SimpleFeature> fc2 = getDistances(radiales, coastLines);
 
-		if(LOGGER.isDebugEnabled()){
+		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Distance information : ");
 			FeatureIterator<SimpleFeature> iteratorfc2 = fc2.features();
 			try {
-				while( iteratorfc2.hasNext() ){
+				while (iteratorfc2.hasNext()) {
 					SimpleFeature feature = iteratorfc2.next();
 					LOGGER.debug("Distance feature id = " + feature.getID());
 					for (Property property : feature.getProperties()) {
 						LOGGER.debug(property.getName() + " = " + property.getValue());
 					}
 				}
-			}
-			finally {
+			} finally {
 				iteratorfc2.close();
 			}
 		}
 
 		String json = getDistancesToJson(fc2);
 
-		if(LOGGER.isDebugEnabled()){
+		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Json information : ");
 			LOGGER.debug("Json result : " + json);
 		}
