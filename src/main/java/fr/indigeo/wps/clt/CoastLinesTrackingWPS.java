@@ -147,6 +147,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			simpleFeatureTypeBuilder.add("cumulate_dist", Double.class);
 			simpleFeatureTypeBuilder.add("taux_recul", Double.class);
 			simpleFeatureTypeBuilder.add("fromStartDist", Double.class);
+			simpleFeatureTypeBuilder.add("globalEvolRate", Double.class);
+			simpleFeatureTypeBuilder.add("meanEvolRatePerYear", Double.class);
 
 			SimpleFeatureBuilder simpleFeatureBuilder = new SimpleFeatureBuilder(
 					simpleFeatureTypeBuilder.buildFeatureType());
@@ -162,7 +164,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			for (Map.Entry<String, Map<Date[], LineString>> radialInfos : composedSegments.entrySet()) {
 				double accumulateDistance = 0;
 				Point firstPoint = null;
-				double distLineRefToRefDate = 0;
+				double distLineRefToFirstPoint = 0;
 				int n = 0;
 				Point RadialFirstPoint = null;
 				for (Map.Entry<String, LineString> radial : radialsMap.entrySet()) {
@@ -176,10 +178,12 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					double separateDistance = 0;
 					double distFromStart = 0;
 					Point endPoint = line.getValue().getEndPoint();
+					// premier segment date ref -> date ref + 1
+					firstPoint = line.getValue().getStartPoint();
 
 					// distance depuis la radiale pour savoir si on est en positif ou négatif
 					// par rapport à la date de référence
-					double distFromLineRef = WPSUtils.getDistance(RadialFirstPoint, endPoint);
+					double distLineRefToLastPoint = WPSUtils.getDistance(RadialFirstPoint, endPoint);
 
 					// un point d'intersection correspond à une intersection entre
 					// la radiale et un trait de côte à une date donnée
@@ -190,18 +194,10 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					// line => LineString point[i] -> point[i+1]
 					separateDistance = line.getValue().getLength();
 					if (n == 0) {
-						// premier segment date ref -> date ref + 1
-						firstPoint = line.getValue().getStartPoint();
-						distLineRefToRefDate = WPSUtils.getDistance(RadialFirstPoint, firstPoint);
+						distLineRefToFirstPoint = WPSUtils.getDistance(RadialFirstPoint, firstPoint);
 					}
 
 					distFromStart = WPSUtils.getDistance(firstPoint, endPoint);
-
-					if (distFromLineRef > distLineRefToRefDate) {
-						// le recule du trait de côte est négatif car on perd de la distance
-						// vis à vis de la ligne de référence et la date de référence
-						distFromStart = -1 * distFromStart;
-					}
 
 					// La distance cummulée est la distance totale de mouvement du trait parcourus
 					// depuis la 1ere date de référence intersectée la plus ancienne jusqu'à
@@ -209,6 +205,28 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					id++;
 					accumulateDistance = accumulateDistance + separateDistance;
 					int nbrJours = WPSUtils.getNbrDaysBetweenTwoDate(line.getKey()[0], line.getKey()[1]);
+
+					// % d'évolution par an :
+					// - Vd : Valeur de départ -> distance entre ref line et année la plus ancienne
+					// - Va : Valeur d'arrivée -> distance entre ref line et année la plus récente
+					// - x : % d'évolution appliqué chaque année
+					// Si Vd * (1+x)^n = Va
+					// Alors x = ((Va/Vd)^1/n)-1
+
+					double globalEvolRate = (distLineRefToLastPoint - distLineRefToFirstPoint) / distLineRefToFirstPoint;
+					double rate = (distLineRefToLastPoint / distLineRefToFirstPoint);
+					double nbYears = nbrJours / 365;
+					double meanEvolRatePerYear = Math.pow(rate, 1 / nbYears) - 1 ;
+
+					// calculate sign
+					if (distLineRefToLastPoint > distLineRefToFirstPoint) {
+						// le recule du trait de côte est négatif car on perd de la distance
+						// vis à vis de la ligne de référence et la date de référence
+						distFromStart = -1 * distFromStart;
+						// le recule est négatif s'il va vers la ligne de référence (vers la mer)
+						separateDistance = -1 * separateDistance;
+
+					}
 					// Taux annuel
 					double taux = (separateDistance / nbrJours) * 365;
 					// distance = Line -> point[i] -> point[i+1]
@@ -220,6 +238,8 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					simpleFeatureBuilder.add(accumulateDistance);
 					simpleFeatureBuilder.add(taux);
 					simpleFeatureBuilder.add(distFromStart);
+					simpleFeatureBuilder.add(globalEvolRate);
+					simpleFeatureBuilder.add(meanEvolRatePerYear);
 					resultFeatureCollection.add(simpleFeatureBuilder.buildFeature(Integer.toString(id)));
 					n++;
 					LOGGER.debug("Distance information : radial - " + radialInfos.getKey() + " Date - "
