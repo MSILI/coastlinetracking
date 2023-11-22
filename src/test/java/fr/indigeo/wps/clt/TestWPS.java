@@ -61,7 +61,7 @@ public class TestWPS {
 		try {
 			// draw radials Test
 			FeatureCollection<SimpleFeatureType, SimpleFeature> refLineFc = getFeatureCollections(refLineFile);
-			FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadialsFc = getRadialsTest(refLineFc, 100, 50, false);
+			FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadialsFc = getRadialsTest(refLineFc, 50, 20, false);
 			getGeoJsonFile(drawRadialsFc, dataDir, "drawRadialsFc");
 			LOGGER.info("drawRadialsFc.json est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
 
