@@ -431,15 +431,15 @@ public class WPSUtils {
 			Map<String, Map<Date, Point>> intersectedPoints) {
 
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
-		Map<String, Map<Date[], LineString>> composedSegments = new HashMap<String, Map<Date[], LineString>>();
+		Map<String, Map<Date[], LineString>> radialLinesByDates = new HashMap<String, Map<Date[], LineString>>();
 
-		for (Map.Entry<String, Map<Date, Point>> radial : intersectedPoints.entrySet()) {
+		for (Map.Entry<String, Map<Date, Point>> intersectedPointOnradial : intersectedPoints.entrySet()) {
 
-			LOGGER.debug("getComposedSegment traitement de radial :" + radial.getKey());
-			if (radial.getValue().size() > 1) {
+			LOGGER.debug("getComposedSegment traitement de radial :" + intersectedPointOnradial.getKey());
+			if (intersectedPointOnradial.getValue().size() > 1) {
 				Map<Date[], LineString> lines = new LinkedHashMap<Date[], LineString>();
 				// dates et points d'intersections correspondants
-				List<Date> DateList = new ArrayList<Date>(radial.getValue().keySet());
+				List<Date> DateList = new ArrayList<Date>(intersectedPointOnradial.getValue().keySet());
 				LOGGER.debug("getComposedSegment keyList size " + DateList.size());
 
 				for (int i = 0; i < DateList.size() - 1; i++) {
@@ -449,9 +449,9 @@ public class WPSUtils {
 					Date firstDate = DateList.get(i);
 					Date secondDate = DateList.get(i + 1);
 					// point d'intersection pour la ligne à cette première date
-					coordinates[0] = radial.getValue().get(firstDate).getCoordinate();
+					coordinates[0] = intersectedPointOnradial.getValue().get(firstDate).getCoordinate();
 					// point d'intersection pour la ligne à cette seconde date
-					coordinates[1] = radial.getValue().get(secondDate).getCoordinate();
+					coordinates[1] = intersectedPointOnradial.getValue().get(secondDate).getCoordinate();
 
 					formToCoastLinesDate[0] = firstDate;
 					formToCoastLinesDate[1] = secondDate;
@@ -460,13 +460,13 @@ public class WPSUtils {
 				}
 				// {radialId: [lineA: {key: [Date1, Date2], value: LineString}}, lineB: {key:
 				// [Date2, Date3], value: LineString}}]}
-				composedSegments.put(radial.getKey(), lines);
-				LOGGER.debug("getComposedSegment  radiale n° " + radial.getKey());
+				radialLinesByDates.put(intersectedPointOnradial.getKey(), lines);
+				LOGGER.debug("getComposedSegment  radiale n° " + intersectedPointOnradial.getKey());
 			}
 		}
 
-		LOGGER.debug("getComposedSegment  " + composedSegments.size() + " nb elements in response");
-		return composedSegments;
+		LOGGER.debug("getComposedSegment  " + radialLinesByDates.size() + " nb elements in response");
+		return radialLinesByDates;
 	}
 
 	/**
@@ -612,7 +612,8 @@ public class WPSUtils {
 						return (Double) feature.getProperty("taux_recul").getValue();
 					if (type == 4)
 						return (Double) feature.getProperty("fromStartDist").getValue();
-
+					if (type == 5)
+						return (Double) feature.getProperty("fromDateRefDist").getValue();
 				}
 			}
 		} catch (Exception e) {
