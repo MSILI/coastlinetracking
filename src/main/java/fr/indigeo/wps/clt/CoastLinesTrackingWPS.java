@@ -191,7 +191,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 				Point dateRefPoint = null;
 				double previousDist = 0;
 				for (Map.Entry<Date[], LineString> dateLine : radialLines.getValue().entrySet()) {
-										LOGGER.debug("Traitement de l'id : " + id);
+					LOGGER.debug("Traitement de l'id : " + id);
 					double distFromStart = 0;
 					// point de fin de la ligne
 					Point endPoint = dateLine.getValue().getEndPoint();
