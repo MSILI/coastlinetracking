@@ -400,7 +400,6 @@ public class WPSUtils {
 				Geometry intersectPoint = radialGeom.intersection(coastGeom);
 				if (intersectPoint != null) {
 					LOGGER.debug("getIntersectedPoints intersection entre la radial et un trait de cote");
-					LOGGER.debug("getIntersectedPoints coastline " + coastLine.getKey() + "-" + coastLine.getValue());
 					// Ajout le point d'intersection avec la date comme clé
 					if (intersectPoint.getGeometryType() == Geometry.TYPENAME_POINT) {
 						intersectPoints.put(coastLine.getKey(), (Point) intersectPoint);
@@ -428,7 +427,7 @@ public class WPSUtils {
 	 * @return
 	 */
 	public static Map<String, Map<Date[], LineString>> getComposedSegment(
-			Map<String, Map<Date, Point>> intersectedPoints) {
+			Map<String, Map<Date, Point>> intersectedPoints, Date dateRef) {
 
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 2154);
 		Map<String, Map<Date[], LineString>> radialLinesByDates = new HashMap<String, Map<Date[], LineString>>();
@@ -442,6 +441,11 @@ public class WPSUtils {
 				List<Date> DateList = new ArrayList<Date>(intersectedPointOnradial.getValue().keySet());
 				LOGGER.debug("getComposedSegment keyList size " + DateList.size());
 
+				// on ne va traiter que les radiales qui intersectent la date de référence
+				// sinon il ne sera pas possible de comparer les TDC à la date de référence
+				if (!DateList.contains(dateRef)) {
+					continue;
+				}
 				for (int i = 0; i < DateList.size() - 1; i++) {
 					Coordinate[] coordinates = new Coordinate[2];
 					Date[] formToCoastLinesDate = new Date[2];
