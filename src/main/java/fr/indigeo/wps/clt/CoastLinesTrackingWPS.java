@@ -165,7 +165,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 			// calcul de tous les points d'intersection entre geom radiales et geom trait de côte
 			Map<String, Map<Date, Point>> intersectedPoints = WPSUtils.getIntersectedPoints(radialsMap, coastLinesMap);
 			// 
-			Map<String, Map<Date[], LineString>> RadialesDatesLines = WPSUtils.getComposedSegment(intersectedPoints);
+			Map<String, Map<Date[], LineString>> RadialesDatesLines = WPSUtils.getComposedSegment(intersectedPoints, minDateRef.get());
 			resultFeatureCollection = new DefaultFeatureCollection(null, simpleFeatureBuilder.getFeatureType());
 			int id = 0;
 			// on parcours les radiales une par une
@@ -245,7 +245,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					int nbrJoursFromDateRef = WPSUtils.getNbrDaysBetweenTwoDate(minDateRef.get(),
 							dateLine.getKey()[1]);
 					double nbYears = nbrJoursFromDateRef / 365;
-					double taux = distFromDateRef/nbYears;
+					double taux = distFromDateRef / nbYears;
 					// Taux entre les deux années de la ligne
 					double evolBetween = (distFromStart / nbrJours) * 365;
 
