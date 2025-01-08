@@ -244,7 +244,7 @@ public class CoastLinesTrackingWPS extends StaticMethodsProcessFactory<CoastLine
 					// taux d'évolution depuis la date de référence
 					int nbrJoursFromDateRef = WPSUtils.getNbrDaysBetweenTwoDate(minDateRef.get(),
 							dateLine.getKey()[1]);
-					double nbYears = nbrJoursFromDateRef / 365;
+					double nbYears = (double)nbrJoursFromDateRef / (double)365;
 					double taux = distFromDateRef / nbYears;
 					// Taux entre les deux années de la ligne
 					double evolBetween = (distFromStart / nbrJours) * 365;

@@ -20,8 +20,8 @@ public class TestWPS {
 	private static final Logger LOGGER = Logger.getLogger(TestWPS.class);
 
 	private static final File dataDir = new File("data");
-	private static final File refLineFile = new File(dataDir, "refLine.json");
-	private static final File coastLinesFile = new File(dataDir, "coastLines_vougot.json");
+	private static final File refLineFile = new File(dataDir, "lineref_vougot.json");
+	private static final File coastLinesFile = new File(dataDir, "tdc_vougot.json");
 
 	@Test
 	public void testDistance() {
@@ -61,7 +61,7 @@ public class TestWPS {
 		try {
 			// draw radials Test
 			FeatureCollection<SimpleFeatureType, SimpleFeature> refLineFc = getFeatureCollections(refLineFile);
-			FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadialsFc = getRadialsTest(refLineFc, 50, 20, false);
+			FeatureCollection<SimpleFeatureType, SimpleFeature> drawRadialsFc = getRadialsTest(refLineFc, 100, 50, false);
 			getGeoJsonFile(drawRadialsFc, dataDir, "drawRadialsFc");
 			LOGGER.info("drawRadialsFc.json est généré dans le dossier data de votre projet ! vous pouvez le visualiser maintenant.");
 
